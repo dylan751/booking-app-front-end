@@ -11,10 +11,12 @@ import React, { useState } from 'react';
 import { DateRange } from 'react-date-range';
 import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
+import { format } from 'date-fns';
 
 import styles from './Header.module.scss';
 
 const Header = () => {
+  const [openDate, setOpenDate] = useState(false);
   const [date, setDate] = useState<any>([
     {
       startDate: new Date(),
@@ -77,16 +79,24 @@ const Header = () => {
               icon={faCalendarDays}
               className={styles['header__container__search__item__icon']}
             />
-            <span className={styles['header__container__search__item__text']}>
-              date to date
+            <span
+              className={styles['header__container__search__item__text']}
+              onClick={() => setOpenDate(!openDate)}
+            >
+              {`${format(date[0].startDate, 'MM/dd/yyyy')} to ${format(
+                date[0].endDate,
+                'MM/dd/yyyy',
+              )}`}
             </span>
-            <DateRange
-              editableDateInputs={true}
-              onChange={(item) => setDate([item.selection])}
-              moveRangeOnFirstSelection={false}
-              ranges={date}
-              className={styles['header__container__search__item__date']}
-            />
+            {openDate && (
+              <DateRange
+                editableDateInputs={true}
+                onChange={(item) => setDate([item.selection])}
+                moveRangeOnFirstSelection={false}
+                ranges={date}
+                className={styles['header__container__search__item__date']}
+              />
+            )}
           </div>
           <div className={styles['header__container__search__item']}>
             <FontAwesomeIcon
