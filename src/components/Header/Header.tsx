@@ -7,10 +7,22 @@ import {
   faPerson,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useState } from 'react';
+import { DateRange } from 'react-date-range';
+import 'react-date-range/dist/styles.css'; // main css file
+import 'react-date-range/dist/theme/default.css'; // theme css file
+
 import styles from './Header.module.scss';
 
-export const Header = () => {
+const Header = () => {
+  const [date, setDate] = useState<any>([
+    {
+      startDate: new Date(),
+      endDate: new Date(),
+      key: 'selection',
+    },
+  ]);
+
   return (
     <div className={styles['header']}>
       <div className={styles['header__container']}>
@@ -68,6 +80,13 @@ export const Header = () => {
             <span className={styles['header__container__search__item__text']}>
               date to date
             </span>
+            <DateRange
+              editableDateInputs={true}
+              onChange={(item) => setDate([item.selection])}
+              moveRangeOnFirstSelection={false}
+              ranges={date}
+              className={styles['header__container__search__item__date']}
+            />
           </div>
           <div className={styles['header__container__search__item']}>
             <FontAwesomeIcon
@@ -78,8 +97,13 @@ export const Header = () => {
               2 adults 2 children 1 room
             </span>
           </div>
+          <div className={styles['header__container__search__item']}>
+            <button className={styles['header__container__btn']}>Search</button>
+          </div>
         </div>
       </div>
     </div>
   );
 };
+
+export default Header;

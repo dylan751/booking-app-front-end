@@ -3,6 +3,7 @@
   color: white;
   display: flex;
   justify-content: center;
+  position: relative;
 
   &__container {
     width: 100%;
@@ -20,24 +21,64 @@
         gap: 10px;
 
         &.active {
-            border: 1px solid white;
-            padding: 10px;
-            border-radius: 20px;
+          border: 1px solid white;
+          padding: 10px;
+          border-radius: 20px;
         }
       }
     }
 
     &__description {
-        margin: 20px 0px;
+      margin: 20px 0px;
     }
 
     &__btn {
-        background-color: #0071c2;
-        color: white;
-        font-weight: 500;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
+      background-color: #0071c2;
+      color: white;
+      font-weight: 500;
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    &__search {
+      height: 30px;
+      background-color: white;
+      border: 3px solid #febb02;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 10px 0px;
+      border-radius: 5px;
+      position: absolute;
+      bottom: -25px;
+      width: 100%;
+      max-width: 1024px;
+
+      &__item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        &__input {
+            border: none;
+            outline: none;
+        }
+
+        &__text {
+            color: lightgray;
+            cursor: pointer;
+        }
+
+        &__date {
+            position: absolute;
+            top: 50px;
+        }
+      }
+
+      &__item__icon {
+        color: lightgray;
+      }
     }
   }
 }

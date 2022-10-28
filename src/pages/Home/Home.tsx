@@ -1,9 +1,9 @@
 import React from 'react';
-import { Header } from '../../components/Header/Header';
-import { Navbar } from '../../components/Navbar/Navbar';
+import Header from '../../components/Header/Header';
+import Navbar from '../../components/Navbar/Navbar';
 import styles from './Home.module.scss';
 
-export const Home = () => {
+const Home = () => {
   return (
     <div>
       <Navbar />
@@ -11,3 +11,5 @@ export const Home = () => {
     </div>
   );
 };
+
+export default Home;
