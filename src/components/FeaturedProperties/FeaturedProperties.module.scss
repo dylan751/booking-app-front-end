@@ -1,0 +1,45 @@
+.featured-properties {
+  width: 100%;
+  max-width: 1024px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+
+  &__item {
+    flex: 1;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+
+    &__img {
+      width: 100%;
+    }
+
+    &__name {
+      font-weight: bold;
+    }
+
+    &__city {
+      font-weight: 300;
+    }
+
+    &__price {
+      font-weight: 500;
+    }
+
+    &__rating {
+      button {
+        background-color: #003580;
+        color: white;
+        border: none;
+        padding: 3px;
+        margin-right: 10px;
+        font-weight: bold;
+      }
+
+      span {
+        font-size: 14px;
+      }
+    }
+  }
+}
