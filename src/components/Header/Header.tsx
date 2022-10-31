@@ -14,12 +14,14 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import { format } from 'date-fns';
 
 import styles from './Header.module.scss';
+import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
   type?: string;
 }
 
 const Header = ({ type }: HeaderProps) => {
+  const [destination, setDestination] = useState('');
   const [openDate, setOpenDate] = useState(false);
   const [date, setDate] = useState<any>([
     {
@@ -36,6 +38,8 @@ const Header = ({ type }: HeaderProps) => {
     room: 1,
   });
 
+  const navigate = useNavigate();
+
   const handleOption = (name: string, operation: 'd' | 'i') => {
     setOptions((prev) => {
       return {
@@ -43,6 +47,10 @@ const Header = ({ type }: HeaderProps) => {
         [name]: operation === 'i' ? options[name] + 1 : options[name] - 1,
       };
     });
+  };
+
+  const handleSearch = () => {
+    navigate('/hotels', { state: { destination, date, options } });
   };
 
   return (
@@ -98,6 +106,7 @@ const Header = ({ type }: HeaderProps) => {
                   type="text"
                   placeholder="Where are you going?"
                   className={styles['header__container__search__item__input']}
+                  onChange={(e) => setDestination(e.target.value)}
                 />
               </div>
               <div className={styles['header__container__search__item']}>
@@ -120,6 +129,7 @@ const Header = ({ type }: HeaderProps) => {
                     onChange={(item) => setDate([item.selection])}
                     moveRangeOnFirstSelection={false}
                     ranges={date}
+                    minDate={new Date()}
                     className={styles['header__container__search__item__date']}
                   />
                 )}
@@ -304,7 +314,10 @@ const Header = ({ type }: HeaderProps) => {
                 )}
               </div>
               <div className={styles['header__container__search__item']}>
-                <button className={styles['header__container__btn']}>
+                <button
+                  className={styles['header__container__btn']}
+                  onClick={handleSearch}
+                >
                   Search
                 </button>
               </div>
