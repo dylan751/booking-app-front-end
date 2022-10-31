@@ -5,6 +5,7 @@ import Header from '../../components/Header/Header';
 import Navbar from '../../components/Navbar/Navbar';
 import { DateRange } from 'react-date-range';
 import styles from './List.module.scss';
+import SearchItem from '../../components/SearchItem/SearchItem';
 
 const List = () => {
   const location = useLocation();
@@ -194,7 +195,16 @@ const List = () => {
             </div>
             <button>Search</button>
           </div>
-          <div className={styles['list__container__wrapper__result']}></div>
+          <div className={styles['list__container__wrapper__result']}>
+            <SearchItem />
+            <SearchItem />
+            <SearchItem />
+            <SearchItem />
+            <SearchItem />
+            <SearchItem />
+            <SearchItem />
+            <SearchItem />
+          </div>
         </div>
       </div>
     </div>
