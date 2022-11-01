@@ -1,7 +1,9 @@
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
+import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
+import MailList from '../../components/MailList/MailList';
 import Navbar from '../../components/Navbar/Navbar';
 import styles from './Hotel.module.scss';
 
@@ -33,6 +35,9 @@ const Hotel = () => {
       <Header type="list" />
       <div className={styles['hotel__container']}>
         <div className={styles['hotel__container__wrapper']}>
+          <button className={styles['hotel__container__wrapper__book-btn']}>
+            Reserve or Book Now!
+          </button>
           <h1 className={styles['hotel__container__wrapper__title']}>
             Grand Hotel
           </h1>
@@ -49,7 +54,7 @@ const Hotel = () => {
             Book a stay over $114 at this property and get a free airport taxi
           </span>
           {/* Sub Photos */}
-          <div className="hotel__container__wrapper__images">
+          <div className={styles['hotel__container__wrapper__images']}>
             {photos.map((photo) => (
               <div
                 className={styles['hotel__container__wrapper__images__item']}
@@ -106,6 +111,8 @@ const Hotel = () => {
             </div>
           </div>
         </div>
+        <MailList />
+        <Footer />
       </div>
     </div>
   );
