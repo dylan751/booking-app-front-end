@@ -4,7 +4,7 @@ import { CountByCity } from '../../models/CountByCity';
 import styles from './Featured.module.scss';
 
 const Featured = () => {
-  const { data, loading, error } = useFetch<CountByCity>(
+  const { data, loading, error } = useFetch<CountByCity[]>(
     `${process.env.REACT_APP_API_ENDPOINT}/hotels/count/byCity?cities=berlin,madrid,london`,
   );
 
@@ -22,7 +22,7 @@ const Featured = () => {
             />
             <div className={styles['featured__item__title']}>
               <h1>Berlin</h1>
-              <h2>{data[0]} properties</h2>
+              <h2>{data && data[0]} properties</h2>
             </div>
           </div>
           <div className={styles['featured__item']}>
@@ -33,7 +33,7 @@ const Featured = () => {
             />
             <div className={styles['featured__item__title']}>
               <h1>Madrid</h1>
-              <h2>{data[1]} properties</h2>
+              <h2>{data && data[1]} properties</h2>
             </div>
           </div>
           <div className={styles['featured__item']}>
@@ -44,7 +44,7 @@ const Featured = () => {
             />
             <div className={styles['featured__item__title']}>
               <h1>London</h1>
-              <h2>{data[2]} properties</h2>
+              <h2>{data && data[2]} properties</h2>
             </div>
           </div>
         </>

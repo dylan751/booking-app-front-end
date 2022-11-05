@@ -4,7 +4,7 @@ import { CountByType } from '../../models/CountByType';
 import styles from './PropertyList.module.scss';
 
 const PropertyList = () => {
-  const { data, loading, error } = useFetch<CountByType>(
+  const { data, loading, error } = useFetch<CountByType[]>(
     `${process.env.REACT_APP_API_ENDPOINT}/hotels/count/byType`,
   );
 

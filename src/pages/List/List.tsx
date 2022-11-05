@@ -18,7 +18,7 @@ const List = () => {
   const [min, setMin] = useState<string>('0');
   const [max, setMax] = useState<string>('999');
 
-  const { data, loading, error, reFetch } = useFetch<Hotel>(
+  const { data, loading, error, reFetch } = useFetch<Hotel[]>(
     `${process.env.REACT_APP_API_ENDPOINT}/hotels?city=${destination}&min=${min}&max=${max}`,
   );
 
@@ -214,7 +214,7 @@ const List = () => {
               'Loading Please wait'
             ) : (
               <>
-                {data.map((item) => (
+                {data?.map((item) => (
                   <SearchItem item={item} key={item._id} />
                 ))}
               </>

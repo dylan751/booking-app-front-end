@@ -5,7 +5,7 @@ import { Hotel } from '../../models/Hotel';
 import styles from './FeaturedProperties.module.scss';
 
 const FeaturedProperties = () => {
-  const { data, loading, error } = useFetch<Hotel>(
+  const { data, loading, error } = useFetch<Hotel[]>(
     `${process.env.REACT_APP_API_ENDPOINT}/hotels?featured=true&limit=4`,
   );
 
@@ -15,7 +15,7 @@ const FeaturedProperties = () => {
         'Loading Please wait'
       ) : (
         <>
-          {data.map((item) => (
+          {data?.map((item) => (
             <div className={styles['featured-properties__item']} key={item._id}>
               <img
                 src={item.photos[0]}
