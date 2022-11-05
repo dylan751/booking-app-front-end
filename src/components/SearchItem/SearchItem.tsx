@@ -1,20 +1,22 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { Hotel } from '../../models/Hotel';
 import styles from './SearchItem.module.scss';
 
-const SearchItem = () => {
+interface SearchItemProps {
+  item: Hotel;
+}
+
+const SearchItem = ({ item }: SearchItemProps) => {
   return (
     <div className={styles['search-item']}>
-      <img
-        src="https://cf.bstatic.com/xdata/images/hotel/square600/261707778.webp?k=fa6b6128468ec15e81f7d076b6f2473fa3a80c255582f155cae35f9edbffdd78&o=&s=1"
-        alt=""
-        className={styles['search-item__img']}
-      />
+      <img src={item.photos[0]} alt="" className={styles['search-item__img']} />
       <div className={styles['search-item__description']}>
         <h1 className={styles['search-item__description__title']}>
-          Tower Street Apartments
+          {item.name}
         </h1>
         <span className={styles['search-item__description__distance']}>
-          500m from center
+          {item.distance}m from center
         </span>
         <span className={styles['search-item__description__taxi-option']}>
           Free airport taxi
@@ -23,7 +25,7 @@ const SearchItem = () => {
           Studio Apartment with Air conditioning
         </span>
         <span className={styles['search-item__description__feature']}>
-          Entire studio • 1 bathroom • 21m² 1 full bed
+          {item.description}
         </span>
         <span className={styles['search-item__description__cancel-option']}>
           Free cancellation{' '}
@@ -35,18 +37,24 @@ const SearchItem = () => {
         </span>
       </div>
       <div className={styles['search-item__detail']}>
-        <div className={styles['search-item__detail__rating']}>
-          <span>Excellent</span>
-          <button>8.9</button>
-        </div>
+        {item.rating && (
+          <div className={styles['search-item__detail__rating']}>
+            <span>Excellent</span>
+            <button>{item.rating}</button>
+          </div>
+        )}
         <div className={styles['search-item__detail__text']}>
           <span className={styles['search-item__detail__text__price']}>
-            $123
+            ${item.cheapestPrice}
           </span>
           <span className={styles['search-item__detail__text__tax-option']}>
             Include taxes and fees
           </span>
-          <button className={styles['search-item__detail__text__check-btn']}>See availablity</button>
+          <Link to={`/hotels/${item._id}`}>
+            <button className={styles['search-item__detail__text__check-btn']}>
+              See availablity
+            </button>
+          </Link>
         </div>
       </div>
     </div>

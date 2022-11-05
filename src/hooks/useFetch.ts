@@ -18,7 +18,7 @@ const useFetch = <dataType>(url: string) => {
       setLoading(false);
     };
     fetchData();
-  }, [url]);
+  }, []);
 
   const reFetch = async () => {
     setLoading(true);
