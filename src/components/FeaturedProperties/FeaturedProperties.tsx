@@ -1,89 +1,46 @@
 import React from 'react';
+import useFetch from '../../hooks/useFetch';
+import { CountByType } from '../../models/CountByType';
+import { Hotel } from '../../models/Hotel';
 import styles from './FeaturedProperties.module.scss';
 
 const FeaturedProperties = () => {
+  const { data, loading, error } = useFetch<Hotel>(
+    `${process.env.REACT_APP_API_ENDPOINT}/hotels?featured=true&limit=4`,
+  );
+
   return (
     <div className={styles['featured-properties']}>
-      <div className={styles['featured-properties__item']}>
-        <img
-          src="https://cf.bstatic.com/xdata/images/hotel/square600/13125860.webp?k=e148feeb802ac3d28d1391dad9e4cf1e12d9231f897d0b53ca067bde8a9d3355&o=&s=1"
-          alt=""
-          className={styles['featured-properties__item__img']}
-        />
-        <span className={styles['featured-properties__item__name']}>
-          Aparthotel Stare Miasto
-        </span>
-        <span className={styles['featured-properties__item__city']}>
-          Madrid
-        </span>
-        <span className={styles['featured-properties__item__price']}>
-          Starting from $120
-        </span>
-        <div className={styles['featured-properties__item__rating']}>
-          <button>8.9</button>
-          <span>Excellent</span>
-        </div>
-      </div>
-      <div className={styles['featured-properties__item']}>
-        <img
-          src="https://cf.bstatic.com/xdata/images/hotel/square600/13125860.webp?k=e148feeb802ac3d28d1391dad9e4cf1e12d9231f897d0b53ca067bde8a9d3355&o=&s=1"
-          alt=""
-          className={styles['featured-properties__item__img']}
-        />
-        <span className={styles['featured-properties__item__name']}>
-          Aparthotel Stare Miasto
-        </span>
-        <span className={styles['featured-properties__item__city']}>
-          Madrid
-        </span>
-        <span className={styles['featured-properties__item__price']}>
-          Starting from $120
-        </span>
-        <div className={styles['featured-properties__item__rating']}>
-          <button>8.9</button>
-          <span>Excellent</span>
-        </div>
-      </div>
-      <div className={styles['featured-properties__item']}>
-        <img
-          src="https://cf.bstatic.com/xdata/images/hotel/square600/13125860.webp?k=e148feeb802ac3d28d1391dad9e4cf1e12d9231f897d0b53ca067bde8a9d3355&o=&s=1"
-          alt=""
-          className={styles['featured-properties__item__img']}
-        />
-        <span className={styles['featured-properties__item__name']}>
-          Aparthotel Stare Miasto
-        </span>
-        <span className={styles['featured-properties__item__city']}>
-          Madrid
-        </span>
-        <span className={styles['featured-properties__item__price']}>
-          Starting from $120
-        </span>
-        <div className={styles['featured-properties__item__rating']}>
-          <button>8.9</button>
-          <span>Excellent</span>
-        </div>
-      </div>
-      <div className={styles['featured-properties__item']}>
-        <img
-          src="https://cf.bstatic.com/xdata/images/hotel/square600/13125860.webp?k=e148feeb802ac3d28d1391dad9e4cf1e12d9231f897d0b53ca067bde8a9d3355&o=&s=1"
-          alt=""
-          className={styles['featured-properties__item__img']}
-        />
-        <span className={styles['featured-properties__item__name']}>
-          Aparthotel Stare Miasto
-        </span>
-        <span className={styles['featured-properties__item__city']}>
-          Madrid
-        </span>
-        <span className={styles['featured-properties__item__price']}>
-          Starting from $120
-        </span>
-        <div className={styles['featured-properties__item__rating']}>
-          <button>8.9</button>
-          <span>Excellent</span>
-        </div>
-      </div>
+      {loading ? (
+        'Loading Please wait'
+      ) : (
+        <>
+          {data.map((item) => (
+            <div className={styles['featured-properties__item']} key={item._id}>
+              <img
+                src={item.photos[0]}
+                alt=""
+                className={styles['featured-properties__item__img']}
+              />
+              <span className={styles['featured-properties__item__name']}>
+                {item.name}
+              </span>
+              <span className={styles['featured-properties__item__city']}>
+                {item.city}
+              </span>
+              <span className={styles['featured-properties__item__price']}>
+                Starting from ${item.cheapestPrice}
+              </span>
+              {item.rating && (
+                <div className={styles['featured-properties__item__rating']}>
+                  <button>{item.rating}</button>
+                  <span>Excellent</span>
+                </div>
+              )}
+            </div>
+          ))}
+        </>
+      )}
     </div>
   );
 };
