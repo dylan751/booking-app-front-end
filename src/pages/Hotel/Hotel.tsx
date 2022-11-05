@@ -5,17 +5,19 @@ import {
   faLocationDot,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import MailList from '../../components/MailList/MailList';
 import Navbar from '../../components/Navbar/Navbar';
+import { SearchContext } from '../../context/SearchContext';
 import useFetch from '../../hooks/useFetch';
 import { Hotel } from '../../models/Hotel';
 import styles from './Hotel.module.scss';
 
 const HotelPage = () => {
+  const { dates, options } = useContext(SearchContext);
   const location = useLocation();
   const hotelId = location.pathname.split('/')[2];
   const [slideNumber, setSlideNumber] = useState(0);
@@ -24,6 +26,17 @@ const HotelPage = () => {
   const { data, loading, error } = useFetch<Hotel>(
     `${process.env.REACT_APP_API_ENDPOINT}/hotels/${hotelId}`,
   );
+
+  // Calculate number of dates function
+  const MILISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+  const dayDifference = (startDate, endDate) => {
+    const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+    const diffDays = Math.ceil(timeDiff / MILISECONDS_PER_DAY);
+    return diffDays;
+  };
+
+  const numberOfDays = dayDifference(dates[0].startDate, dates[0].endDate);
+  console.log(data && numberOfDays * data.cheapestPrice * options.room);
 
   const handleOpenSlider = (index: number) => {
     setSlideNumber(index);
@@ -137,13 +150,16 @@ const HotelPage = () => {
               <div
                 className={styles['hotel__container__wrapper__detail__price']}
               >
-                <h1>Perfect for a 9-night stay!</h1>
+                <h1>Perfect for a {numberOfDays}-night stay!</h1>
                 <span>
                   Located in the real heart of Krakow, this property has an
                   excellent location score of 9.8!
                 </span>
                 <h2>
-                  <b>$945</b> (9 nights)
+                  <b>
+                    ${data && numberOfDays * data.cheapestPrice * options.room}
+                  </b>{' '}
+                  ({numberOfDays} nights)
                 </h2>
                 <button>Reserve or Book Now!</button>
               </div>
