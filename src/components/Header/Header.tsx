@@ -16,12 +16,14 @@ import { format } from 'date-fns';
 import styles from './Header.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { SearchContext } from '../../context/SearchContext';
+import { AuthContext } from '../../context/AuthContext';
 
 interface HeaderProps {
   type?: string;
 }
 
 const Header = ({ type }: HeaderProps) => {
+  const { user } = useContext(AuthContext);
   const { dispatch } = useContext(SearchContext);
   const [destination, setDestination] = useState('');
   const [openDate, setOpenDate] = useState(false);
@@ -100,9 +102,11 @@ const Header = ({ type }: HeaderProps) => {
               Get rewarded for your travels - unlock instant savings of 10% or
               more with a free Zuongbooking account
             </p>
-            <button className={styles['header__container__btn']}>
-              Sign in / Register
-            </button>
+            {!user && (
+              <button className={styles['header__container__btn']}>
+                Sign in / Register
+              </button>
+            )}
             <div className={styles['header__container__search']}>
               <div className={styles['header__container__search__item']}>
                 <FontAwesomeIcon
