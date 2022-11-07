@@ -1,0 +1,78 @@
+.reserve {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__container {
+    background-color: #fff;
+    padding: 20px;
+    position: relative;
+
+    &__close-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      cursor: pointer;
+    }
+
+    &__item {
+      display: flex;
+      align-items: center;
+      gap: 50px;
+      padding: 20px;
+
+      &__information {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+
+        &__title {
+          font-weight: 500;
+        }
+
+        &__description {
+          font-weight: 300;
+        }
+
+        &__max-people {
+          font-size: 12px;
+        }
+
+        &__price {
+          font-weight: 500;
+        }
+      }
+
+      &__select {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        font-size: 8px;
+        color: gray;
+
+        &__room {
+          display: flex;
+          flex-direction: column;
+        }
+      }
+    }
+
+    &__btn {
+      border: none;
+      padding: 10px 20px;
+      background-color: #0071c2;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 100%;
+      margin-top: 20px;
+    }
+  }
+}

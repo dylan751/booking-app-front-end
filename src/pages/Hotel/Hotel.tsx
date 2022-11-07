@@ -6,11 +6,13 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Footer from '../../components/Footer/Footer';
 import Header from '../../components/Header/Header';
 import MailList from '../../components/MailList/MailList';
 import Navbar from '../../components/Navbar/Navbar';
+import Reserve from '../../components/Reserve/Reserve';
+import { AuthContext } from '../../context/AuthContext';
 import { SearchContext } from '../../context/SearchContext';
 import useFetch from '../../hooks/useFetch';
 import { Hotel } from '../../models/Hotel';
@@ -22,10 +24,13 @@ const HotelPage = () => {
   const hotelId = location.pathname.split('/')[2];
   const [slideNumber, setSlideNumber] = useState(0);
   const [isOpenSlider, setIsOpenSlider] = useState(false);
+  const [isOpenBookingModal, setIsOpenBookingModal] = useState(false);
 
   const { data, loading, error } = useFetch<Hotel>(
     `${process.env.REACT_APP_API_ENDPOINT}/hotels/${hotelId}`,
   );
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   // Calculate number of dates function
   const MILISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -36,7 +41,6 @@ const HotelPage = () => {
   };
 
   const numberOfDays = dayDifference(dates[0].startDate, dates[0].endDate);
-  console.log(data && numberOfDays * data.cheapestPrice * options.room);
 
   const handleOpenSlider = (index: number) => {
     setSlideNumber(index);
@@ -51,6 +55,14 @@ const HotelPage = () => {
       newSlideNumber = slideNumber === 5 ? 0 : slideNumber + 1;
     }
     setSlideNumber(newSlideNumber);
+  };
+
+  const handleBook = () => {
+    if (user) {
+      setIsOpenBookingModal(true);
+    } else {
+      navigate('/login');
+    }
   };
 
   return (
@@ -161,13 +173,16 @@ const HotelPage = () => {
                   </b>{' '}
                   ({numberOfDays} nights)
                 </h2>
-                <button>Reserve or Book Now!</button>
+                <button onClick={handleBook}>Reserve or Book Now!</button>
               </div>
             </div>
           </div>
           <MailList />
           <Footer />
         </div>
+      )}
+      {isOpenBookingModal && (
+        <Reserve setIsOpenBookingModal={setIsOpenBookingModal} hotelId={hotelId} />
       )}
     </div>
   );
