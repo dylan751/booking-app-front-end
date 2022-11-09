@@ -26,7 +26,8 @@ const Login = () => {
         `${process.env.REACT_APP_API_ENDPOINT}/auth/login`,
         credentials,
       );
-      dispatch && dispatch({ type: 'LOGIN_SUCCESS', payload: res.data.details });
+      dispatch &&
+        dispatch({ type: 'LOGIN_SUCCESS', payload: res.data.details });
       navigate('/');
     } catch (err: any) {
       dispatch &&
