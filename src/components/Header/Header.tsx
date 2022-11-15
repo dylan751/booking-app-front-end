@@ -22,12 +22,18 @@ interface HeaderProps {
   type?: string;
 }
 
+interface DatesInterface {
+  startDate: Date;
+  endDate: Date;
+  key: string;
+}
+
 const Header = ({ type }: HeaderProps) => {
   const { user } = useContext(AuthContext);
   const { dispatch } = useContext(SearchContext);
   const [destination, setDestination] = useState('');
   const [openDate, setOpenDate] = useState(false);
-  const [dates, setDates] = useState<any>([
+  const [dates, setDates] = useState<DatesInterface[]>([
     {
       startDate: new Date(),
       endDate: new Date(),
@@ -43,6 +49,10 @@ const Header = ({ type }: HeaderProps) => {
   });
 
   const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/login');
+  };
 
   const handleOption = (name: string, operation: 'd' | 'i') => {
     setOptions((prev) => {
@@ -103,7 +113,10 @@ const Header = ({ type }: HeaderProps) => {
               more with a free Zuongbooking account
             </p>
             {!user && (
-              <button className={styles['header__container__btn']}>
+              <button
+                className={styles['header__container__btn']}
+                onClick={handleClick}
+              >
                 Sign in / Register
               </button>
             )}

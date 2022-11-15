@@ -1,6 +1,5 @@
 import React from 'react';
 import useFetch from '../../hooks/useFetch';
-import { CountByType } from '../../models/CountByType';
 import { Hotel } from '../../models/Hotel';
 import styles from './FeaturedProperties.module.scss';
 
@@ -8,6 +7,10 @@ const FeaturedProperties = () => {
   const { data, loading, error } = useFetch<Hotel[]>(
     `${process.env.REACT_APP_API_ENDPOINT}/hotels?featured=true&limit=4`,
   );
+
+  if (error) {
+    return <div>{error.message}</div>;
+  }
 
   return (
     <div className={styles['featured-properties']}>

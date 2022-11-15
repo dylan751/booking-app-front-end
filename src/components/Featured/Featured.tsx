@@ -8,6 +8,10 @@ const Featured = () => {
     `${process.env.REACT_APP_API_ENDPOINT}/hotels/count/byCity?cities=berlin,madrid,london`,
   );
 
+  if (error) {
+    return <div>{error.message}</div>;
+  }
+
   return (
     <div className={styles['featured']}>
       {loading ? (

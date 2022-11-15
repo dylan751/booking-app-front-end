@@ -16,7 +16,7 @@ interface ReserveProps {
 const Reserve = ({ setIsOpenBookingModal, hotelId }: ReserveProps) => {
   const navigate = useNavigate();
   const [selectedRooms, setSelectedRooms] = useState<number[]>([]);
-  const { data, loading, error } = useFetch<Room[]>(
+  const { data, error } = useFetch<Room[]>(
     `${process.env.REACT_APP_API_ENDPOINT}/hotels/room/${hotelId}`,
   );
   const { dates } = useContext(SearchContext);
@@ -58,7 +58,7 @@ const Reserve = ({ setIsOpenBookingModal, hotelId }: ReserveProps) => {
     try {
       await Promise.all(
         selectedRooms.map((roomId) => {
-          const response = axios.put(
+          axios.put(
             `${process.env.REACT_APP_API_ENDPOINT}/rooms/availability/${roomId}`,
             { dates: allDates },
           );
@@ -70,6 +70,10 @@ const Reserve = ({ setIsOpenBookingModal, hotelId }: ReserveProps) => {
       console.log(err);
     }
   };
+
+  if (error) {
+    return <div>{error.message}</div>;
+  }
 
   return (
     <div className={styles['reserve']}>

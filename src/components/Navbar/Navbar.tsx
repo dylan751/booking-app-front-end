@@ -1,10 +1,23 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import styles from './Navbar.module.scss';
 
 const Navbar = () => {
-  const { user } = useContext(AuthContext);
+  const { user, dispatch } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate('/login');
+  };
+
+  const handleRegister = () => {
+    navigate('/register');
+  };
+
+  const handleLogout = () => {
+    dispatch && dispatch({ type: 'LOGOUT' });
+  };
 
   return (
     <div className={styles['navbar']}>
@@ -15,13 +28,24 @@ const Navbar = () => {
           </span>
         </Link>
         {user ? (
-          user.username
+          <div className={styles['navbar__container__items']}>
+            {user.username}
+            <button
+              className={styles['navbar__container__items__btn']}
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          </div>
         ) : (
           <div className={styles['navbar__container__items']}>
-            <button className={styles['navbar__container__items__btn']}>
+            <button className={styles['navbar__container__items__btn']} onClick={handleRegister}>
               Register
             </button>
-            <button className={styles['navbar__container__items__btn']}>
+            <button
+              className={styles['navbar__container__items__btn']}
+              onClick={handleLogin}
+            >
               Login
             </button>
           </div>

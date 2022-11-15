@@ -1,20 +1,32 @@
 import { format } from 'date-fns';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Navbar from '../../components/Navbar/Navbar';
 import { DateRange } from 'react-date-range';
-import styles from './List.module.scss';
+import './List.css';
 import SearchItem from '../../components/SearchItem/SearchItem';
 import useFetch from '../../hooks/useFetch';
 import { Hotel } from '../../models/Hotel';
+import { SearchContext } from '../../context/SearchContext';
+
+interface OptionsInterface {
+  adult: number;
+  children: number;
+  room: number;
+}
 
 const List = () => {
   const location = useLocation();
-  const [destination, setDestination] = useState(location.state.destination);
-  const [dates, setDates] = useState(location.state.dates);
+  const { dispatch } = useContext(SearchContext);
+  const [destination, setDestination] = useState(
+    location.state.destination || '',
+  );
+  const [dates, setDates] = useState(location.state.dates || '');
   const [openDate, setOpenDate] = useState(false);
-  const [options, setOptions] = useState(location.state.options);
+  const [options, setOptions] = useState<OptionsInterface>(
+    location.state.options,
+  );
   const [min, setMin] = useState<string>('0');
   const [max, setMax] = useState<string>('999');
 
@@ -22,196 +34,118 @@ const List = () => {
     `${process.env.REACT_APP_API_ENDPOINT}/hotels?city=${destination}&min=${min}&max=${max}`,
   );
 
+  const handleOption = (name: string, number: string) => {
+    setOptions((prev) => {
+      return {
+        ...prev,
+        [name]: number,
+      };
+    });
+  };
+
   const handleSearch = () => {
+    dispatch &&
+      dispatch({
+        type: 'NEW_SEARCH',
+        payload: { destination, dates, options },
+      });
     reFetch();
   };
 
+  if (error) {
+    return <div>{error.message}</div>;
+  }
+
   return (
-    <div className={styles['list']}>
+    <div>
       <Navbar />
       <Header type="list" />
-      <div className={styles['list__container']}>
-        <div className={styles['list__container__wrapper']}>
-          <div className={styles['list__container__wrapper__search']}>
-            <h1 className={styles['list__container__wrapper__search__title']}>
-              Search
-            </h1>
-            <div className={styles['list__container__wrapper__search__item']}>
+      <div className="listContainer">
+        <div className="listWrapper">
+          <div className="listSearch">
+            <h1 className="lsTitle">Search</h1>
+            <div className="lsItem">
               <label>Destination</label>
               <input
                 placeholder={destination}
                 type="text"
-                className={
-                  styles['list__container__wrapper__search__item__input']
-                }
+                onChange={(e) => setDestination(e.target.value)}
               />
             </div>
-            <div className={styles['list__container__wrapper__search__item']}>
+            <div className="lsItem">
               <label>Check-in Date</label>
-              <span
-                className={
-                  styles['list__container__wrapper__search__item__span']
-                }
-                onClick={() => setOpenDate(!openDate)}
-              >{`${format(dates[0].startDate, 'MM/dd/yyyy')} to ${format(
-                dates[0].endDate,
+              <span onClick={() => setOpenDate(!openDate)}>{`${format(
+                dates[0].startDate,
                 'MM/dd/yyyy',
-              )}`}</span>
+              )} to ${format(dates[0].endDate, 'MM/dd/yyyy')}`}</span>
               {openDate && (
                 <DateRange
                   onChange={(item) => setDates([item.selection])}
-                  ranges={dates}
                   minDate={new Date()}
+                  ranges={dates}
                 />
               )}
             </div>
-            <div className={styles['list__container__wrapper__search__item']}>
+            <div className="lsItem">
               <label>Options</label>
-              <div
-                className={
-                  styles['list__container__wrapper__search__item__option']
-                }
-              >
-                <div
-                  className={
-                    styles[
-                      'list__container__wrapper__search__item__option__item'
-                    ]
-                  }
-                >
-                  <span
-                    className={
-                      styles[
-                        'list__container__wrapper__search__item__option__item__text'
-                      ]
-                    }
-                  >
+              <div className="lsOptions">
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">
                     Min price <small>per night</small>
                   </span>
                   <input
-                    className={
-                      styles[
-                        'list__container__wrapper__search__item__option__item__input'
-                      ]
-                    }
                     type="number"
                     onChange={(e) => setMin(e.target.value)}
+                    className="lsOptionInput"
                   />
                 </div>
-                <div
-                  className={
-                    styles[
-                      'list__container__wrapper__search__item__option__item'
-                    ]
-                  }
-                >
-                  <span
-                    className={
-                      styles[
-                        'list__container__wrapper__search__item__option__item__text'
-                      ]
-                    }
-                  >
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">
                     Max price <small>per night</small>
                   </span>
                   <input
-                    className={
-                      styles[
-                        'list__container__wrapper__search__item__option__item__input'
-                      ]
-                    }
                     type="number"
                     onChange={(e) => setMax(e.target.value)}
+                    className="lsOptionInput"
                   />
                 </div>
-                <div
-                  className={
-                    styles[
-                      'list__container__wrapper__search__item__option__item'
-                    ]
-                  }
-                >
-                  <span
-                    className={
-                      styles[
-                        'list__container__wrapper__search__item__option__item__text'
-                      ]
-                    }
-                  >
-                    Adult
-                  </span>
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">Adult</span>
                   <input
-                    className={
-                      styles[
-                        'list__container__wrapper__search__item__option__item__input'
-                      ]
-                    }
                     type="number"
                     min={1}
-                    placeholder={options.adult}
+                    className="lsOptionInput"
+                    placeholder={options.adult.toString()}
+                    onChange={(e) => handleOption('adult', e.target.value)}
                   />
                 </div>
-                <div
-                  className={
-                    styles[
-                      'list__container__wrapper__search__item__option__item'
-                    ]
-                  }
-                >
-                  <span
-                    className={
-                      styles[
-                        'list__container__wrapper__search__item__option__item__text'
-                      ]
-                    }
-                  >
-                    Children
-                  </span>
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">Children</span>
                   <input
-                    className={
-                      styles[
-                        'list__container__wrapper__search__item__option__item__input'
-                      ]
-                    }
                     type="number"
                     min={0}
-                    placeholder={options.children}
+                    className="lsOptionInput"
+                    placeholder={options.children.toString()}
+                    onChange={(e) => handleOption('children', e.target.value)}
                   />
                 </div>
-                <div
-                  className={
-                    styles[
-                      'list__container__wrapper__search__item__option__item'
-                    ]
-                  }
-                >
-                  <span
-                    className={
-                      styles[
-                        'list__container__wrapper__search__item__option__item__text'
-                      ]
-                    }
-                  >
-                    Room
-                  </span>
+                <div className="lsOptionItem">
+                  <span className="lsOptionText">Room</span>
                   <input
-                    className={
-                      styles[
-                        'list__container__wrapper__search__item__option__item__input'
-                      ]
-                    }
                     type="number"
                     min={1}
-                    placeholder={options.room}
+                    className="lsOptionInput"
+                    placeholder={options.room.toString()}
+                    onChange={(e) => handleOption('room', e.target.value)}
                   />
                 </div>
               </div>
             </div>
             <button onClick={handleSearch}>Search</button>
           </div>
-          <div className={styles['list__container__wrapper__result']}>
+          <div className="listResult">
             {loading ? (
-              'Loading Please wait'
+              'loading'
             ) : (
               <>
                 {data?.map((item) => (

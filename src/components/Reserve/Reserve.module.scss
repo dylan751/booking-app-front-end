@@ -16,8 +16,9 @@
 
     &__close-btn {
       position: absolute;
-      top: 0;
-      right: 0;
+      padding: 10px;
+      top: 10px;
+      right: 10px;
       cursor: pointer;
     }
 
@@ -26,6 +27,7 @@
       align-items: center;
       gap: 50px;
       padding: 20px;
+      justify-content: space-between;
 
       &__information {
         display: flex;

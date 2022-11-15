@@ -65,6 +65,10 @@ const HotelPage = () => {
     }
   };
 
+  if (error) {
+    return <div>{error.message}</div>;
+  }
+
   return (
     <div className={styles['hotel']}>
       <Navbar />
@@ -100,7 +104,10 @@ const HotelPage = () => {
             </div>
           )}
           <div className={styles['hotel__container__wrapper']}>
-            <button className={styles['hotel__container__wrapper__book-btn']}>
+            <button
+              className={styles['hotel__container__wrapper__book-btn']}
+              onClick={handleBook}
+            >
               Reserve or Book Now!
             </button>
             <h1 className={styles['hotel__container__wrapper__title']}>
@@ -182,7 +189,10 @@ const HotelPage = () => {
         </div>
       )}
       {isOpenBookingModal && (
-        <Reserve setIsOpenBookingModal={setIsOpenBookingModal} hotelId={hotelId} />
+        <Reserve
+          setIsOpenBookingModal={setIsOpenBookingModal}
+          hotelId={hotelId}
+        />
       )}
     </div>
   );
