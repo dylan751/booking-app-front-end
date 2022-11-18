@@ -1,11 +1,11 @@
 import { format } from 'date-fns';
 import React, { useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import Header from '../../components/Header/Header';
-import Navbar from '../../components/Navbar/Navbar';
+import Header from '../../components/Header';
+import Navbar from '../../components/Navbar';
 import { DateRange } from 'react-date-range';
-import './List.css';
-import SearchItem from '../../components/SearchItem/SearchItem';
+import './HotelList.css';
+import SearchItem from '../../components/SearchItem';
 import useFetch from '../../hooks/useFetch';
 import { Hotel } from '../../models/Hotel';
 import { SearchContext } from '../../context/SearchContext';
@@ -16,16 +16,25 @@ interface OptionsInterface {
   room: number;
 }
 
-const List = () => {
+const HotelList = () => {
   const location = useLocation();
   const { dispatch } = useContext(SearchContext);
+  const currentDate = new Date();
   const [destination, setDestination] = useState(
-    location.state.destination || '',
+    location.state?.destination || '',
   );
-  const [dates, setDates] = useState(location.state.dates || '');
+  const [dates, setDates] = useState(
+    location.state?.dates || [
+      {
+        startDate: currentDate,
+        endDate: new Date(currentDate.getTime() + 86400000),
+        key: 'selection',
+      },
+    ],
+  );
   const [openDate, setOpenDate] = useState(false);
   const [options, setOptions] = useState<OptionsInterface>(
-    location.state.options,
+    location.state?.options || { adult: 1, children: 0, room: 1 },
   );
   const [min, setMin] = useState<string>('0');
   const [max, setMax] = useState<string>('999');
@@ -160,4 +169,4 @@ const List = () => {
   );
 };
 
-export default List;
+export default HotelList;

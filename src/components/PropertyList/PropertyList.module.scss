@@ -22,10 +22,18 @@
         font-size: 18px;
         color: #444;
         text-transform: capitalize;
+
+        @media screen and (max-width: 768px) {
+          font-size: 14px;
+        }
       }
       h2 {
         font-size: 14px;
         font-weight: 300;
+
+        @media screen and (max-width: 768px) {
+          font-size: 14px;
+        }
       }
     }
   }

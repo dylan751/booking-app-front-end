@@ -81,3 +81,9 @@
 .listResult {
   flex: 3;
 }
+
+@media screen and (max-width: 1024px) {
+  .listContainer {
+    padding: 0 20px;
+  }
+}

@@ -7,18 +7,18 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Footer from '../../components/Footer/Footer';
-import Header from '../../components/Header/Header';
-import MailList from '../../components/MailList/MailList';
-import Navbar from '../../components/Navbar/Navbar';
-import Reserve from '../../components/Reserve/Reserve';
+import Footer from '../../components/Footer';
+import Header from '../../components/Header';
+import MailList from '../../components/MailList';
+import Navbar from '../../components/Navbar';
+import Reserve from '../../components/Reserve';
 import { AuthContext } from '../../context/AuthContext';
 import { SearchContext } from '../../context/SearchContext';
 import useFetch from '../../hooks/useFetch';
 import { Hotel } from '../../models/Hotel';
-import styles from './Hotel.module.scss';
+import styles from './HotelItem.module.scss';
 
-const HotelPage = () => {
+const HotelItem = () => {
   const { dates, options } = useContext(SearchContext);
   const location = useLocation();
   const hotelId = location.pathname.split('/')[2];
@@ -198,4 +198,4 @@ const HotelPage = () => {
   );
 };
 
-export default HotelPage;
+export default HotelItem;

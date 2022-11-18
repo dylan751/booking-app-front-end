@@ -18,6 +18,10 @@
       margin-bottom: 10px;
       color: #003580;
       cursor: pointer;
+
+      @media screen and (max-width: 768px) {
+        font-size: 10px;
+      }
     }
   }
 }

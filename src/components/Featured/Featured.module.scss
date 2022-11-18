@@ -13,6 +13,13 @@
     overflow: hidden;
     height: 250px;
 
+    @media screen and (max-width: 1024px) {
+      height: 220px;
+    }
+
+    @media screen and (max-width: 768px) {
+      height: 150px;
+    }
 
     &__img {
       width: 100%;
@@ -20,9 +27,17 @@
     }
 
     &__title {
-        position: absolute;
-        bottom: 20px;
-        left: 20px;
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+
+      @media screen and (max-width: 1024px) {
+        font-size: 14px;
+      }
+
+      @media screen and (max-width: 768px) {
+        font-size: 10px;
+      }
     }
   }
 }

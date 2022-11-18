@@ -22,7 +22,7 @@ interface HeaderProps {
   type?: string;
 }
 
-interface DatesInterface {
+export interface DatesInterface {
   startDate: Date;
   endDate: Date;
   key: string;
@@ -33,10 +33,11 @@ const Header = ({ type }: HeaderProps) => {
   const { dispatch } = useContext(SearchContext);
   const [destination, setDestination] = useState('');
   const [openDate, setOpenDate] = useState(false);
+  const currentDate = new Date();
   const [dates, setDates] = useState<DatesInterface[]>([
     {
-      startDate: new Date(),
-      endDate: new Date(),
+      startDate: currentDate,
+      endDate: new Date(currentDate.getTime() + 86400000),
       key: 'selection',
     },
   ]);
@@ -341,6 +342,7 @@ const Header = ({ type }: HeaderProps) => {
                 <button
                   className={styles['header__container__btn']}
                   onClick={handleSearch}
+                  disabled={!destination}
                 >
                   Search
                 </button>

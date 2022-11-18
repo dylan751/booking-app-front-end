@@ -9,6 +9,18 @@
   gap: 20px;
   padding: 50px;
 
+  &__title {
+    @media screen and (max-width: 768px) {
+      font-size: 28px;
+    }
+  }
+
+  &__description {
+    @media screen and (max-width: 768px) {
+      font-size: 14px;
+    }
+  }
+
   &__input-container {
     input {
       width: 300px;
@@ -17,6 +29,10 @@
       border: none;
       margin-right: 10px;
       border-radius: 5px;
+
+      @media screen and (max-width: 768px) {
+        padding: 6px;
+      }
     }
 
     button {
@@ -27,6 +43,10 @@
       border: none;
       border-radius: 5px;
       cursor: pointer;
+
+      @media screen and (max-width: 768px) {
+        height: 44px;
+      }
     }
   }
 }
