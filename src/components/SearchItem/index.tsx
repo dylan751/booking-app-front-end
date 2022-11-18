@@ -25,7 +25,7 @@ const SearchItem = ({ item }: SearchItemProps) => {
           Studio Apartment with Air conditioning
         </span>
         <span className={styles['search-item__description__feature']}>
-          {item.description}
+          {`${item.description.substring(0, 150)} ...`}
         </span>
         <span className={styles['search-item__description__cancel-option']}>
           Free cancellation{' '}
