@@ -10,6 +10,7 @@ import SearchItem from '../../components/SearchItem';
 import useFetch from '../../hooks/useFetch';
 import { Hotel } from '../../models/Hotel';
 import { SearchContext } from '../../context/SearchContext';
+import { CountByCity } from '../../models/CountByCity';
 
 interface OptionsInterface {
   adult: number;
@@ -43,6 +44,10 @@ const HotelList = () => {
 
   const { data, loading, error, reFetch } = useFetch<Hotel[]>(
     `${process.env.REACT_APP_API_ENDPOINT}/hotels?city=${destination}&min=${min}&max=${max}`,
+  );
+
+  const { data: countData } = useFetch<CountByCity[]>(
+    `${process.env.REACT_APP_API_ENDPOINT}/hotels/count/byCity?cities=${destination}`,
   );
 
   const handleOption = (name: string, operation: 'd' | 'i') => {
@@ -290,6 +295,7 @@ const HotelList = () => {
                     type="number"
                     onChange={(e) => setMin(e.target.value)}
                     className="lsOptionInput"
+                    placeholder="1"
                   />
                 </div>
                 <div className="lsOptionItem">
@@ -300,6 +306,7 @@ const HotelList = () => {
                     type="number"
                     onChange={(e) => setMax(e.target.value)}
                     className="lsOptionInput"
+                    placeholder="1000"
                   />
                 </div>
               </div>
@@ -311,6 +318,10 @@ const HotelList = () => {
               'loading'
             ) : (
               <>
+                <h1>
+                  {destination}: {(countData && countData[0]) || '-'} properties
+                  found
+                </h1>
                 {data?.map((item) => (
                   <SearchItem item={item} key={item._id} />
                 ))}

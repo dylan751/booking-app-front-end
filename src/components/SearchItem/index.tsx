@@ -1,4 +1,6 @@
 import React from 'react';
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import { Hotel } from '../../models/Hotel';
 import styles from './SearchItem.module.scss';
@@ -37,22 +39,26 @@ const SearchItem = ({ item }: SearchItemProps) => {
         </span>
       </div>
       <div className={styles['search-item__detail']}>
-        {item.rating && (
+        {/* {item.rating && (
           <div className={styles['search-item__detail__rating']}>
             <span>Excellent</span>
             <button>{item.rating}</button>
           </div>
-        )}
+        )} */}
+          <div className={styles['search-item__detail__rating']}>
+            <span>Excellent</span>
+            <button>9.0</button>
+          </div>
         <div className={styles['search-item__detail__text']}>
           <span className={styles['search-item__detail__text__price']}>
-            ${item.cheapestPrice}
+            US${item.cheapestPrice}
           </span>
           <span className={styles['search-item__detail__text__tax-option']}>
             Include taxes and fees
           </span>
           <Link to={`/hotels/${item._id}`}>
             <button className={styles['search-item__detail__text__check-btn']}>
-              See availablity
+              See availablity <FontAwesomeIcon icon={faChevronRight} />
             </button>
           </Link>
         </div>

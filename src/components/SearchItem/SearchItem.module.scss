@@ -60,7 +60,9 @@
 
     &__rating {
       display: flex;
-      justify-content: space-between;
+      gap: 10px;
+      justify-content: flex-end;
+      align-items: center;
 
       span {
         font-weight: 500;
@@ -69,9 +71,10 @@
       button {
         background-color: #003580;
         color: white;
-        padding: 5px;
+        padding: 8px;
         font-weight: bold;
         border: none;
+        border-radius: 6px 6px 6px 0;
       }
     }
 
@@ -82,7 +85,8 @@
       gap: 5px;
 
       &__price {
-        font-size: 24px;
+        font-size: 20px;
+        font-weight: 500;
       }
 
       &__tax-option {
@@ -94,10 +98,10 @@
         background-color: #0071c2;
         color: whitesmoke;
         font-weight: bold;
-        padding: 10px 5px;
+        padding: 10px 15px;
         border: none;
         cursor: pointer;
-        border-radius: 5px;
+        border-radius: 2px;
       }
     }
   }

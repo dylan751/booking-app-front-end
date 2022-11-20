@@ -72,7 +72,7 @@
 }
 
 .listSearch > button {
-  padding: 10px;
+  padding: 15px;
   background-color: #0071c2;
   color: white;
   border: none;
@@ -83,6 +83,11 @@
 
 .listResult {
   flex: 7;
+}
+
+.listResult>h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
 @media screen and (max-width: 1024px) {
