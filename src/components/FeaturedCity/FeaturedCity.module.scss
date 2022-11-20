@@ -1,0 +1,63 @@
+.featured-city {
+  width: 100%;
+  max-width: 1015px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  z-index: 1;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    &-1,
+    &-2 {
+      width: 100%;
+      display: flex;
+      gap: 15px;
+
+      &__item {
+        position: relative;
+        color: white;
+        border-radius: 2px;
+        overflow: hidden;
+        height: 250px;
+
+        @media screen and (max-width: 1024px) {
+          height: 220px;
+        }
+
+        @media screen and (max-width: 768px) {
+          height: 150px;
+        }
+
+        &__img {
+          width: 100%;
+          object-fit: cover;
+          cursor: pointer;
+        }
+
+        &__title {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          padding: 20px;
+          cursor: pointer;
+          font-size: 16px;
+          text-shadow: 1px 1px 1px black;
+          background: linear-gradient(to bottom,rgba(0,27,65,0.65) 0,rgba(0,27,65,0) 100%);
+
+          @media screen and (max-width: 1024px) {
+            font-size: 14px;
+          }
+
+          @media screen and (max-width: 768px) {
+            font-size: 10px;
+          }
+        }
+      }
+    }
+  }
+}

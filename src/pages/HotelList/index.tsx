@@ -32,7 +32,7 @@ const HotelList = () => {
       },
     ],
   );
-  const [openDate, setOpenDate] = useState(false);
+  const [openDate, setOpenDate] = useState(location.state?.openDate || false);
   const [options, setOptions] = useState<OptionsInterface>(
     location.state?.options || { adult: 1, children: 0, room: 1 },
   );

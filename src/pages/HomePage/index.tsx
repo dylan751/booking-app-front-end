@@ -1,5 +1,5 @@
 import React from 'react';
-import Featured from '../../components/Featured';
+import FeaturedCity from '../../components/FeaturedCity';
 import FeaturedProperties from '../../components/FeaturedProperties';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
@@ -14,12 +14,14 @@ const HomePage = () => {
       <Navbar />
       <Header />
       <div className={styles['home-page__container']}>
-        <Featured />
         <h1 className={styles['home-page__container__title']}>
           Browse by property type
         </h1>
         <PropertyList />
-        <h1 className={styles['home-page__container__title']}>Home guests love</h1>
+        <FeaturedCity />
+        <h1 className={styles['home-page__container__title']}>
+          Home guests love
+        </h1>
         <FeaturedProperties />
         <MailList />
         <Footer />
