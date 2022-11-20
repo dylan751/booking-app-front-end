@@ -5,6 +5,7 @@ import Header from '../../components/Header';
 import Navbar from '../../components/Navbar';
 import { DateRange } from 'react-date-range';
 import './HotelList.css';
+import styles from './HotelList.module.scss';
 import SearchItem from '../../components/SearchItem';
 import useFetch from '../../hooks/useFetch';
 import { Hotel } from '../../models/Hotel';
@@ -36,6 +37,7 @@ const HotelList = () => {
   const [options, setOptions] = useState<OptionsInterface>(
     location.state?.options || { adult: 1, children: 0, room: 1 },
   );
+  const [openOptions, setOpenOptions] = useState(false);
   const [min, setMin] = useState<string>('0');
   const [max, setMax] = useState<string>('999');
 
@@ -43,11 +45,11 @@ const HotelList = () => {
     `${process.env.REACT_APP_API_ENDPOINT}/hotels?city=${destination}&min=${min}&max=${max}`,
   );
 
-  const handleOption = (name: string, number: string) => {
+  const handleOption = (name: string, operation: 'd' | 'i') => {
     setOptions((prev) => {
       return {
         ...prev,
-        [name]: number,
+        [name]: operation === 'i' ? options[name] + 1 : options[name] - 1,
       };
     });
   };
@@ -76,13 +78,14 @@ const HotelList = () => {
             <div className="lsItem">
               <label>Destination</label>
               <input
-                placeholder={destination}
+                // placeholder={destination}
+                value={destination}
                 type="text"
                 onChange={(e) => setDestination(e.target.value)}
               />
             </div>
             <div className="lsItem">
-              <label>Check-in Date</label>
+              <label>Check-in date</label>
               <span onClick={() => setOpenDate(!openDate)}>{`${format(
                 dates[0].startDate,
                 'MM/dd/yyyy',
@@ -96,8 +99,189 @@ const HotelList = () => {
               )}
             </div>
             <div className="lsItem">
-              <label>Options</label>
-              <div className="lsOptions">
+              <label>1-night stay</label>
+              <div className="lsOption">
+                <div className={styles['header__container__search__item']}>
+                  <span
+                    className={styles['header__container__search__item__text']}
+                    onClick={() => setOpenOptions(!openOptions)}
+                  >
+                    {`${options.adult} adult・${options.children} children・${options.room} room`}
+                  </span>
+                  {openOptions && (
+                    <div
+                      className={
+                        styles['header__container__search__item__options']
+                      }
+                    >
+                      <div
+                        className={
+                          styles[
+                            'header__container__search__item__options__item'
+                          ]
+                        }
+                      >
+                        <span
+                          className={
+                            styles[
+                              'header__container__search__item__options__item__text'
+                            ]
+                          }
+                        >
+                          Adult
+                        </span>
+                        <div
+                          className={
+                            styles[
+                              'header__container__search__item__options__item__counter-container'
+                            ]
+                          }
+                        >
+                          <button
+                            className={
+                              styles[
+                                'header__container__search__item__options__item__counter-btn'
+                              ]
+                            }
+                            onClick={() => handleOption('adult', 'd')}
+                            disabled={options.adult <= 1}
+                          >
+                            -
+                          </button>
+                          <span
+                            className={
+                              styles[
+                                'header__container__search__item__options__item__counter-number'
+                              ]
+                            }
+                          >
+                            {options.adult}
+                          </span>
+                          <button
+                            className={
+                              styles[
+                                'header__container__search__item__options__item__counter-btn'
+                              ]
+                            }
+                            onClick={() => handleOption('adult', 'i')}
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        className={
+                          styles[
+                            'header__container__search__item__options__item'
+                          ]
+                        }
+                      >
+                        <span
+                          className={
+                            styles[
+                              'header__container__search__item__options__item__text'
+                            ]
+                          }
+                        >
+                          Children
+                        </span>
+                        <div
+                          className={
+                            styles[
+                              'header__container__search__item__options__item__counter-container'
+                            ]
+                          }
+                        >
+                          <button
+                            className={
+                              styles[
+                                'header__container__search__item__options__item__counter-btn'
+                              ]
+                            }
+                            onClick={() => handleOption('children', 'd')}
+                            disabled={options.children <= 0}
+                          >
+                            -
+                          </button>
+                          <span
+                            className={
+                              styles[
+                                'header__container__search__item__options__item__counter-number'
+                              ]
+                            }
+                          >
+                            {options.children}
+                          </span>
+                          <button
+                            className={
+                              styles[
+                                'header__container__search__item__options__item__counter-btn'
+                              ]
+                            }
+                            onClick={() => handleOption('children', 'i')}
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        className={
+                          styles[
+                            'header__container__search__item__options__item'
+                          ]
+                        }
+                      >
+                        <span
+                          className={
+                            styles[
+                              'header__container__search__item__options__item__text'
+                            ]
+                          }
+                        >
+                          Room
+                        </span>
+                        <div
+                          className={
+                            styles[
+                              'header__container__search__item__options__item__counter-container'
+                            ]
+                          }
+                        >
+                          <button
+                            className={
+                              styles[
+                                'header__container__search__item__options__item__counter-btn'
+                              ]
+                            }
+                            onClick={() => handleOption('room', 'd')}
+                            disabled={options.room <= 1}
+                          >
+                            -
+                          </button>
+                          <span
+                            className={
+                              styles[
+                                'header__container__search__item__options__item__counter-number'
+                              ]
+                            }
+                          >
+                            {options.room}
+                          </span>
+                          <button
+                            className={
+                              styles[
+                                'header__container__search__item__options__item__counter-btn'
+                              ]
+                            }
+                            onClick={() => handleOption('room', 'i')}
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <div className="lsOptionItem">
                   <span className="lsOptionText">
                     Min price <small>per night</small>
@@ -116,36 +300,6 @@ const HotelList = () => {
                     type="number"
                     onChange={(e) => setMax(e.target.value)}
                     className="lsOptionInput"
-                  />
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Adult</span>
-                  <input
-                    type="number"
-                    min={1}
-                    className="lsOptionInput"
-                    placeholder={options.adult.toString()}
-                    onChange={(e) => handleOption('adult', e.target.value)}
-                  />
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Children</span>
-                  <input
-                    type="number"
-                    min={0}
-                    className="lsOptionInput"
-                    placeholder={options.children.toString()}
-                    onChange={(e) => handleOption('children', e.target.value)}
-                  />
-                </div>
-                <div className="lsOptionItem">
-                  <span className="lsOptionText">Room</span>
-                  <input
-                    type="number"
-                    min={1}
-                    className="lsOptionInput"
-                    placeholder={options.room.toString()}
-                    onChange={(e) => handleOption('room', e.target.value)}
                   />
                 </div>
               </div>
