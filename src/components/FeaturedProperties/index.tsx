@@ -38,11 +38,11 @@ const FeaturedProperties = () => {
               <span className={styles['featured-properties__item__name']}>
                 {item.name}
               </span>
-              <span className={styles['featured-properties__item__city']}>
-                {item.city}
+              <span className={styles['featured-properties__item__address']}>
+                {item.address}
               </span>
               <span className={styles['featured-properties__item__price']}>
-                Starting from ${item.cheapestPrice}
+                <p>Starting from</p> ${item.cheapestPrice}
               </span>
               {item.rating && (
                 <div className={styles['featured-properties__item__rating']}>
