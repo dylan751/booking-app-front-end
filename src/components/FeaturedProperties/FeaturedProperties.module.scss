@@ -47,13 +47,15 @@
         background-color: #003580;
         color: white;
         border: none;
+        border-radius: 6px 6px 6px 0;
         padding: 3px;
         margin-right: 10px;
-        font-weight: bold;
+        font-weight: 400;
+        font-size: 12px;
       }
 
       span {
-        font-size: 14px;
+        font-size: 12px;
       }
     }
   }

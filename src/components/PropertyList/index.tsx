@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import useFetch from '../../hooks/useFetch';
 import { CountByType } from '../../models/CountByType';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 import styles from './PropertyList.module.scss';
 
 const PropertyList = () => {
@@ -15,6 +17,31 @@ const PropertyList = () => {
     'https://cf.bstatic.com/static/img/theme-index/carousel_320x240/card-image-villas_300/dd0d7f8202676306a661aa4f0cf1ffab31286211.jpg',
   ];
 
+  const [slidesNumber, setSlidesNumber] = useState(
+    window.innerWidth > 1024
+      ? 4
+      : window.innerWidth > 768
+      ? 3
+      : window.innerWidth > 480
+      ? 2
+      : 1,
+  );
+  useEffect(() => {
+    const handleResize = () => {
+      setSlidesNumber(
+        window.innerWidth > 1024
+          ? 4
+          : window.innerWidth > 768
+          ? 3
+          : window.innerWidth > 480
+          ? 2
+          : 1,
+      );
+    };
+
+    window.addEventListener('resize', handleResize);
+  }, [window.innerWidth]);
+
   if (error) {
     return <div>{error.message}</div>;
   }
@@ -24,24 +51,26 @@ const PropertyList = () => {
       {loading ? (
         'Loading Please wait'
       ) : (
-        <>
+        <Swiper spaceBetween={10} slidesPerView={slidesNumber}>
           {data &&
             images.map((img, index) => (
-              <div className={styles['property-list__item']} key={index}>
-                <img
-                  src={img}
-                  alt=""
-                  className={styles['property-list__item__img']}
-                />
-                <div className={styles['property-list__item__title']}>
-                  <h1>{data[index]?.type}</h1>
-                  <h2>
-                    {data[index]?.count} {data[index]?.type}
-                  </h2>
+              <SwiperSlide key={index}>
+                <div className={styles['property-list__item']}>
+                  <img
+                    src={img}
+                    alt=""
+                    className={styles['property-list__item__img']}
+                  />
+                  <div className={styles['property-list__item__title']}>
+                    <h1>{data[index]?.type}</h1>
+                    <h2>
+                      {data[index]?.count} {data[index]?.type}
+                    </h2>
+                  </div>
                 </div>
-              </div>
+              </SwiperSlide>
             ))}
-        </>
+        </Swiper>
       )}
     </div>
   );
