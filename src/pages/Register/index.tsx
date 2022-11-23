@@ -112,7 +112,7 @@ const Register = () => {
               className={styles['register__container__input']}
             />
             <input
-              type="text"
+              type="number"
               placeholder="Phone Number *"
               value={credentials.phone}
               id="phone"

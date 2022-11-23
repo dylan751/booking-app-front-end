@@ -45,10 +45,10 @@ const SearchItem = ({ item }: SearchItemProps) => {
             <button>{item.rating}</button>
           </div>
         )} */}
-          <div className={styles['search-item__detail__rating']}>
-            <span>Excellent</span>
-            <button>9.0</button>
-          </div>
+        <div className={styles['search-item__detail__rating']}>
+          <span>Excellent</span>
+          <button>9.0</button>
+        </div>
         <div className={styles['search-item__detail__text']}>
           <span className={styles['search-item__detail__text__price']}>
             US${item.cheapestPrice}

@@ -5,6 +5,127 @@
   margin-top: 20px;
   gap: 20px;
 
+  &__btn {
+    background-color: #0071c2;
+    color: white;
+    font-weight: 500;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+
+    &:disabled {
+      background-color: gray;
+      cursor: not-allowed;
+    }
+
+    @media screen and (max-width: 768px) {
+      padding: 6px;
+    }
+  }
+
+  &__wrapper {
+    &__search {
+      height: 30px;
+      padding: 10px 0px;
+      background-color: white;
+      border: 3px solid #febb02;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      border-radius: 5px;
+      position: relative;
+      bottom: -25px;
+      width: 50%;
+      max-width: 1024px;
+      gap: 10px;
+
+      @media screen and (max-width: 1024px) {
+        padding: 10px 6px;
+        width: 90%;
+      }
+
+      @media screen and (max-width: 768px) {
+        width: 85%;
+      }
+
+      &__item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        &__input {
+          border: none;
+          outline: none;
+
+          @media screen and (max-width: 768px) {
+            font-size: 12px;
+          }
+        }
+
+        &__text {
+          color: lightgray;
+          cursor: pointer;
+
+          @media screen and (max-width: 1024px) {
+            font-size: 14px;
+          }
+
+          @media screen and (max-width: 768px) {
+            font-size: 12px;
+          }
+        }
+
+        &__date {
+          position: absolute;
+          top: 50px;
+          z-index: 2;
+        }
+
+        &__options {
+          position: absolute;
+          top: 50px;
+          background-color: white;
+          color: gray;
+          border-radius: 5px;
+          box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.4);
+          z-index: 2;
+
+          &__item {
+            width: 200px;
+            display: flex;
+            justify-content: space-between;
+            margin: 10px;
+
+            &__counter-container {
+              display: flex;
+              align-items: center;
+              gap: 10px;
+              font-size: 12px;
+              color: black;
+            }
+
+            &__counter-btn {
+              width: 30px;
+              height: 30px;
+              border: 1px solid #0071c2;
+              color: #0071c2;
+              cursor: pointer;
+              background-color: white;
+
+              &:disabled {
+                cursor: not-allowed;
+              }
+            }
+          }
+        }
+      }
+
+      &__item__icon {
+        color: lightgray;
+      }
+    }
+  }
+
   @media screen and (max-width: 1024px) {
     padding: 0 20px;
   }
