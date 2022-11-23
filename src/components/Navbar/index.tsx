@@ -43,7 +43,7 @@ const Navbar = ({ type }: NavbarProps) => {
           </div>
         ) : (
           <div className={styles['navbar__container__items']}>
-            {type !== 'login' && (
+            {type !== 'login' && type !== 'register' && (
               <>
                 <button
                   className={styles['navbar__container__items__btn']}

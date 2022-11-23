@@ -33,8 +33,30 @@
       border-radius: 3px;
     }
 
-    &__register-btn:disabled {
+    &__previous-btn {
+      border: 1px solid #0071c2;
+      padding: 8px 20px;
+      background-color: white;
+      color: #0071c2;
+      font-weight: 500;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+
+    &__next-btn {
+      border: none;
+      padding: 10px 20px;
       background-color: #0071c2;
+      color: white;
+      font-weight: 500;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+
+    &__register-btn:disabled {
+      background-color: rgb(185, 185, 185);
       cursor: not-allowed;
     }
   }

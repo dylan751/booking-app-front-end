@@ -8,7 +8,7 @@ import Navbar from '../../components/Navbar';
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
-    username: '',
+    email: '',
     password: '',
   });
 
@@ -55,8 +55,8 @@ const Login = () => {
           </div>
           <input
             type="text"
-            placeholder="Username"
-            id="username"
+            placeholder="Email"
+            id="email"
             onChange={handleInputChange}
             className={styles['login__container__input']}
           />

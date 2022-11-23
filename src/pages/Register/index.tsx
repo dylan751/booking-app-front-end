@@ -9,7 +9,12 @@ const Register = () => {
   const [credentials, setCredentials] = useState({
     username: '',
     password: '',
+    email: '',
+    country: '',
+    city: '',
+    phone: '',
   });
+  const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -33,6 +38,7 @@ const Register = () => {
       toast.success('Registered account succeeded');
     } catch (err: any) {
       toast.error(err.response.data.message);
+      setIsLoading(false);
     }
   };
 
@@ -42,37 +48,103 @@ const Register = () => {
 
   return (
     <>
-      <Navbar type="login" />
+      <Navbar type="register" />
       <div className={styles['register']}>
-        <div className={styles['register__container']}>
-          <div className={styles['register__container__header']}>
-            Sign in or create an account
+        {step === 1 && (
+          <div className={styles['register__container']}>
+            <div className={styles['register__container__header']}>
+              Sign in or create an account
+            </div>
+            <input
+              type="email"
+              placeholder="Email"
+              value={credentials.email}
+              id="email"
+              onChange={handleInputChange}
+              className={styles['register__container__input']}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={credentials.password}
+              id="password"
+              onChange={handleInputChange}
+              className={styles['register__container__input']}
+            />
+            <button
+              onClick={() => setStep(2)}
+              className={styles['register__container__next-btn']}
+            >
+              Next
+            </button>
+            <span className={styles['login-btn']} onClick={handleNavigate}>
+              Sign in to an account
+            </span>
           </div>
-          <input
-            type="text"
-            placeholder="Username"
-            id="username"
-            onChange={handleInputChange}
-            className={styles['register__container__input']}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            id="password"
-            onChange={handleInputChange}
-            className={styles['register__container__input']}
-          />
-          <button
-            className={styles['register__container__register-btn']}
-            onClick={handleRegister}
-            disabled={isLoading}
-          >
-            Register
-          </button>
-          <span className={styles['login-btn']} onClick={handleNavigate}>
-            Sign in to an account
-          </span>
-        </div>
+        )}
+        {step === 2 && (
+          <div className={styles['register__container']}>
+            <div className={styles['register__container__header']}>
+              Your Basic Informations
+            </div>
+            <input
+              type="text"
+              placeholder="Full Name *"
+              value={credentials.username}
+              id="username"
+              onChange={handleInputChange}
+              className={styles['register__container__input']}
+            />
+            <input
+              type="text"
+              placeholder="Country *"
+              value={credentials.country}
+              id="country"
+              onChange={handleInputChange}
+              className={styles['register__container__input']}
+            />
+            <input
+              type="text"
+              placeholder="City *"
+              value={credentials.city}
+              id="city"
+              onChange={handleInputChange}
+              className={styles['register__container__input']}
+            />
+            <input
+              type="text"
+              placeholder="Phone Number *"
+              value={credentials.phone}
+              id="phone"
+              onChange={handleInputChange}
+              className={styles['register__container__input']}
+            />
+            <button
+              onClick={() => setStep(1)}
+              className={styles['register__container__previous-btn']}
+            >
+              Previous
+            </button>
+            <button
+              className={styles['register__container__register-btn']}
+              onClick={handleRegister}
+              disabled={
+                isLoading ||
+                !credentials.username ||
+                !credentials.password ||
+                !credentials.email ||
+                !credentials.country ||
+                !credentials.city ||
+                !credentials.phone
+              }
+            >
+              Register
+            </button>
+            <span className={styles['login-btn']} onClick={handleNavigate}>
+              Sign in to an account
+            </span>
+          </div>
+        )}
       </div>
     </>
   );
