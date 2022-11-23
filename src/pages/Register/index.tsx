@@ -1,7 +1,6 @@
 import axios from 'axios';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthContext } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
 import styles from './Register.module.scss';
 import Navbar from '../../components/Navbar';
@@ -11,8 +10,7 @@ const Register = () => {
     username: '',
     password: '',
   });
-
-  const { loading, error, dispatch } = useContext(AuthContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -22,7 +20,8 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    console.log(credentials);
+    setIsLoading(true);
+
     try {
       await axios.post(
         `${process.env.REACT_APP_API_ENDPOINT}/auth/register`,
@@ -30,19 +29,16 @@ const Register = () => {
       );
 
       navigate('/login');
+      setIsLoading(false);
       toast.success('Registered account succeeded');
     } catch (err: any) {
-      toast.error(err.message);
+      toast.error(err.response.data.message);
     }
   };
 
   const handleNavigate = () => {
     navigate('/login');
   };
-
-  if (error) {
-    toast.error(`${error.message}`, { toastId: 'REGISTER_FAILURE' });
-  }
 
   return (
     <>
@@ -69,7 +65,7 @@ const Register = () => {
           <button
             className={styles['register__container__register-btn']}
             onClick={handleRegister}
-            disabled={loading}
+            disabled={isLoading}
           >
             Register
           </button>
