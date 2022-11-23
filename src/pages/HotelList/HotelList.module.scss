@@ -11,6 +11,12 @@
         padding: 5px;
         margin-bottom: 15px;
 
+        &__date {
+          position: absolute;
+          top: 50px;
+          z-index: 2;
+        }
+
         &__text {
           font-size: 14px;
           color: black;

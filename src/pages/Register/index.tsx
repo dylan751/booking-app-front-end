@@ -3,10 +3,10 @@ import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { toast } from 'react-toastify';
-import styles from './Login.module.scss';
+import styles from './Register.module.scss';
 import Navbar from '../../components/Navbar';
 
-const Login = () => {
+const Register = () => {
   const [credentials, setCredentials] = useState({
     username: '',
     password: '',
@@ -20,37 +20,36 @@ const Login = () => {
     setCredentials((prev) => ({ ...prev, [e.target.id]: e.target.value }));
   };
 
-  const handleLogin = async (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    dispatch && dispatch({ type: 'LOGIN_START' });
+    console.log(credentials);
     try {
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_ENDPOINT}/auth/login`,
+      await axios.post(
+        `${process.env.REACT_APP_API_ENDPOINT}/auth/register`,
         credentials,
       );
-      dispatch &&
-        dispatch({ type: 'LOGIN_SUCCESS', payload: res.data.details });
-      navigate('/');
+
+      navigate('/login');
+      toast.success('Registered account succeeded');
     } catch (err: any) {
-      dispatch &&
-        dispatch({ type: 'LOGIN_FAILURE', payload: err.response.data });
+      toast.error(err.message);
     }
   };
 
   const handleNavigate = () => {
-    navigate('/register');
+    navigate('/login');
   };
 
   if (error) {
-    toast.error(`${error.message}`, { toastId: 'LOGIN_FAILURE' });
+    toast.error(`${error.message}`, { toastId: 'REGISTER_FAILURE' });
   }
 
   return (
     <>
       <Navbar type="login" />
-      <div className={styles['login']}>
-        <div className={styles['login__container']}>
-          <div className={styles['login__container__header']}>
+      <div className={styles['register']}>
+        <div className={styles['register__container']}>
+          <div className={styles['register__container__header']}>
             Sign in or create an account
           </div>
           <input
@@ -58,24 +57,24 @@ const Login = () => {
             placeholder="Username"
             id="username"
             onChange={handleInputChange}
-            className={styles['login__container__input']}
+            className={styles['register__container__input']}
           />
           <input
             type="password"
             placeholder="Password"
             id="password"
             onChange={handleInputChange}
-            className={styles['login__container__input']}
+            className={styles['register__container__input']}
           />
           <button
-            className={styles['login__container__login-btn']}
-            onClick={handleLogin}
+            className={styles['register__container__register-btn']}
+            onClick={handleRegister}
             disabled={loading}
           >
-            Sign in
+            Register
           </button>
-          <span className={styles['signup-btn']} onClick={handleNavigate}>
-            Create a new account
+          <span className={styles['login-btn']} onClick={handleNavigate}>
+            Sign in to an account
           </span>
         </div>
       </div>
@@ -83,4 +82,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

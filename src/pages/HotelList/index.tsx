@@ -83,7 +83,6 @@ const HotelList = () => {
             <div className="lsItem">
               <label>Destination</label>
               <input
-                // placeholder={destination}
                 value={destination}
                 type="text"
                 onChange={(e) => setDestination(e.target.value)}
@@ -97,9 +96,12 @@ const HotelList = () => {
               )} to ${format(dates[0].endDate, 'MM/dd/yyyy')}`}</span>
               {openDate && (
                 <DateRange
+                  editableDateInputs={true}
                   onChange={(item) => setDates([item.selection])}
-                  minDate={new Date()}
+                  moveRangeOnFirstSelection={false}
                   ranges={dates}
+                  minDate={new Date()}
+                  className={styles['header__container__search__item__date']}
                 />
               )}
             </div>
@@ -319,8 +321,8 @@ const HotelList = () => {
             ) : (
               <>
                 <h1>
-                  {destination}: {(countData && countData[0]) || '-'} properties
-                  found
+                  {destination || '...'}: {(countData && countData[0]) || '-'}{' '}
+                  properties found
                 </h1>
                 {data?.map((item) => (
                   <SearchItem item={item} key={item._id} />

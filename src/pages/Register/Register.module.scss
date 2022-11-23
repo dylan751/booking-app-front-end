@@ -1,4 +1,4 @@
-.login {
+.register {
   height: calc(100vh - 70px);
   display: flex;
   align-items: center;
@@ -22,7 +22,7 @@
       border: 0.5px solid black;
     }
 
-    &__login-btn {
+    &__register-btn {
       border: none;
       padding: 14px 20px;
       background-color: #0071c2;
@@ -33,14 +33,14 @@
       border-radius: 3px;
     }
 
-    &__login-btn:disabled {
+    &__register-btn:disabled {
       background-color: #0071c2;
       cursor: not-allowed;
     }
   }
 }
 
-.signup-btn {
+.login-btn {
   color: #0071c2;
   text-decoration: underline;
   cursor: pointer;

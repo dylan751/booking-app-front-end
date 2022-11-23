@@ -3,6 +3,7 @@
   background-color: #003580;
   display: flex;
   justify-content: center;
+  padding: 10px;
 
   &__container {
     width: 100%;
@@ -17,15 +18,17 @@
     }
 
     &__logo {
-      font-weight: 500;
+      font-weight: bold;
+      font-size: 24px;
     }
 
     &__items__btn {
-      margin-left: 20px;
+      font-weight: 600;
+      margin-left: 10px;
       border: none;
-      padding: 5px 10px;
+      padding: 8px 16px;
       cursor: pointer;
-      color: #003580;
+      color: #0071c2;
     }
   }
 }

@@ -3,7 +3,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import styles from './Navbar.module.scss';
 
-const Navbar = () => {
+interface NavbarProps {
+  type?: string;
+}
+
+const Navbar = ({ type }: NavbarProps) => {
   const { user, dispatch } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -39,15 +43,22 @@ const Navbar = () => {
           </div>
         ) : (
           <div className={styles['navbar__container__items']}>
-            <button className={styles['navbar__container__items__btn']} onClick={handleRegister}>
-              Register
-            </button>
-            <button
-              className={styles['navbar__container__items__btn']}
-              onClick={handleLogin}
-            >
-              Login
-            </button>
+            {type !== 'login' && (
+              <>
+                <button
+                  className={styles['navbar__container__items__btn']}
+                  onClick={handleRegister}
+                >
+                  Register
+                </button>
+                <button
+                  className={styles['navbar__container__items__btn']}
+                  onClick={handleLogin}
+                >
+                  Sign in
+                </button>
+              </>
+            )}
           </div>
         )}
       </div>
