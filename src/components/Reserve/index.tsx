@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { ReserveContext } from '../../context/ReserveContext';
 import { SearchContext } from '../../context/SearchContext';
 import useFetch from '../../hooks/useFetch';
 import { Room } from '../../models/Room';
@@ -20,6 +22,7 @@ const Reserve = ({ setIsOpenBookingModal, hotelId }: ReserveProps) => {
     `${process.env.REACT_APP_API_ENDPOINT}/hotels/room/${hotelId}`,
   );
   const { dates } = useContext(SearchContext);
+  const { dispatch: reserveDispatch } = useContext(ReserveContext);
 
   const getDatesInRage = (startDate, endDate) => {
     const date = new Date(startDate.getTime());
@@ -56,16 +59,21 @@ const Reserve = ({ setIsOpenBookingModal, hotelId }: ReserveProps) => {
 
   const handleReserve = async () => {
     try {
-      await Promise.all(
-        selectedRooms.map((roomId) => {
-          axios.put(
-            `${process.env.REACT_APP_API_ENDPOINT}/rooms/availability/${roomId}`,
-            { dates: allDates },
-          );
-        }),
-      );
-      setIsOpenBookingModal(false);
-      navigate('/');
+      // await Promise.all(
+      //   selectedRooms.map((roomId) => {
+      //     axios.put(
+      //       `${process.env.REACT_APP_API_ENDPOINT}/rooms/availability/${roomId}`,
+      //       { dates: allDates },
+      //     );
+      //   }),
+      // );
+      // setIsOpenBookingModal(false);
+      reserveDispatch &&
+        reserveDispatch({
+          type: 'NEW_RESERVE',
+          payload: { selectedRooms },
+        });
+      navigate(`/reserve/${hotelId}`);
     } catch (err) {
       console.log(err);
     }

@@ -8,6 +8,7 @@ import HotelItem from './pages/HotelItem';
 import HotelList from './pages/HotelList';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import ReservePage from './pages/ReservePage';
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/hotels" element={<HotelList />} />
         <Route path="/hotels/:id" element={<HotelItem />} />
+        <Route path="/reserve/:id" element={<ReservePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>
