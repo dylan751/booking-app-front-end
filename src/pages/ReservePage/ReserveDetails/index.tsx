@@ -6,22 +6,29 @@ import {
   faDesktop,
   faUserTie,
   faChevronRight,
+  faParking,
+  faUtensils,
+  faVanShuttle,
+  faWifi,
+  faStar,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from 'date-fns';
 import React, { useContext } from 'react';
 import { AuthContext } from '../../../context/AuthContext';
 import { SearchContext } from '../../../context/SearchContext';
+import { Hotel } from '../../../models/Hotel';
 import styles from './ReserveDetails.module.scss';
 
 interface ReserveDetailsProps {
   setStep: any;
+  hotel?: Hotel;
 }
 
-const ReserveDetails = ({ setStep }: ReserveDetailsProps) => {
+const ReserveDetails = ({ setStep, hotel }: ReserveDetailsProps) => {
   const { dates } = useContext(SearchContext);
   const { user } = useContext(AuthContext);
-  console.log(dates);
+
   return (
     <div className={styles['reserve']}>
       <div className={styles['reserve__booking']}>
@@ -74,16 +81,128 @@ const ReserveDetails = ({ setStep }: ReserveDetailsProps) => {
           </h4>
         </div>
         <div className={styles['reserve__booking__payment-schedule']}>
-          Your payment schedule
+          <h4 className={styles['reserve__booking__payment-schedule__header']}>
+            Your payment schedule
+          </h4>
+          <div className={styles['reserve__booking__payment-schedule__content']}>
+            <span>{`Before you stay you'll pay`}</span>
+            <span>US$15</span>
+          </div>
         </div>
         <div className={styles['reserve__booking__cancel-cost']}>
-          How much will it cost to cancel?
+          <h4 className={styles['reserve__booking__cancel-cost__header']}>
+            How much will it cost to cancel?
+          </h4>
+          <div className={styles['reserve__booking__cancel-cost__content']}>
+            <span>{`If you cancel, you'll pay`}</span>
+            <span>US$15</span>
+          </div>
         </div>
       </div>
       <div className={styles['reserve__personal']}>
         <div className={styles['reserve__personal__container']}>
           <div className={styles['reserve__personal__container__hotel']}>
-            Hotel
+            <div
+              className={
+                styles['reserve__personal__container__hotel__container']
+              }
+            >
+              <img
+                className={
+                  styles['reserve__personal__container__hotel__container__img']
+                }
+                src={hotel?.photos[0]}
+                alt="hotel-logo"
+              />
+              <div
+                className={
+                  styles[
+                    'reserve__personal__container__hotel__container__details'
+                  ]
+                }
+              >
+                <div
+                  className={
+                    styles[
+                      'reserve__personal__container__hotel__container__details__title'
+                    ]
+                  }
+                >
+                  <span>Hotel</span>
+                  <FontAwesomeIcon icon={faStar} size="xs" color="#febb02" />
+                  <FontAwesomeIcon icon={faStar} size="xs" color="#febb02" />
+                </div>
+                <h3>{hotel?.name}</h3>
+                <span>{hotel?.address}</span>
+                <span
+                  className={
+                    styles[
+                      'reserve__personal__container__hotel__container__details__review'
+                    ]
+                  }
+                >
+                  Excellent Location — 9.0
+                </span>
+                <div
+                  className={
+                    styles[
+                      'reserve__personal__container__hotel__container__details__rating'
+                    ]
+                  }
+                >
+                  <button>9.0</button>
+                  <span>Excellent</span>
+                </div>
+                <div
+                  className={
+                    styles[
+                      'reserve__personal__container__hotel__container__details__service'
+                    ]
+                  }
+                >
+                  <div
+                    className={
+                      styles[
+                        'reserve__personal__container__hotel__container__details__service__item'
+                      ]
+                    }
+                  >
+                    <FontAwesomeIcon icon={faParking} />
+                    Parking
+                  </div>
+                  <div
+                    className={
+                      styles[
+                        'reserve__personal__container__hotel__container__details__service__item'
+                      ]
+                    }
+                  >
+                    <FontAwesomeIcon icon={faUtensils} />
+                    Restaurant
+                  </div>
+                  <div
+                    className={
+                      styles[
+                        'reserve__personal__container__hotel__container__details__service__item'
+                      ]
+                    }
+                  >
+                    <FontAwesomeIcon icon={faVanShuttle} />
+                    Airport shuttle
+                  </div>
+                  <div
+                    className={
+                      styles[
+                        'reserve__personal__container__hotel__container__details__service__item'
+                      ]
+                    }
+                  >
+                    <FontAwesomeIcon icon={faWifi} />
+                    Free Wifi
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div className={styles['reserve__personal__container__good-to-know']}>
             <h3>Good to know:</h3>
@@ -125,7 +244,7 @@ const ReserveDetails = ({ setStep }: ReserveDetailsProps) => {
                   ]
                 }
               >
-                <FontAwesomeIcon icon={faUserTie} />
+                <FontAwesomeIcon icon={faUserTie} color="#003580" />
                 {user.username}
               </div>
             </div>
@@ -308,7 +427,6 @@ const ReserveDetails = ({ setStep }: ReserveDetailsProps) => {
           Next: Final details{' '}
           <FontAwesomeIcon
             icon={faChevronRight}
-            className={styles['hotel__container__slider__arrow']}
             size="sm"
           />
         </button>

@@ -89,11 +89,31 @@
     &__payment-schedule {
       padding: 16px;
       border: 1px solid lightgray;
+
+      &__header {
+        margin-bottom: 16px;
+      }
+
+      &__content {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+      }
     }
 
     &__cancel-cost {
       padding: 16px;
       border: 1px solid lightgray;
+
+      &__header {
+        margin-bottom: 16px;
+      }
+
+      &__content {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+      }
     }
   }
 
@@ -113,6 +133,64 @@
       &__hotel {
         padding: 16px;
         border: 1px solid lightgray;
+
+        &__container {
+          display: flex;
+          gap: 16px;
+
+          &__img {
+            width: 160px;
+            height: 160px;
+          }
+
+          &__details {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            &__title {
+              display: flex;
+              align-items: center;
+              gap: 2px;
+            }
+
+            span {
+              font-size: 12px;
+            }
+
+            &__review {
+              color: #008009;
+            }
+
+            &__rating {
+              display: flex;
+              gap: 8px;
+              justify-content: flex-start;
+              align-items: center;
+
+              button {
+                background-color: #003580;
+                color: white;
+                padding: 4px;
+                font-size: 12px;
+                border: none;
+                border-radius: 4px 4px 4px 0;
+              }
+            }
+
+            &__service {
+              display: flex;
+              gap: 10px;
+
+              &__item {
+                display: flex;
+                gap: 3px;
+                align-items: center;
+                font-size: 12px;
+              }
+            }
+          }
+        }
       }
 
       &__good-to-know {
@@ -158,6 +236,7 @@
               padding: 6px 12px;
               border-radius: 4px;
               font-size: 14px;
+              margin-top: 10px;
             }
           }
 
