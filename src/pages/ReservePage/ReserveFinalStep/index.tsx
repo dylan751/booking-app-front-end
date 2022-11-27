@@ -11,19 +11,35 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from 'date-fns';
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthContext';
+import { ReserveContext } from '../../../context/ReserveContext';
 import { SearchContext } from '../../../context/SearchContext';
 import { Hotel } from '../../../models/Hotel';
+import { Room } from '../../../models/Room';
+import { dayDifference } from '../../../services/utils';
 import styles from './ReserveFinalStep.module.scss';
 
 interface ReserveFinalStepProps {
   setStep: any;
   hotel?: Hotel;
+  roomData?: Room[];
 }
 
-const ReserveFinalStep = ({ setStep, hotel }: ReserveFinalStepProps) => {
-  const { dates } = useContext(SearchContext);
+const ReserveFinalStep = ({
+  setStep,
+  hotel,
+  roomData,
+}: ReserveFinalStepProps) => {
+  const { dates, options } = useContext(SearchContext);
   const { user } = useContext(AuthContext);
+  const { selectedRooms } = useContext(ReserveContext);
+
+  const navigate = useNavigate();
+  const hotelId = location.pathname.split('/')[2];
+
+  const numberOfDays = dayDifference(dates[0].startDate, dates[0].endDate);
+  const price = hotel && numberOfDays * hotel.cheapestPrice * options.room;
 
   const handleReserve = async () => {
     console.log('Reserve');
@@ -40,6 +56,10 @@ const ReserveFinalStep = ({ setStep, hotel }: ReserveFinalStepProps) => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleChangeSelection = () => {
+    navigate(`/hotels/${hotelId}`);
   };
 
   return (
@@ -85,6 +105,37 @@ const ReserveFinalStep = ({ setStep, hotel }: ReserveFinalStepProps) => {
               }
             >
               <h5>You selected:</h5>
+              <div
+                className={
+                  styles[
+                    'reserve__booking__details__content__selected-room__container'
+                  ]
+                }
+              >
+                {roomData?.map((room) => (
+                  <div key={room._id}>
+                    <>
+                      {room.title} -{' '}
+                      {room.roomNumbers.map(
+                        (roomNumber, index) =>
+                          selectedRooms.includes(roomNumber._id) && (
+                            <span key={index}>{roomNumber.number}</span>
+                          ),
+                      )}
+                    </>
+                  </div>
+                ))}
+              </div>
+              <span
+                className={
+                  styles[
+                    'reserve__booking__details__content__selected-room__container__change-selection'
+                  ]
+                }
+                onClick={handleChangeSelection}
+              >
+                Change your selection
+              </span>
             </div>
           </div>
         </div>
@@ -92,6 +143,86 @@ const ReserveFinalStep = ({ setStep, hotel }: ReserveFinalStepProps) => {
           <h4 className={styles['reserve__booking__price-summary__header']}>
             Your price summary
           </h4>
+          <div className={styles['reserve__booking__price-summary__content']}>
+            <div
+              className={
+                styles['reserve__booking__price-summary__content__price']
+              }
+            >
+              <div
+                className={
+                  styles[
+                    'reserve__booking__price-summary__content__price__item'
+                  ]
+                }
+              >
+                <span>Two-Bedroom Superior Apartment</span>
+                <span>US${price}</span>
+              </div>
+              <div
+                className={
+                  styles[
+                    'reserve__booking__price-summary__content__price__item'
+                  ]
+                }
+              >
+                <span>5 % VAT</span>
+                <span>US${price && price * 0.05}</span>
+              </div>
+            </div>
+            <div
+              className={
+                styles['reserve__booking__price-summary__content__price-total']
+              }
+            >
+              <span>Price</span>
+              <span>US${price && price + price * 0.05} *</span>
+            </div>
+            <div
+              className={
+                styles[
+                  'reserve__booking__price-summary__content__excluded-charges'
+                ]
+              }
+            >
+              <h5>Excluded charges</h5>
+              <div
+                className={
+                  styles[
+                    'reserve__booking__price-summary__content__excluded-charges__item'
+                  ]
+                }
+              >
+                <span>City tax</span>
+                <span>US$8</span>
+              </div>
+              <div
+                className={
+                  styles[
+                    'reserve__booking__price-summary__content__excluded-charges__item'
+                  ]
+                }
+              >
+                <span>
+                  Damage deposit <b>Fully refundable</b>
+                </span>
+                <span>US$156 *</span>
+              </div>
+            </div>
+            <hr />
+            <div
+              className={
+                styles['reserve__booking__price-summary__content__more-info']
+              }
+            >
+              <span>
+                {`* This price is converted to show you the approximate cost in US$. You'll pay in`}{' '}
+                <b>€</b> {`or`} <b>HUF</b>
+                {`. The exchange rate may change before you pay.`}
+              </span>
+              <span>{`Bear in mind that your card issuer may charge you a foreign transaction fee.`}</span>
+            </div>
+          </div>
         </div>
         <div className={styles['reserve__booking__payment-schedule']}>
           <h4 className={styles['reserve__booking__payment-schedule__header']}>
@@ -100,8 +231,7 @@ const ReserveFinalStep = ({ setStep, hotel }: ReserveFinalStepProps) => {
           <div
             className={styles['reserve__booking__payment-schedule__content']}
           >
-            <span>{`Before you stay you'll pay`}</span>
-            <span>US$15</span>
+            <span>{`No payment today. You'll pay when you stay.`}</span>
           </div>
         </div>
         <div className={styles['reserve__booking__cancel-cost']}>
@@ -109,8 +239,10 @@ const ReserveFinalStep = ({ setStep, hotel }: ReserveFinalStepProps) => {
             How much will it cost to cancel?
           </h4>
           <div className={styles['reserve__booking__cancel-cost__content']}>
-            <span>{`If you cancel, you'll pay`}</span>
-            <span>US$15</span>
+            <span>{`Free cancellation until 23:59 on ${format(
+              dates[0].startDate,
+              'dd MMM',
+            )}`}</span>
           </div>
         </div>
       </div>

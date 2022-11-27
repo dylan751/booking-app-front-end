@@ -18,7 +18,6 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthContext';
 import { ReserveContext } from '../../../context/ReserveContext';
 import { SearchContext } from '../../../context/SearchContext';
-import useFetch from '../../../hooks/useFetch';
 import { Hotel } from '../../../models/Hotel';
 import { Room } from '../../../models/Room';
 import { dayDifference } from '../../../services/utils';
@@ -27,9 +26,10 @@ import styles from './ReserveDetails.module.scss';
 interface ReserveDetailsProps {
   setStep: any;
   hotel?: Hotel;
+  roomData?: Room[];
 }
 
-const ReserveDetails = ({ setStep, hotel }: ReserveDetailsProps) => {
+const ReserveDetails = ({ setStep, hotel, roomData }: ReserveDetailsProps) => {
   const { dates, options } = useContext(SearchContext);
   const { user } = useContext(AuthContext);
   const { selectedRooms } = useContext(ReserveContext);
@@ -39,12 +39,6 @@ const ReserveDetails = ({ setStep, hotel }: ReserveDetailsProps) => {
 
   const numberOfDays = dayDifference(dates[0].startDate, dates[0].endDate);
   const price = hotel && numberOfDays * hotel.cheapestPrice * options.room;
-
-  const { data: roomData } = useFetch<Room[]>(
-    `${
-      process.env.REACT_APP_API_ENDPOINT
-    }/rooms/multiple/${selectedRooms.toString()}`,
-  );
 
   const handleChangeSelection = () => {
     navigate(`/hotels/${hotelId}`);
