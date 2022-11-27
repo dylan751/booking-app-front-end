@@ -21,6 +21,7 @@ const Navbar = ({ type }: NavbarProps) => {
 
   const handleLogout = () => {
     dispatch && dispatch({ type: 'LOGOUT' });
+    navigate('/');
   };
 
   return (

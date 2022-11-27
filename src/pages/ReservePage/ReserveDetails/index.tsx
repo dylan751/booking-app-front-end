@@ -15,9 +15,13 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from 'date-fns';
 import React, { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthContext';
+import { ReserveContext } from '../../../context/ReserveContext';
 import { SearchContext } from '../../../context/SearchContext';
+import useFetch from '../../../hooks/useFetch';
 import { Hotel } from '../../../models/Hotel';
+import { Room } from '../../../models/Room';
 import styles from './ReserveDetails.module.scss';
 
 interface ReserveDetailsProps {
@@ -28,6 +32,24 @@ interface ReserveDetailsProps {
 const ReserveDetails = ({ setStep, hotel }: ReserveDetailsProps) => {
   const { dates } = useContext(SearchContext);
   const { user } = useContext(AuthContext);
+  const { selectedRooms } = useContext(ReserveContext);
+
+  const navigate = useNavigate();
+  const hotelId = location.pathname.split('/')[2];
+
+  const { data: roomData, error } = useFetch<Room[]>(
+    `${
+      process.env.REACT_APP_API_ENDPOINT
+    }/rooms/multiple/${selectedRooms.toString()}`,
+  );
+
+  const handleChangeSelection = () => {
+    navigate(`/hotels/${hotelId}`);
+  };
+
+  if (error) {
+    return <div>Network Error!</div>;
+  }
 
   return (
     <div className={styles['reserve']}>
@@ -72,6 +94,37 @@ const ReserveDetails = ({ setStep, hotel }: ReserveDetailsProps) => {
               }
             >
               <h5>You selected:</h5>
+              <div
+                className={
+                  styles[
+                    'reserve__booking__details__content__selected-room__container'
+                  ]
+                }
+              >
+                {roomData?.map((room) => (
+                  <div key={room._id}>
+                    <>
+                      {room.title} -{' '}
+                      {room.roomNumbers.map(
+                        (roomNumber, index) =>
+                          selectedRooms.includes(roomNumber._id) && (
+                            <span key={index}>{roomNumber.number}</span>
+                          ),
+                      )}
+                    </>
+                  </div>
+                ))}
+              </div>
+              <span
+                className={
+                  styles[
+                    'reserve__booking__details__content__selected-room__container__change-selection'
+                  ]
+                }
+                onClick={handleChangeSelection}
+              >
+                Change your selection
+              </span>
             </div>
           </div>
         </div>
@@ -84,9 +137,10 @@ const ReserveDetails = ({ setStep, hotel }: ReserveDetailsProps) => {
           <h4 className={styles['reserve__booking__payment-schedule__header']}>
             Your payment schedule
           </h4>
-          <div className={styles['reserve__booking__payment-schedule__content']}>
-            <span>{`Before you stay you'll pay`}</span>
-            <span>US$15</span>
+          <div
+            className={styles['reserve__booking__payment-schedule__content']}
+          >
+            <span>{`No payment today. You'll pay when you stay.`}</span>
           </div>
         </div>
         <div className={styles['reserve__booking__cancel-cost']}>
@@ -94,8 +148,10 @@ const ReserveDetails = ({ setStep, hotel }: ReserveDetailsProps) => {
             How much will it cost to cancel?
           </h4>
           <div className={styles['reserve__booking__cancel-cost__content']}>
-            <span>{`If you cancel, you'll pay`}</span>
-            <span>US$15</span>
+            <span>{`Free cancellation until 23:59 on ${format(
+              dates[0].startDate,
+              'dd MMM',
+            )}`}</span>
           </div>
         </div>
       </div>
@@ -425,10 +481,7 @@ const ReserveDetails = ({ setStep, hotel }: ReserveDetailsProps) => {
         </div>
         <button onClick={() => setStep(2)} className={styles['reserve__btn']}>
           Next: Final details{' '}
-          <FontAwesomeIcon
-            icon={faChevronRight}
-            size="sm"
-          />
+          <FontAwesomeIcon icon={faChevronRight} size="sm" />
         </button>
       </div>
     </div>
