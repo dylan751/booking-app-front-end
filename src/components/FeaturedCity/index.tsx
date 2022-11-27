@@ -17,12 +17,12 @@ const FeaturedCity = () => {
 
   const dummy_featured_1 = [
     {
-      src: 'https://cf.bstatic.com/xdata/images/city/max500/652923.webp?k=38c46c1be4120dd87755482ba1e719be391760be25977efbb6149691f0e861fb&o=',
+      src: 'https://cf.bstatic.com/xdata/images/city/max600/652923.webp?k=38c46c1be4120dd87755482ba1e719be391760be25977efbb6149691f0e861fb&o=',
       city: 'Krakow',
       propertyCount: data && data[0],
     },
     {
-      src: 'https://cf.bstatic.com/xdata/images/city/max500/690334.webp?k=b99df435f06a15a1568ddd5f55d239507c0156985577681ab91274f917af6dbb&o=',
+      src: 'https://cf.bstatic.com/xdata/images/city/max600/690334.webp?k=b99df435f06a15a1568ddd5f55d239507c0156985577681ab91274f917af6dbb&o=',
       city: 'Budapest',
       propertyCount: data && data[1],
     },

@@ -36,7 +36,7 @@
       position: relative;
       bottom: -25px;
       width: 50%;
-      max-width: 1024px;
+      max-width: 1140px;
       gap: 10px;
 
       @media screen and (max-width: 1024px) {
@@ -174,7 +174,7 @@
   &__wrapper {
     position: relative;
     width: 100%;
-    max-width: 1024px;
+    max-width: 1140px;
     display: flex;
     flex-direction: column;
     gap: 10px;

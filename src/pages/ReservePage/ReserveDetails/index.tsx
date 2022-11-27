@@ -1,6 +1,5 @@
 import {
   faCircleCheck,
-  faCreditCard,
 } from '@fortawesome/free-regular-svg-icons';
 import {
   faDesktop,
@@ -22,6 +21,7 @@ import { SearchContext } from '../../../context/SearchContext';
 import useFetch from '../../../hooks/useFetch';
 import { Hotel } from '../../../models/Hotel';
 import { Room } from '../../../models/Room';
+import { dayDifference } from '../../../services/utils';
 import styles from './ReserveDetails.module.scss';
 
 interface ReserveDetailsProps {
@@ -30,14 +30,17 @@ interface ReserveDetailsProps {
 }
 
 const ReserveDetails = ({ setStep, hotel }: ReserveDetailsProps) => {
-  const { dates } = useContext(SearchContext);
+  const { dates, options } = useContext(SearchContext);
   const { user } = useContext(AuthContext);
   const { selectedRooms } = useContext(ReserveContext);
 
   const navigate = useNavigate();
   const hotelId = location.pathname.split('/')[2];
 
-  const { data: roomData, error } = useFetch<Room[]>(
+  const numberOfDays = dayDifference(dates[0].startDate, dates[0].endDate);
+  const price = hotel && numberOfDays * hotel.cheapestPrice * options.room;
+
+  const { data: roomData } = useFetch<Room[]>(
     `${
       process.env.REACT_APP_API_ENDPOINT
     }/rooms/multiple/${selectedRooms.toString()}`,
@@ -46,10 +49,6 @@ const ReserveDetails = ({ setStep, hotel }: ReserveDetailsProps) => {
   const handleChangeSelection = () => {
     navigate(`/hotels/${hotelId}`);
   };
-
-  if (error) {
-    return <div>Network Error!</div>;
-  }
 
   return (
     <div className={styles['reserve']}>
@@ -132,6 +131,86 @@ const ReserveDetails = ({ setStep, hotel }: ReserveDetailsProps) => {
           <h4 className={styles['reserve__booking__price-summary__header']}>
             Your price summary
           </h4>
+          <div className={styles['reserve__booking__price-summary__content']}>
+            <div
+              className={
+                styles['reserve__booking__price-summary__content__price']
+              }
+            >
+              <div
+                className={
+                  styles[
+                    'reserve__booking__price-summary__content__price__item'
+                  ]
+                }
+              >
+                <span>Two-Bedroom Superior Apartment</span>
+                <span>US${price}</span>
+              </div>
+              <div
+                className={
+                  styles[
+                    'reserve__booking__price-summary__content__price__item'
+                  ]
+                }
+              >
+                <span>5 % VAT</span>
+                <span>US${price && price * 0.05}</span>
+              </div>
+            </div>
+            <div
+              className={
+                styles['reserve__booking__price-summary__content__price-total']
+              }
+            >
+              <span>Price</span>
+              <span>US${price && price + price * 0.05} *</span>
+            </div>
+            <div
+              className={
+                styles[
+                  'reserve__booking__price-summary__content__excluded-charges'
+                ]
+              }
+            >
+              <h5>Excluded charges</h5>
+              <div
+                className={
+                  styles[
+                    'reserve__booking__price-summary__content__excluded-charges__item'
+                  ]
+                }
+              >
+                <span>City tax</span>
+                <span>US$8</span>
+              </div>
+              <div
+                className={
+                  styles[
+                    'reserve__booking__price-summary__content__excluded-charges__item'
+                  ]
+                }
+              >
+                <span>
+                  Damage deposit <b>Fully refundable</b>
+                </span>
+                <span>US$156 *</span>
+              </div>
+            </div>
+            <hr />
+            <div
+              className={
+                styles['reserve__booking__price-summary__content__more-info']
+              }
+            >
+              <span>
+                {`* This price is converted to show you the approximate cost in US$. You'll pay in`}{' '}
+                <b>€</b> {`or`} <b>HUF</b>
+                {`. The exchange rate may change before you pay.`}
+              </span>
+              <span>{`Bear in mind that your card issuer may charge you a foreign transaction fee.`}</span>
+            </div>
+          </div>
         </div>
         <div className={styles['reserve__booking__payment-schedule']}>
           <h4 className={styles['reserve__booking__payment-schedule__header']}>
@@ -269,14 +348,77 @@ const ReserveDetails = ({ setStep, hotel }: ReserveDetailsProps) => {
                 ]
               }
             >
-              <FontAwesomeIcon
-                icon={faCreditCard}
-                color={'#00800a'}
+              <div
                 className={
-                  styles['reserve__personal__container__good-to-know__icon']
+                  styles[
+                    'reserve__personal__container__good-to-know__description__item'
+                  ]
                 }
-              />
-              <span>No credit card needed!</span>
+              >
+                <FontAwesomeIcon
+                  icon={faCircleCheck}
+                  color={'#00800a'}
+                  className={
+                    styles['reserve__personal__container__good-to-know__icon']
+                  }
+                  size="lg"
+                />
+                <span>
+                  Free cancellation until 23:59 on{' '}
+                  {format(dates[0].startDate, 'dd MMM yyyy')}
+                </span>
+              </div>
+              <div
+                className={
+                  styles[
+                    'reserve__personal__container__good-to-know__description__item'
+                  ]
+                }
+              >
+                <FontAwesomeIcon
+                  icon={faCircleCheck}
+                  color={'#00800a'}
+                  className={
+                    styles['reserve__personal__container__good-to-know__icon']
+                  }
+                  size="lg"
+                />
+                <span>No credit card needed!</span>
+              </div>
+              <div
+                className={
+                  styles[
+                    'reserve__personal__container__good-to-know__description__item'
+                  ]
+                }
+              >
+                <FontAwesomeIcon
+                  icon={faCircleCheck}
+                  color={'#00800a'}
+                  className={
+                    styles['reserve__personal__container__good-to-know__icon']
+                  }
+                  size="lg"
+                />
+                <span>{`No payment needed today. You'll pay when you stay.`}</span>
+              </div>
+              <div
+                className={
+                  styles[
+                    'reserve__personal__container__good-to-know__description__item'
+                  ]
+                }
+              >
+                <FontAwesomeIcon
+                  icon={faCircleCheck}
+                  color={'#00800a'}
+                  className={
+                    styles['reserve__personal__container__good-to-know__icon']
+                  }
+                  size="lg"
+                />
+                <span>{`Congratulations! You've chosen the cheapest apartment at ${hotel?.name}. Don't miss out, book now!`}</span>
+              </div>
             </div>
           </div>
           <div className={styles['reserve__personal__container__details']}>

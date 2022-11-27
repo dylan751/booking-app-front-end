@@ -21,6 +21,7 @@ import { AuthContext } from '../../context/AuthContext';
 import { SearchContext } from '../../context/SearchContext';
 import useFetch from '../../hooks/useFetch';
 import { Hotel } from '../../models/Hotel';
+import { dayDifference } from '../../services/utils';
 import styles from './HotelItem.module.scss';
 
 const HotelItem = () => {
@@ -64,13 +65,6 @@ const HotelItem = () => {
   const navigate = useNavigate();
 
   // Calculate number of dates function
-  const MILISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
-  const dayDifference = (startDate, endDate) => {
-    const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
-    const diffDays = Math.ceil(timeDiff / MILISECONDS_PER_DAY);
-    return diffDays;
-  };
-
   const numberOfDays = dayDifference(dates[0].startDate, dates[0].endDate);
 
   const handleOpenSlider = (index: number) => {
