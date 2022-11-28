@@ -632,6 +632,7 @@ const ReserveDetails = ({
                 rows={4}
                 id="special-request"
                 name="special-request"
+                defaultValue={formData.specialRequest}
                 onChange={(e) => handleChange('specialRequest', e.target.value)}
               />
             </div>

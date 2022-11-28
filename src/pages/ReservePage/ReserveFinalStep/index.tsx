@@ -404,6 +404,7 @@ const ReserveFinalStep = ({
                   <input
                     type="text"
                     placeholder="Viet Nam"
+                    defaultValue={formData.country}
                     onChange={(e) => handleChange('country', e.target.value)}
                   />
                 </div>
@@ -418,6 +419,7 @@ const ReserveFinalStep = ({
                   <input
                     type="number"
                     placeholder="+0123456789"
+                    defaultValue={formData.phoneNumber}
                     onChange={(e) =>
                       handleChange('phoneNumber', e.target.value)
                     }
