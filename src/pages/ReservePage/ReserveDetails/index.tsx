@@ -1,6 +1,4 @@
-import {
-  faCircleCheck,
-} from '@fortawesome/free-regular-svg-icons';
+import { faCircleCheck } from '@fortawesome/free-regular-svg-icons';
 import {
   faDesktop,
   faUserTie,
@@ -18,6 +16,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthContext';
 import { ReserveContext } from '../../../context/ReserveContext';
 import { SearchContext } from '../../../context/SearchContext';
+import { Form } from '../../../models/Form';
 import { Hotel } from '../../../models/Hotel';
 import { Room } from '../../../models/Room';
 import { dayDifference } from '../../../services/utils';
@@ -27,9 +26,17 @@ interface ReserveDetailsProps {
   setStep: any;
   hotel?: Hotel;
   roomData?: Room[];
+  formData: Form;
+  setFormData: any;
 }
 
-const ReserveDetails = ({ setStep, hotel, roomData }: ReserveDetailsProps) => {
+const ReserveDetails = ({
+  setStep,
+  hotel,
+  roomData,
+  formData,
+  setFormData,
+}: ReserveDetailsProps) => {
   const { dates, options } = useContext(SearchContext);
   const { user } = useContext(AuthContext);
   const { selectedRooms } = useContext(ReserveContext);
@@ -42,6 +49,13 @@ const ReserveDetails = ({ setStep, hotel, roomData }: ReserveDetailsProps) => {
 
   const handleChangeSelection = () => {
     navigate(`/hotels/${hotelId}`);
+  };
+
+  const handleChange = (key: string, value: any) => {
+    console.log(key, value);
+    setFormData((prev) => {
+      return { ...prev, [key]: value };
+    });
   };
 
   return (
@@ -456,9 +470,25 @@ const ReserveDetails = ({ setStep, hotel, roomData }: ReserveDetailsProps) => {
                     ]
                   }
                 >
-                  <input type="radio" id="yes" name="work" value={1} />{' '}
+                  <input
+                    type="radio"
+                    id="yes"
+                    name="work"
+                    value={1}
+                    onChange={(e) =>
+                      handleChange('isTravelForWork', e.target.value)
+                    }
+                  />{' '}
                   <span>Yes</span>
-                  <input type="radio" id="no" name="work" value={0} />{' '}
+                  <input
+                    type="radio"
+                    id="no"
+                    name="work"
+                    value={0}
+                    onChange={(e) =>
+                      handleChange('isTravelForWork', e.target.value)
+                    }
+                  />{' '}
                   <span>No</span>
                 </div>
               </div>
@@ -482,7 +512,14 @@ const ReserveDetails = ({ setStep, hotel, roomData }: ReserveDetailsProps) => {
                     }
                   >
                     <label>First Name</label>
-                    <input type="text" placeholder="Duong" />
+                    <input
+                      type="text"
+                      placeholder="Duong"
+                      defaultValue={formData.firstName}
+                      onChange={(e) =>
+                        handleChange('firstName', e.target.value)
+                      }
+                    />
                   </div>
                   <div
                     className={
@@ -492,7 +529,12 @@ const ReserveDetails = ({ setStep, hotel, roomData }: ReserveDetailsProps) => {
                     }
                   >
                     <label>Last Name</label>
-                    <input type="text" placeholder="Nguyen" />
+                    <input
+                      type="text"
+                      placeholder="Nguyen"
+                      defaultValue={formData.lastName}
+                      onChange={(e) => handleChange('lastName', e.target.value)}
+                    />
                   </div>
                 </div>
                 <div
@@ -503,7 +545,12 @@ const ReserveDetails = ({ setStep, hotel, roomData }: ReserveDetailsProps) => {
                   }
                 >
                   <label>Email Address</label>
-                  <input type="email" placeholder="example@gmail.com" />
+                  <input
+                    type="email"
+                    placeholder="example@gmail.com"
+                    defaultValue={user.email}
+                    onChange={(e) => handleChange('email', e.target.value)}
+                  />
                   <span>Confirmation email sent to this address</span>
                 </div>
               </div>
@@ -533,7 +580,10 @@ const ReserveDetails = ({ setStep, hotel, roomData }: ReserveDetailsProps) => {
                       type="radio"
                       id="main-guest"
                       name="who-booking"
-                      value={1}
+                      value={0}
+                      onChange={(e) =>
+                        handleChange('whoBookingFor', e.target.value)
+                      }
                     />{' '}
                     <span>{`I'm the main guest`}</span>
                   </div>
@@ -548,7 +598,10 @@ const ReserveDetails = ({ setStep, hotel, roomData }: ReserveDetailsProps) => {
                       type="radio"
                       id="someone-else"
                       name="who-booking"
-                      value={0}
+                      value={1}
+                      onChange={(e) =>
+                        handleChange('whoBookingFor', e.target.value)
+                      }
                     />{' '}
                     <span>{`I'm booking for someone else`}</span>
                   </div>
@@ -575,7 +628,12 @@ const ReserveDetails = ({ setStep, hotel, roomData }: ReserveDetailsProps) => {
               <span>
                 Please write your requests in English or Vietnamese. (optional)
               </span>
-              <textarea rows={4} id="special-request" name="special-request" />
+              <textarea
+                rows={4}
+                id="special-request"
+                name="special-request"
+                onChange={(e) => handleChange('specialRequest', e.target.value)}
+              />
             </div>
           </div>
           <div className={styles['reserve__personal__container__arrival-time']}>
@@ -615,7 +673,7 @@ const ReserveDetails = ({ setStep, hotel, roomData }: ReserveDetailsProps) => {
             </div>
           </div>
         </div>
-        <button onClick={() => setStep(2)} className={styles['reserve__btn']}>
+        <button onClick={() => {setStep(2)}} className={styles['reserve__btn']}>
           Next: Final details{' '}
           <FontAwesomeIcon icon={faChevronRight} size="sm" />
         </button>

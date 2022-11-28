@@ -10,11 +10,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from 'date-fns';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../context/AuthContext';
 import { ReserveContext } from '../../../context/ReserveContext';
 import { SearchContext } from '../../../context/SearchContext';
+import { Form } from '../../../models/Form';
 import { Hotel } from '../../../models/Hotel';
 import { Room } from '../../../models/Room';
 import { dayDifference } from '../../../services/utils';
@@ -24,12 +25,16 @@ interface ReserveFinalStepProps {
   setStep: any;
   hotel?: Hotel;
   roomData?: Room[];
+  formData: Form;
+  setFormData: any;
 }
 
 const ReserveFinalStep = ({
   setStep,
   hotel,
   roomData,
+  formData,
+  setFormData,
 }: ReserveFinalStepProps) => {
   const { dates, options } = useContext(SearchContext);
   const { user } = useContext(AuthContext);
@@ -41,8 +46,15 @@ const ReserveFinalStep = ({
   const numberOfDays = dayDifference(dates[0].startDate, dates[0].endDate);
   const price = hotel && numberOfDays * hotel.cheapestPrice * options.room;
 
+  useEffect(() => {
+    setFormData((prev) => {
+      return { ...prev, price: price && price * 1.05 };
+    });
+  }, []);
+
   const handleReserve = async () => {
     console.log('Reserve');
+    console.log(formData);
     try {
       // await Promise.all(
       //   selectedRooms.map((roomId) => {
@@ -60,6 +72,13 @@ const ReserveFinalStep = ({
 
   const handleChangeSelection = () => {
     navigate(`/hotels/${hotelId}`);
+  };
+
+  const handleChange = (key: string, value: any) => {
+    console.log(key, value);
+    setFormData((prev) => {
+      return { ...prev, [key]: value };
+    });
   };
 
   return (
@@ -382,7 +401,11 @@ const ReserveFinalStep = ({
                   }
                 >
                   <label>Country/region *</label>
-                  <input type="text" placeholder="Viet Nam" />
+                  <input
+                    type="text"
+                    placeholder="Viet Nam"
+                    onChange={(e) => handleChange('country', e.target.value)}
+                  />
                 </div>
                 <div
                   className={
@@ -392,7 +415,13 @@ const ReserveFinalStep = ({
                   }
                 >
                   <label>{'Telephone (mobile number preferred) *'}</label>
-                  <input type="number" placeholder="+0123456789" />
+                  <input
+                    type="number"
+                    placeholder="+0123456789"
+                    onChange={(e) =>
+                      handleChange('phoneNumber', e.target.value)
+                    }
+                  />
                   <span>Needed by the property to validate your booking</span>
                 </div>
               </div>
@@ -409,7 +438,11 @@ const ReserveFinalStep = ({
                   }
                 >
                   <span>Name</span>
-                  <div>{user.username}</div>
+                  <div>
+                    {formData.firstName
+                      ? `${formData.firstName} ${formData.lastName}`
+                      : user.username}
+                  </div>
                 </div>
                 <div
                   className={
@@ -419,7 +452,7 @@ const ReserveFinalStep = ({
                   }
                 >
                   <span>Email</span>
-                  <div>{user.email}</div>
+                  <div>{formData.email || user.email}</div>
                 </div>
               </div>
             </div>
@@ -451,6 +484,15 @@ const ReserveFinalStep = ({
           <button
             onClick={handleReserve}
             className={styles['reserve__btn__group__reserve-button']}
+            disabled={
+              !formData.firstName ||
+              !formData.lastName ||
+              !formData.email ||
+              !formData.country ||
+              !formData.phoneNumber ||
+              !formData.hotelId ||
+              !formData.roomIds
+            }
           >
             <FontAwesomeIcon icon={faLock} size="lg" />
             <span>Complete Booking</span>
