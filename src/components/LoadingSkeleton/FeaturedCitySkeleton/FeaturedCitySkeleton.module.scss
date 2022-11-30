@@ -1,6 +1,7 @@
-.featured-skeleton {
-  border-radius: 0.5rem;
-  border: 1px solid #d9d9d9;
-  padding: 2rem 3rem;
-  display: flex;
+.featured-city-skeleton {
+  span {
+    border-radius: 2px !important;
+  }
+  position: relative;
+  top: -3px;
 }

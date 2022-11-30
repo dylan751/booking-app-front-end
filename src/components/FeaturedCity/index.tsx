@@ -1,4 +1,5 @@
 import React from 'react';
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { useNavigate } from 'react-router-dom';
 import useFetch from '../../hooks/useFetch';
 import { CountByCity } from '../../models/CountByCity';
@@ -66,55 +67,52 @@ const FeaturedCity = () => {
 
   return (
     <div className={styles['featured-city']}>
-      {loading ? (
-        // <FeaturedCitySkeleton />
-        'Loading Please wait...'
-      ) : (
-        <div className={styles['featured-city__container']}>
-          <div className={styles['featured-city__container-1']}>
-            {dummy_featured_1.map((featured, index) => (
+      <div className={styles['featured-city__container']}>
+        <div className={styles['featured-city__container-1']}>
+          {dummy_featured_1.map((featured, index) => (
+            <div
+              className={styles['featured-city__container-1__item']}
+              key={index}
+              onClick={() => handleClick(featured.city)}
+            >
+              {loading && <FeaturedCitySkeleton />}
+              <img
+                src={featured.src}
+                alt=""
+                className={styles['featured-city__container-1__item__img']}
+              />
               <div
-                className={styles['featured-city__container-1__item']}
-                key={index}
-                onClick={() => handleClick(featured.city)}
+                className={styles['featured-city__container-1__item__title']}
               >
-                <img
-                  src={featured.src}
-                  alt=""
-                  className={styles['featured-city__container-1__item__img']}
-                />
-                <div
-                  className={styles['featured-city__container-1__item__title']}
-                >
-                  <h1>{featured.city}</h1>
-                  <h2>{featured.propertyCount} properties</h2>
-                </div>
+                <h1>{featured.city}</h1>
+                <h2>{featured.propertyCount} properties</h2>
               </div>
-            ))}
-          </div>
-          <div className={styles['featured-city__container-2']}>
-            {dummy_featured_2.map((featured, index) => (
-              <div
-                className={styles['featured-city__container-2__item']}
-                key={index}
-              >
-                <img
-                  src={featured.src}
-                  alt=""
-                  className={styles['featured-city__container-2__item__img']}
-                  onClick={() => handleClick(featured.city)}
-                />
-                <div
-                  className={styles['featured-city__container-2__item__title']}
-                >
-                  <h1>{featured.city}</h1>
-                  <h2>{featured.propertyCount} properties</h2>
-                </div>
-              </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-      )}
+        <div className={styles['featured-city__container-2']}>
+          {dummy_featured_2.map((featured, index) => (
+            <div
+              className={styles['featured-city__container-2__item']}
+              key={index}
+              onClick={() => handleClick(featured.city)}
+            >
+              {loading && <FeaturedCitySkeleton />}
+              <img
+                src={featured.src}
+                alt=""
+                className={styles['featured-city__container-2__item__img']}
+              />
+              <div
+                className={styles['featured-city__container-2__item__title']}
+              >
+                <h1>{featured.city}</h1>
+                <h2>{featured.propertyCount} properties</h2>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
