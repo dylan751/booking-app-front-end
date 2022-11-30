@@ -4,6 +4,8 @@ import { CountByType } from '../../models/CountByType';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import styles from './PropertyList.module.scss';
+import PropertyListSkeleton from '../LoadingSkeleton/PropertyListSkeleton';
+import Skeleton from 'react-loading-skeleton';
 
 const PropertyList = () => {
   const { data, loading, error } = useFetch<CountByType[]>(
@@ -48,30 +50,38 @@ const PropertyList = () => {
 
   return (
     <div className={styles['property-list']}>
-      {loading ? (
-        'Loading Please wait'
-      ) : (
-        <Swiper spaceBetween={10} slidesPerView={slidesNumber}>
-          {data &&
-            images.map((img, index) => (
-              <SwiperSlide key={index}>
+      <Swiper spaceBetween={10} slidesPerView={slidesNumber}>
+        {data &&
+          images.map((img, index) => (
+            <SwiperSlide key={index}>
+              <div className={styles['property-list']}>
                 <div className={styles['property-list__item']}>
-                  <img
-                    src={img}
-                    alt=""
-                    className={styles['property-list__item__img']}
-                  />
+                  {loading ? (
+                    <PropertyListSkeleton />
+                  ) : (
+                    <img
+                      src={img}
+                      alt=""
+                      className={styles['property-list__item__img']}
+                    />
+                  )}
                   <div className={styles['property-list__item__title']}>
-                    <h1>{data[index]?.type}</h1>
+                    <h1>
+                      {loading ? <Skeleton width={100} /> : data[index]?.type}
+                    </h1>
                     <h2>
-                      {data[index]?.count} {data[index]?.type}
+                      {loading ? (
+                        <Skeleton width={80} />
+                      ) : (
+                        `${data[index]?.count} ${data[index]?.type}`
+                      )}
                     </h2>
                   </div>
                 </div>
-              </SwiperSlide>
-            ))}
-        </Swiper>
-      )}
+              </div>
+            </SwiperSlide>
+          ))}
+      </Swiper>
     </div>
   );
 };
