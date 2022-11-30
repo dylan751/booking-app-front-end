@@ -9,9 +9,13 @@ import {
   faChevronLeft,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import React, { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import ReserveSideBar from '../../../components/ReserveSideBar';
 import { AuthContext } from '../../../context/AuthContext';
+import { ReserveContext } from '../../../context/ReserveContext';
 import { SearchContext } from '../../../context/SearchContext';
 import { Form } from '../../../models/Form';
 import { Hotel } from '../../../models/Hotel';
@@ -35,7 +39,10 @@ const ReserveFinalStep = ({
   setFormData,
 }: ReserveFinalStepProps) => {
   const { dates, options } = useContext(SearchContext);
+  const { selectedRooms } = useContext(ReserveContext);
   const { user } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const numberOfDays = dayDifference(dates[0].startDate, dates[0].endDate);
   const price = hotel && numberOfDays * hotel.cheapestPrice * options.room;
@@ -46,26 +53,48 @@ const ReserveFinalStep = ({
     });
   }, []);
 
+  const getDatesInRage = (startDate, endDate) => {
+    const date = new Date(startDate.getTime());
+    const dateList: number[] = [];
+
+    while (date <= endDate) {
+      dateList.push(new Date(date).getTime());
+      date.setDate(date.getDate() + 1);
+    }
+
+    return dateList;
+  };
+
+  const allDates = getDatesInRage(dates[0].startDate, dates[0].endDate);
+
   const handleReserve = async () => {
-    console.log('Reserve');
-    console.log(formData);
     try {
-      // await Promise.all(
-      //   selectedRooms.map((roomId) => {
-      //     axios.put(
-      //       `${process.env.REACT_APP_API_ENDPOINT}/rooms/availability/${roomId}`,
-      //       { dates: allDates },
-      //     );
-      //   }),
-      // );
-      // setIsOpenBookingModal(false);
+      try {
+        await axios.post(
+          `${process.env.REACT_APP_API_ENDPOINT}/forms`,
+          formData,
+        );
+      } catch (err) {
+        console.log('Create Form err', err);
+      }
+
+      await Promise.all(
+        selectedRooms.map((roomId) => {
+          axios.put(
+            `${process.env.REACT_APP_API_ENDPOINT}/rooms/availability/${roomId}`,
+            { dates: allDates },
+          );
+        }),
+      );
+
+      toast.success('Reserve Hotel Succeeded');
+      navigate('/');
     } catch (err) {
-      console.log(err);
+      console.log('Update room availability err', err);
     }
   };
 
   const handleChange = (key: string, value: any) => {
-    console.log(key, value);
     setFormData((prev) => {
       return { ...prev, [key]: value };
     });

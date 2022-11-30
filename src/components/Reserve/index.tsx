@@ -1,9 +1,7 @@
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import axios from 'axios';
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import { ReserveContext } from '../../context/ReserveContext';
 import { SearchContext } from '../../context/SearchContext';
 import useFetch from '../../hooks/useFetch';
@@ -57,17 +55,9 @@ const Reserve = ({ setIsOpenBookingModal, hotelId }: ReserveProps) => {
     );
   };
 
-  const handleReserve = async () => {
+  const handleClickReserve = async () => {
     try {
-      // await Promise.all(
-      //   selectedRooms.map((roomId) => {
-      //     axios.put(
-      //       `${process.env.REACT_APP_API_ENDPOINT}/rooms/availability/${roomId}`,
-      //       { dates: allDates },
-      //     );
-      //   }),
-      // );
-      // setIsOpenBookingModal(false);
+      setIsOpenBookingModal(false);
       reserveDispatch &&
         reserveDispatch({
           type: 'NEW_RESERVE',
@@ -144,7 +134,7 @@ const Reserve = ({ setIsOpenBookingModal, hotelId }: ReserveProps) => {
         ))}
         <button
           className={styles['reserve__container__btn']}
-          onClick={handleReserve}
+          onClick={handleClickReserve}
         >
           Reserve Now!
         </button>

@@ -39,7 +39,6 @@ const ReserveDetails = ({
   const { user } = useContext(AuthContext);
 
   const handleChange = (key: string, value: any) => {
-    console.log(key, value);
     setFormData((prev) => {
       return { ...prev, [key]: value };
     });

@@ -48,7 +48,6 @@ const HotelItem = () => {
       };
     });
   };
-  console.log(dates, options);
 
   const handleSearch = () => {
     dispatch &&
