@@ -14,6 +14,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Footer from '../../components/Footer';
 import Header, { DatesInterface } from '../../components/Header';
+import HotelImageSlider from '../../components/HotelImageSlider';
 import MailList from '../../components/MailList';
 import Navbar from '../../components/Navbar';
 import Reserve from '../../components/Reserve';
@@ -103,30 +104,10 @@ const HotelItem = () => {
       ) : (
         <div className={styles['hotel__container']}>
           {isOpenSlider && (
-            <div className={styles['hotel__container__slider']}>
-              <FontAwesomeIcon
-                icon={faCircleXmark}
-                className={styles['hotel__container__slider__close']}
-                onClick={() => setIsOpenSlider(false)}
-              />
-              <FontAwesomeIcon
-                icon={faCircleArrowLeft}
-                className={styles['hotel__container__slider__arrow']}
-                onClick={() => handleMoveSlider('left')}
-              />
-              <div className={styles['hotel__container__slider__wrapper']}>
-                <img
-                  src={data?.photos[slideNumber]}
-                  alt=""
-                  className={styles['hotel__container__slider__wrapper__img']}
-                />
-              </div>
-              <FontAwesomeIcon
-                icon={faCircleArrowRight}
-                className={styles['hotel__container__slider__arrow']}
-                onClick={() => handleMoveSlider('right')}
-              />
-            </div>
+            <HotelImageSlider
+              photos={data?.photos}
+              setIsOpenSlider={setIsOpenSlider}
+            />
           )}
           <div className={styles['hotel__container__wrapper']}>
             <button
