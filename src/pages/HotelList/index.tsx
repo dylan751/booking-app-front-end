@@ -11,6 +11,7 @@ import useFetch from '../../hooks/useFetch';
 import { Hotel } from '../../models/Hotel';
 import { SearchContext } from '../../context/SearchContext';
 import { CountByCity } from '../../models/CountByCity';
+import SearchItemSkeleton from '../../components/LoadingSkeleton/SearchItemSkeleton';
 
 interface OptionsInterface {
   adult: number;
@@ -316,19 +317,19 @@ const HotelList = () => {
             <button onClick={handleSearch}>Search</button>
           </div>
           <div className="listResult">
-            {loading ? (
-              'loading'
-            ) : (
-              <>
-                <h1>
-                  {destination || '...'}: {(countData && countData[0]) || '-'}{' '}
-                  properties found
-                </h1>
-                {data?.map((item) => (
+            <>
+              <h1>
+                {destination || '...'}: {(countData && countData[0]) || '-'}{' '}
+                properties found
+              </h1>
+              {data?.map((item) =>
+                loading ? (
+                  <SearchItemSkeleton />
+                ) : (
                   <SearchItem item={item} key={item._id} />
-                ))}
-              </>
-            )}
+                ),
+              )}
+            </>
           </div>
         </div>
       </div>
