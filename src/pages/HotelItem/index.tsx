@@ -1,8 +1,5 @@
 import {
   faCalendarDays,
-  faCircleArrowLeft,
-  faCircleArrowRight,
-  faCircleXmark,
   faLocationDot,
   faPerson,
 } from '@fortawesome/free-solid-svg-icons';
@@ -33,7 +30,7 @@ const HotelItem = () => {
   } = useContext(SearchContext);
   const location = useLocation();
   const hotelId = location.pathname.split('/')[2];
-  const [slideNumber, setSlideNumber] = useState(0);
+  const [, setSlideNumber] = useState(0);
   const [isOpenSlider, setIsOpenSlider] = useState(false);
   const [isOpenBookingModal, setIsOpenBookingModal] = useState(false);
   const [openDate, setOpenDate] = useState(false);
@@ -71,16 +68,6 @@ const HotelItem = () => {
   const handleOpenSlider = (index: number) => {
     setSlideNumber(index);
     setIsOpenSlider(true);
-  };
-
-  const handleMoveSlider = (direction: string) => {
-    let newSlideNumber;
-    if (direction === 'left') {
-      newSlideNumber = slideNumber === 0 ? 5 : slideNumber - 1;
-    } else {
-      newSlideNumber = slideNumber === 5 ? 0 : slideNumber + 1;
-    }
-    setSlideNumber(newSlideNumber);
   };
 
   const handleBook = () => {
