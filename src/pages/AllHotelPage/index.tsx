@@ -3,6 +3,7 @@ import AllHotelList from '../../components/AllHotelList';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Navbar from '../../components/Navbar';
+import PropertyList from '../../components/PropertyList';
 import useFetch from '../../hooks/useFetch';
 import { Hotel } from '../../models/Hotel';
 import styles from './AllHotelPage.module.scss';
@@ -23,6 +24,16 @@ const AllHotelPage = () => {
       <Header />
       <div className={styles['hotel-page__container']}>
         <AllHotelList hotelList={data} loading={loading} />
+      </div>
+      <div className={styles['property-list__container']}>
+        <div className={styles['property-list__container__header']}>
+          <h3>More accommodation on Zuong Booking</h3>
+          <p>
+            Dive into our world of apartments, villas and other unique
+            accommodation
+          </p>
+        </div>
+        <PropertyList />
       </div>
       <Footer />
     </div>
