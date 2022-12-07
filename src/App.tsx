@@ -9,6 +9,7 @@ import HotelList from './pages/HotelList';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import ReservePage from './pages/ReservePage';
+import AllHotelPage from './pages/AllHotelPage';
 
 const App = () => {
   return (
@@ -20,6 +21,8 @@ const App = () => {
         <Route path="/reserve/:id" element={<ReservePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+
+        <Route path="/all-hotels" element={<AllHotelPage />} />
       </Routes>
       <ToastContainer />
     </BrowserRouter>
