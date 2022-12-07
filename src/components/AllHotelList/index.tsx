@@ -1,7 +1,6 @@
 import React from 'react';
 import { Hotel } from '../../models/Hotel';
 import AllHotelListItemSkeleton from '../LoadingSkeleton/AllHotelListItemSkeleton';
-import FeaturedCitySkeleton from '../LoadingSkeleton/FeaturedCitySkeleton';
 import styles from './AllHotelList.module.scss';
 import AllHotelListItem from './AllHotelListItem';
 
@@ -19,12 +18,12 @@ const AllHotelList = ({ hotelList, loading }: AllHotelListProps) => {
           <p>Find a great deal on a hotel for tonight or an upcoming trip</p>
         </div>
         <div className={styles['hotel-list__container__items']}>
-          {hotelList?.map((hotel) =>
-            loading ? (
-              <AllHotelListItemSkeleton />
-            ) : (
+          {loading ? (
+            <AllHotelListItemSkeleton count={6} />
+          ) : (
+            hotelList?.map((hotel) => (
               <AllHotelListItem key={hotel._id} item={hotel} />
-            ),
+            ))
           )}
         </div>
       </div>

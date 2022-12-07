@@ -22,7 +22,7 @@ const AllHotelPage = () => {
       <Navbar />
       <Header />
       <div className={styles['hotel-page__container']}>
-        <AllHotelList hotelList={data} loading={loading}/>
+        <AllHotelList hotelList={data} loading={loading} />
       </div>
       <Footer />
     </div>
