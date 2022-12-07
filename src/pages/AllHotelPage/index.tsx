@@ -2,6 +2,7 @@ import React from 'react';
 import AllHotelList from '../../components/AllHotelList';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
+import HotelFAQ from '../../components/HotelFAQ';
 import Navbar from '../../components/Navbar';
 import PropertyList from '../../components/PropertyList';
 import useFetch from '../../hooks/useFetch';
@@ -25,6 +26,7 @@ const AllHotelPage = () => {
       <div className={styles['hotel-page__container']}>
         <AllHotelList hotelList={data} loading={loading} />
       </div>
+      <HotelFAQ />
       <div className={styles['property-list__container']}>
         <div className={styles['property-list__container__header']}>
           <h3>More accommodation on Zuong Booking</h3>
