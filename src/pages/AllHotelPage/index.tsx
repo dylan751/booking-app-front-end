@@ -13,12 +13,16 @@ const AllHotelPage = () => {
     `${process.env.REACT_APP_API_ENDPOINT}/hotels?limit=6&offset=0`,
   );
 
+  if (error) {
+    return <div>{error.message}</div>;
+  }
+
   return (
     <div className={styles['hotel-page']}>
       <Navbar />
       <Header />
       <div className={styles['hotel-page__container']}>
-        <AllHotelList hotelList={data} />
+        <AllHotelList hotelList={data} loading={loading}/>
       </div>
       <Footer />
     </div>
