@@ -11,7 +11,6 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
 import React, { useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ReserveSideBar from '../../../components/ReserveSideBar';
 import { AuthContext } from '../../../context/AuthContext';
@@ -43,7 +42,6 @@ const ReserveFinalStep = ({
   const { selectedRooms } = useContext(ReserveContext);
   const { user } = useContext(AuthContext);
 
-  const navigate = useNavigate();
 
   const numberOfDays = dayDifference(dates[0].startDate, dates[0].endDate);
   const price = hotel && numberOfDays * hotel.cheapestPrice * options.room;
@@ -99,7 +97,6 @@ const ReserveFinalStep = ({
         });
 
       toast.success('Reserve Hotel Succeeded');
-      navigate('/');
     } catch (err) {
       console.log('Update room availability err', err);
     }
