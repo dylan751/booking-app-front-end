@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Hotel } from '../../../models/Hotel';
 import styles from './AllHotelListItem.module.scss';
 
@@ -7,8 +8,16 @@ interface AllHotelListItemProps {
 }
 
 const AllHotelListItem = ({ item }: AllHotelListItemProps) => {
+  const navigate = useNavigate();
+  const handleClick = (hotelId: number) => {
+    navigate(`/hotels/${hotelId}`);
+  };
+
   return (
-    <div className={styles['hotel-list-item']}>
+    <div
+      className={styles['hotel-list-item']}
+      onClick={() => handleClick(item._id)}
+    >
       <img className={styles['hotel-list-item__img']} src={item.photos[0]} />
       <div className={styles['hotel-list-item__content']}>
         <div className={styles['hotel-list-item__content__header']}>
@@ -17,7 +26,7 @@ const AllHotelListItem = ({ item }: AllHotelListItemProps) => {
             <span>{item.address}</span>
           </div>
           <div className={styles['hotel-list-item__content__header__rating']}>
-            <button>{item.rating}</button>
+            <button>{item.rating || 9.9}</button>
           </div>
         </div>
         <div className={styles['hotel-list-item__content__description']}>

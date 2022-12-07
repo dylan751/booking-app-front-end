@@ -6,8 +6,10 @@ import 'swiper/css';
 import styles from './PropertyList.module.scss';
 import PropertyListSkeleton from '../LoadingSkeleton/PropertyListSkeleton';
 import Skeleton from 'react-loading-skeleton';
+import { useNavigate } from 'react-router-dom';
 
 const PropertyList = () => {
+  const navigate = useNavigate();
   const { data, loading, error } = useFetch<CountByType[]>(
     `${process.env.REACT_APP_API_ENDPOINT}/hotels/count/byType`,
   );
@@ -44,6 +46,10 @@ const PropertyList = () => {
     window.addEventListener('resize', handleResize);
   }, [window.innerWidth]);
 
+  const handleClick = (propertyType: string) => {
+    navigate(`/all-${propertyType}`);
+  };
+
   if (error) {
     return <div>{error.message}</div>;
   }
@@ -63,6 +69,7 @@ const PropertyList = () => {
                       src={img}
                       alt=""
                       className={styles['property-list__item__img']}
+                      onClick={() => handleClick(data[index]?.type)}
                     />
                   )}
                   <div className={styles['property-list__item__title']}>
