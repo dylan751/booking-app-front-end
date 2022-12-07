@@ -20,6 +20,7 @@ import { SearchContext } from '../../../context/SearchContext';
 import { Form } from '../../../models/Form';
 import { Hotel } from '../../../models/Hotel';
 import { Room } from '../../../models/Room';
+import { checkout } from '../../../services/checkout';
 import { dayDifference } from '../../../services/utils';
 import styles from './ReserveFinalStep.module.scss';
 
@@ -86,6 +87,16 @@ const ReserveFinalStep = ({
           );
         }),
       );
+
+      // Redirect to Stripe
+      const lineItems: any = [];
+      lineItems.push({
+        price: 'price_1M7ThHI7VVxG2TJj0E0dZ5BB',
+        quantity: options.room,
+      }),
+        checkout({
+          lineItems,
+        });
 
       toast.success('Reserve Hotel Succeeded');
       navigate('/');
