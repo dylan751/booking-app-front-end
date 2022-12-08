@@ -398,7 +398,7 @@ const HotelItem = () => {
                 </div>
               )}
             </div>
-            <div className={styles['hotel__container__search__item']}>
+            <div className={styles['hotel__container__wrapper__search__item']}>
               <button
                 className={styles['hotel__container__btn']}
                 onClick={handleSearch}
