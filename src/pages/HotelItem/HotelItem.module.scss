@@ -85,7 +85,8 @@
           width: 100%;
           display: flex;
           align-items: center;
-          color: lightgray;
+          color: #262626;
+          font-weight: 500;
           cursor: pointer;
 
           @media screen and (max-width: 1024px) {
@@ -145,7 +146,7 @@
       }
 
       &__item__icon {
-        color: lightgray;
+        color: #262626;
       }
     }
   }

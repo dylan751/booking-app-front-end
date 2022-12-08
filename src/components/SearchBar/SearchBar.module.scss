@@ -51,6 +51,13 @@
       border: none;
       outline: none;
 
+      &::placeholder {
+        font-family: inherit;
+        color: #262626;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
       @media screen and (max-width: 768px) {
         font-size: 12px;
       }
@@ -59,7 +66,9 @@
     &__text {
       display: flex;
       align-items: center;
-      color: lightgray;
+      color: #262626;
+      font-size: 14px;
+      font-weight: 500;
       cursor: pointer;
 
       @media screen and (max-width: 1024px) {
@@ -118,10 +127,12 @@
     }
 
     &__btn {
+      font-family: inherit;
       width: 100%;
       background-color: #0071c2;
       color: white;
       font-weight: 500;
+      font-size: 20px;
       border: none;
       padding: 10px;
       height: 100%;
@@ -139,6 +150,6 @@
   }
 
   &__item__icon {
-    color: lightgray;
+    color: #262626;
   }
 }

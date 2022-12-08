@@ -88,9 +88,9 @@ const SearchBar = ({ component }: SearchBarProps) => {
             className={styles['search__item__text']}
             onClick={() => setOpenDate(!openDate)}
           >
-            {`${format(dates[0].startDate, 'MM/dd/yyyy')} to ${format(
+            {`${format(dates[0].startDate, 'EE d MMM')}  —  ${format(
               dates[0].endDate,
-              'MM/dd/yyyy',
+              'EE d MMM',
             )}`}
           </span>
           {openDate && (
@@ -113,7 +113,7 @@ const SearchBar = ({ component }: SearchBarProps) => {
             className={styles['search__item__text']}
             onClick={() => setOpenOptions(!openOptions)}
           >
-            {`${options.adult} adult ・ ${options.children} children ・ ${options.room} room`}
+            {`${options.adult} adults ・ ${options.children} children ・ ${options.room} room`}
           </span>
           {openOptions && (
             <div className={styles['search__item__options']}>
