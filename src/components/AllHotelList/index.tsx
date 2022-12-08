@@ -7,15 +7,19 @@ import AllHotelListItem from './AllHotelListItem';
 interface AllHotelListProps {
   hotelList?: Hotel[];
   loading: boolean;
+  type: 'Hotel' | 'Apartment' | 'Resort' | 'Villa' | 'Cabin';
 }
 
-const AllHotelList = ({ hotelList, loading }: AllHotelListProps) => {
+const AllHotelList = ({ hotelList, loading, type }: AllHotelListProps) => {
   return (
     <div className={styles['hotel-list']}>
       <div className={styles['hotel-list__container']}>
         <div className={styles['hotel-list__container__header']}>
-          <h3>Last minute hotels near you</h3>
-          <p>Find a great deal on a hotel for tonight or an upcoming trip</p>
+          <h3>Last minute {type.toLowerCase()} near you</h3>
+          <p>
+            Find a great deal on a {type.toLowerCase()} for tonight or an upcoming
+            trip
+          </p>
         </div>
         <div className={styles['hotel-list__container__items']}>
           {loading ? (

@@ -9,10 +9,14 @@ import useFetch from '../../hooks/useFetch';
 import { Hotel } from '../../models/Hotel';
 import styles from './AllHotelPage.module.scss';
 
-const AllHotelPage = () => {
+interface AllHotelPageProps {
+  type: 'Hotel' | 'Apartment' | 'Resort' | 'Villa' | 'Cabin';
+}
+
+const AllHotelPage = ({ type }: AllHotelPageProps) => {
   // TODO: Add Pagination
   const { data, loading, error } = useFetch<Hotel[]>(
-    `${process.env.REACT_APP_API_ENDPOINT}/hotels?limit=6&offset=0`,
+    `${process.env.REACT_APP_API_ENDPOINT}/hotels?type=${type}&limit=6&offset=0`,
   );
 
   if (error) {
@@ -24,9 +28,9 @@ const AllHotelPage = () => {
       <Navbar />
       <Header />
       <div className={styles['hotel-page__container']}>
-        <AllHotelList hotelList={data} loading={loading} />
+        <AllHotelList hotelList={data} loading={loading} type={type} />
       </div>
-      <HotelFAQ />
+      <HotelFAQ type={type} />
       <div className={styles['property-list__container']}>
         <div className={styles['property-list__container__header']}>
           <h3>More accommodation on Zuong Booking</h3>

@@ -324,7 +324,7 @@ const HotelList = () => {
               </h1>
               {data?.map((item) =>
                 loading ? (
-                  <SearchItemSkeleton />
+                  <SearchItemSkeleton key={item._id} />
                 ) : (
                   <SearchItem item={item} key={item._id} />
                 ),

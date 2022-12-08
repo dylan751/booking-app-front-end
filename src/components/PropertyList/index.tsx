@@ -48,6 +48,7 @@ const PropertyList = () => {
 
   const handleClick = (propertyType: string) => {
     navigate(`/all-${propertyType}`);
+    location.reload();
   };
 
   if (error) {
