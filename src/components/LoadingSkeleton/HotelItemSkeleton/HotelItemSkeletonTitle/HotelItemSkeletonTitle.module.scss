@@ -1,0 +1,11 @@
+.hotel-item-skeleton-title {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  span {
+    border-radius: 2px !important;
+  }
+  position: relative;
+  top: -3px;
+}
