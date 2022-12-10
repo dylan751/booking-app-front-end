@@ -12,6 +12,8 @@ import { Hotel } from '../../models/Hotel';
 import { SearchContext } from '../../context/SearchContext';
 import { CountByCity } from '../../models/CountByCity';
 import SearchItemSkeleton from '../../components/LoadingSkeleton/SearchItemSkeleton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 
 interface OptionsInterface {
   adult: number;
@@ -83,18 +85,21 @@ const HotelList = () => {
             <h1 className="lsTitle">Search</h1>
             <div className="lsItem">
               <label>Destination</label>
-              <input
-                value={destination}
-                type="text"
-                onChange={(e) => setDestination(e.target.value)}
-              />
+              <div className="lsDestination">
+                <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" />
+                <input
+                  value={destination}
+                  type="text"
+                  onChange={(e) => setDestination(e.target.value)}
+                />
+              </div>
             </div>
             <div className="lsItem">
               <label>Check-in date</label>
               <span onClick={() => setOpenDate(!openDate)}>{`${format(
                 dates[0].startDate,
-                'MM/dd/yyyy',
-              )} to ${format(dates[0].endDate, 'MM/dd/yyyy')}`}</span>
+                'EE d MMM',
+              )} – ${format(dates[0].endDate, 'EE d MMM')}`}</span>
               {openDate && (
                 <DateRange
                   editableDateInputs={true}
@@ -114,7 +119,7 @@ const HotelList = () => {
                     className={styles['header__container__search__item__text']}
                     onClick={() => setOpenOptions(!openOptions)}
                   >
-                    {`${options.adult} adult・${options.children} children・${options.room} room`}
+                    {`${options.adult} adults・${options.children} children・${options.room} room`}
                   </span>
                   {openOptions && (
                     <div

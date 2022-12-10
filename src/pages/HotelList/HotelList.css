@@ -39,15 +39,28 @@
   font-size: 12px;
 }
 
-.lsItem > input {
+.lsItem > .lsDestination {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  padding: 5px 8px;
+  gap: 8px;
+}
+
+.lsItem > div > input {
   height: 30px;
   border: none;
   font-size: 14px;
-  padding: 5px;
 }
+
+.lsItem > div > input:focus {
+  border: none;
+  outline: none;
+}
+
 .lsItem > span {
   height: 30px;
-  padding: 5px;
+  padding: 5px 8px;
   background-color: white;
   font-size: 14px;
   display: flex;
@@ -86,7 +99,7 @@
   flex: 7;
 }
 
-.listResult>h1 {
+.listResult > h1 {
   font-size: 24px;
   margin-bottom: 20px;
 }
