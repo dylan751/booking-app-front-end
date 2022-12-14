@@ -6,7 +6,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import styles from './FeaturedProperties.module.scss';
 import FeaturedPropertiesSkeleton from '../LoadingSkeleton/FeaturedPropertiesSkeleton';
-import Skeleton from 'react-loading-skeleton';
 
 const FeaturedProperties = () => {
   const navigate = useNavigate();
@@ -49,58 +48,47 @@ const FeaturedProperties = () => {
 
   return (
     <div className={styles['featured-properties']}>
-      <Swiper spaceBetween={10} slidesPerView={slidesNumber}>
-        {data?.map((item) => (
-          <SwiperSlide key={item._id}>
-            <div
-              className={styles['featured-properties__item']}
-              onClick={() => handleClick(item._id)}
-            >
-              {loading ? (
-                <FeaturedPropertiesSkeleton />
-              ) : (
+      {loading ? (
+        <FeaturedPropertiesSkeleton count={slidesNumber} />
+      ) : (
+        <Swiper spaceBetween={10} slidesPerView={slidesNumber}>
+          {data?.map((item) => (
+            <SwiperSlide key={item._id}>
+              <div
+                className={styles['featured-properties__item']}
+                onClick={() => handleClick(item._id)}
+              >
                 <img
                   src={item.photos[0]}
                   alt=""
                   className={styles['featured-properties__item__img']}
                 />
-              )}
-              <span className={styles['featured-properties__item__name']}>
-                {loading ? <Skeleton width={150} /> : item.name}
-              </span>
-              <span className={styles['featured-properties__item__address']}>
-                {loading ? <Skeleton width={200} /> : item.address}
-              </span>
-              <span className={styles['featured-properties__item__price']}>
-                {/* <p>Starting from</p> ${item.cheapestPrice} */}
-                {loading ? (
-                  <Skeleton width={140} />
-                ) : (
-                  <>
-                    <p>Starting from</p> ${item.cheapestPrice}
-                  </>
-                )}
-              </span>
-              {/* {item.rating && (
+                <span className={styles['featured-properties__item__name']}>
+                  {item.name}
+                </span>
+                <span className={styles['featured-properties__item__address']}>
+                  {item.address}
+                </span>
+                <span className={styles['featured-properties__item__price']}>
+                  <p>Starting from</p> ${item.cheapestPrice}
+                </span>
+                {/* {item.rating && (
                 <div className={styles['featured-properties__item__rating']}>
                   <button>{item.rating}</button>
                   <span>Excellent</span>
                 </div>
               )} */}
-              <div className={styles['featured-properties__item__rating']}>
-                {loading ? (
-                  <Skeleton width={100} />
-                ) : (
+                <div className={styles['featured-properties__item__rating']}>
                   <>
                     <button>9.0</button>
                     <span>Excellent</span>
                   </>
-                )}
+                </div>
               </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      )}
     </div>
   );
 };

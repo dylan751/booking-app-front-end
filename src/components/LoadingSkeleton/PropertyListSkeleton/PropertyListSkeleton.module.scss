@@ -1,7 +1,13 @@
 .property-list-skeleton {
-  span {
-    border-radius: 2px !important;
+  display: flex;
+  gap: 16px;
+  width: 100%;
+
+  &__item {
+    width: 100%;
+
+    &__img {
+      margin-bottom: 10px;
+    }
   }
-  position: relative;
-  top: -3px;
 }
