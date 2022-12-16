@@ -2,6 +2,8 @@
   &__container {
     margin-top: 50px;
     margin-bottom: 50px;
+    max-width: 1140px;
+    margin: 50px auto;
   }
 }
 
@@ -13,6 +15,13 @@
     flex-direction: column;
     gap: 30px;
 
+    @media screen and (max-width: 1024px) {
+      padding: 0 50px;
+    }
+    @media screen and (max-width: 480px) {
+      padding: 0 10px;
+    }
+
     &__header {
       width: 1140px;
       h3 {
@@ -23,7 +32,6 @@
       }
 
       @media screen and (max-width: 1024px) {
-        padding: 0 50px;
         font-size: 16px;
         width: 100%;
       }

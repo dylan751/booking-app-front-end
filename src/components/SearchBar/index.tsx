@@ -35,6 +35,7 @@ const SearchBar = ({ component }: SearchBarProps) => {
       key: 'selection',
     },
   ]);
+  console.log(dates);
 
   const [openOptions, setOpenOptions] = useState(false);
   const [options, setOptions] = useState({

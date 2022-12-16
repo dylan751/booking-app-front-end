@@ -5,7 +5,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from 'date-fns';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { DateRange } from 'react-date-range';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -80,6 +80,17 @@ const HotelItem = () => {
     }
   };
 
+  const [isReserveButton, setIsReserveButton] = useState(
+    window.innerWidth > 768 ? true : false,
+  );
+  useEffect(() => {
+    const handleResize = () => {
+      setIsReserveButton(window.innerWidth > 768 ? true : false);
+    };
+
+    window.addEventListener('resize', handleResize);
+  }, [window.innerWidth]);
+
   if (error) {
     return <div>{error.message}</div>;
   }
@@ -96,12 +107,14 @@ const HotelItem = () => {
           />
         )}
         <div className={styles['hotel__container__wrapper']}>
-          <button
-            className={styles['hotel__container__wrapper__book-btn']}
-            onClick={handleBook}
-          >
-            Reserve or Book Now!
-          </button>
+          {isReserveButton && (
+            <button
+              className={styles['hotel__container__wrapper__book-btn']}
+              onClick={handleBook}
+            >
+              Reserve or Book Now!
+            </button>
+          )}
           {loading ? (
             <HotelItemSkeletonTitle />
           ) : (

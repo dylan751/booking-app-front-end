@@ -36,6 +36,10 @@
           width: 100%;
           object-fit: cover;
           cursor: pointer;
+
+          @media screen and (max-width: 480px) {
+            min-height: 150px;
+          }
         }
 
         &__title {

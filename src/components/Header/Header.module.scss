@@ -13,6 +13,9 @@
     @media screen and (max-width: 1024px) {
       padding: 0 50px;
     }
+    @media screen and (max-width: 480px) {
+      padding: 0 10px;
+    }
 
     &.listMode {
       margin: 20px 0px 0px 0px;
@@ -25,6 +28,10 @@
 
       @media screen and (max-width: 768px) {
         gap: 20px;
+      }
+
+      @media screen and (max-width: 480px) {
+        gap: 10px;
       }
 
       &__item {
@@ -41,6 +48,10 @@
 
         @media screen and (max-width: 768px) {
           font-size: 14px;
+        }
+
+        @media screen and (max-width: 480px) {
+          font-size: 10px;
         }
       }
     }
