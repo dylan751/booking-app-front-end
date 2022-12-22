@@ -46,6 +46,9 @@
 
       @media screen and (max-width: 768px) {
         width: 85%;
+        flex-direction: column;
+        height: 130px;
+        bottom: -85px;
       }
 
       &__item:nth-child(1) {
@@ -54,10 +57,18 @@
       }
       &__item:nth-child(2) {
         flex: 2;
+        @media screen and (max-width: 768px) {
+          margin-left: 0;
+        }
       }
       &__item:last-child {
         flex: 1;
         padding: 0;
+        @media screen and (max-width: 768px) {
+          margin-left: 0;
+          width: 100%;
+          margin-bottom: 0px;
+        }
       }
 
       &__item {
@@ -70,18 +81,23 @@
         height: 100%;
         margin-left: 4px;
         border-radius: 2px;
-        padding: 0 10px;
+        border: 1px solid transparent;
 
-        &__input {
-          border: none;
-          outline: none;
+        &:hover {
+          box-shadow: 0 0 1px 1px gray;
+        }
 
-          @media screen and (max-width: 768px) {
-            font-size: 12px;
-          }
+        @media screen and (max-width: 768px) {
+          width: 100%;
+          margin-bottom: 5px;
+        }
+
+        &__icon {
+          padding-left: 10px;
         }
 
         &__text {
+          height: 100%;
           width: 100%;
           display: flex;
           align-items: center;
@@ -100,20 +116,28 @@
 
         &__date {
           position: absolute;
-          top: 50px;
+          top: 65px;
           z-index: 2;
           box-shadow: 0px 2px 16px 0px rgba(0, 0, 0, 0.24);
           border-radius: 2px;
+
+          @media screen and (max-width: 768px) {
+            top: 90px;
+          }
         }
 
         &__options {
           position: absolute;
-          top: 50px;
+          top: 65px;
           background-color: white;
           color: gray;
-          border-radius: 5px;
+          border-radius: 2px;
           box-shadow: 0px 0px 10px -5px rgba(0, 0, 0, 0.4);
           z-index: 2;
+
+          @media screen and (max-width: 768px) {
+            top: 130px;
+          }
 
           &__item {
             width: 200px;
