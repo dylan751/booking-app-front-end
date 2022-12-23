@@ -34,6 +34,12 @@ const Navbar = ({ type }: NavbarProps) => {
         </Link>
         {user ? (
           <div className={styles['navbar__container__items']}>
+            <button
+              className={styles['navbar__container__items__info-btn']}
+              onClick={() => navigate('/reservations')}
+            >
+              List your reservations
+            </button>
             {user.username}
             <button
               className={styles['navbar__container__items__btn']}

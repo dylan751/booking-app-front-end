@@ -1,4 +1,5 @@
 export interface Form {
+  userId: string;
   isTravelForWork: boolean;
   firstName: string;
   lastName: string;
@@ -10,4 +11,6 @@ export interface Form {
   price: number;
   hotelId: string;
   roomIds: string;
+  startDate: Date;
+  endDate: Date;
 }

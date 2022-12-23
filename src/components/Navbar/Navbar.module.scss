@@ -30,16 +30,38 @@
       }
     }
 
-    &__items__btn {
-      font-weight: 600;
-      margin-left: 10px;
-      border: none;
-      padding: 8px 16px;
-      cursor: pointer;
-      color: #0071c2;
+    &__items {
+      &__info-btn {
+        font-family: inherit;
+        font-weight: 500;
+        margin-right: 10px;
+        border: 1px solid #fff;
+        padding: 8px;
+        font-size: 14px;
+        color: #fff;
+        background-color: #003580;
+        cursor: pointer;
 
-      @media screen and (max-width: 480px) {
-        font-size: 12px;
+        &:hover {
+          background-color: #275191;
+        }
+
+        @media screen and (max-width: 480px) {
+          font-size: 12px;
+        }
+      }
+
+      &__btn {
+        font-weight: 600;
+        margin-left: 10px;
+        border: none;
+        padding: 8px 16px;
+        cursor: pointer;
+        color: #0071c2;
+
+        @media screen and (max-width: 480px) {
+          font-size: 12px;
+        }
       }
     }
   }

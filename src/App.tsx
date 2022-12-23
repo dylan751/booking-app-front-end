@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ReservePage from './pages/ReservePage';
 import AllHotelPage from './pages/AllHotelPage';
+import UserReservationsPage from './pages/UserReservationsPage';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/reserve/:id" element={<ReservePage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/reservations" element={<UserReservationsPage />} />
 
         <Route path="/all-hotels" element={<AllHotelPage type={'Hotel'} />} />
         <Route

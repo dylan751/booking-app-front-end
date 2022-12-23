@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import { AuthContext } from '../../context/AuthContext';
 import { ReserveContext } from '../../context/ReserveContext';
+import { SearchContext } from '../../context/SearchContext';
 import useFetch from '../../hooks/useFetch';
 import { Form } from '../../models/Form';
 import { Hotel } from '../../models/Hotel';
@@ -21,6 +22,7 @@ const ReservePage = () => {
   );
 
   const { selectedRooms } = useContext(ReserveContext);
+  const { dates } = useContext(SearchContext);
   const { user } = useContext(AuthContext);
   const { data: roomData } = useFetch<Room[]>(
     `${
@@ -29,6 +31,7 @@ const ReservePage = () => {
   );
 
   const [formData, setFormData] = useState<Form>({
+    userId: user._id,
     isTravelForWork: false,
     firstName: '',
     lastName: '',
@@ -40,6 +43,8 @@ const ReservePage = () => {
     price: 0,
     hotelId: hotelId,
     roomIds: selectedRooms.toString(),
+    startDate: dates[0].startDate,
+    endDate: dates[0].endDate,
   });
 
   return (
