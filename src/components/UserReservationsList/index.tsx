@@ -4,7 +4,7 @@ import UserReservationsListItem from './UserReservationListItem';
 import styles from './UserReservationsList.module.scss';
 
 interface UserReservationsListProps {
-  reservationDatas: Form[];
+  reservationDatas?: Form[];
 }
 
 const UserReservationsList = ({
@@ -12,7 +12,7 @@ const UserReservationsList = ({
 }: UserReservationsListProps) => {
   return (
     <div className={styles['reservation-list']}>
-      {reservationDatas.map((item, index) => (
+      {reservationDatas?.map((item, index) => (
         <UserReservationsListItem key={index} item={item} />
       ))}
     </div>

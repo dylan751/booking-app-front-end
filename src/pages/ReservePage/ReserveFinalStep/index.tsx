@@ -42,8 +42,7 @@ const ReserveFinalStep = ({
   const { selectedRooms } = useContext(ReserveContext);
   const { user } = useContext(AuthContext);
 
-
-  const numberOfDays = dayDifference(dates[0].startDate, dates[0].endDate);
+  const numberOfDays = dayDifference(dates[0].startDate, dates[0].endDate,);
   const price = hotel && numberOfDays * hotel.cheapestPrice * options.room;
 
   useEffect(() => {

@@ -14,7 +14,9 @@ const UserReservationsListItem = ({ item }: UserReservationsListItemProps) => {
   const { data, loading, error } = useFetch<Hotel>(
     `${process.env.REACT_APP_API_ENDPOINT}/hotels/${item.hotelId}`,
   );
-  const numberOfDays = dayDifference(item.startDate, item.endDate);
+  const start = new Date(item.startDate);
+  const end = new Date(item.endDate);
+  const numberOfDays = dayDifference(start, end);
   const price = data && numberOfDays * data.cheapestPrice * data.rooms.length;
 
   if (error) {
@@ -25,7 +27,7 @@ const UserReservationsListItem = ({ item }: UserReservationsListItemProps) => {
     <div className={styles['reservation-list-item']}>
       <h2>{data?.city}</h2>
       <span>
-        {format(item?.startDate, 'dd MMM')} - {format(item?.endDate, 'dd MMM')}
+        {format(start, 'dd MMM')} - {format(end, 'dd MMM')}
       </span>
       <div className={styles['reservation-list-item__container']}>
         <img src={data?.photos[0]} alt="hotel" />
@@ -45,8 +47,7 @@ const UserReservationsListItem = ({ item }: UserReservationsListItemProps) => {
             }
           >
             {' '}
-            {format(item?.startDate, 'dd MMM')} -{' '}
-            {format(item?.endDate, 'dd MMM')} . {data?.city}
+            {format(start, 'dd MMM')} - {format(end, 'dd MMM')} . {data?.city}
           </div>
           <div
             className={
@@ -57,7 +58,7 @@ const UserReservationsListItem = ({ item }: UserReservationsListItemProps) => {
           </div>
         </div>
         <div className={styles['reservation-list-item__container__price']}>
-          USD {price}
+          US${price && price + price * 0.05}
         </div>
       </div>
     </div>
