@@ -4,6 +4,7 @@ import useFetch from '../../../hooks/useFetch';
 import { Form } from '../../../models/Form';
 import { Hotel } from '../../../models/Hotel';
 import { dayDifference } from '../../../services/utils';
+import UserReservationsListItemSkeleton from '../../LoadingSkeleton/UserReservationsListItemSkeleton';
 import styles from './UserReservationsListItem.module.scss';
 
 interface UserReservationsListItemProps {
@@ -25,42 +26,53 @@ const UserReservationsListItem = ({ item }: UserReservationsListItemProps) => {
 
   return (
     <div className={styles['reservation-list-item']}>
-      <h2>{data?.city}</h2>
-      <span>
-        {format(start, 'dd MMM')} - {format(end, 'dd MMM')}
-      </span>
-      <div className={styles['reservation-list-item__container']}>
-        <img src={data?.photos[0]} alt="hotel" />
-        <div
-          className={styles['reservation-list-item__container__description']}
-        >
-          <div
-            className={
-              styles['reservation-list-item__container__description__name']
-            }
-          >
-            {data?.name}
+      {loading ? (
+        <UserReservationsListItemSkeleton />
+      ) : (
+        <>
+          <h2>{data?.city}</h2>
+          <span>
+            {format(start, 'dd MMM')} - {format(end, 'dd MMM')}
+          </span>
+          <div className={styles['reservation-list-item__container']}>
+            <img src={data?.photos[0]} alt="hotel" />
+            <div
+              className={
+                styles['reservation-list-item__container__description']
+              }
+            >
+              <div
+                className={
+                  styles['reservation-list-item__container__description__name']
+                }
+              >
+                {data?.name}
+              </div>
+              <div
+                className={
+                  styles['reservation-list-item__container__description__time']
+                }
+              >
+                {' '}
+                {format(start, 'dd MMM')} - {format(end, 'dd MMM')} .{' '}
+                {data?.city}
+              </div>
+              <div
+                className={
+                  styles[
+                    'reservation-list-item__container__description__status'
+                  ]
+                }
+              >
+                Completed
+              </div>
+            </div>
+            <div className={styles['reservation-list-item__container__price']}>
+              US${price && price + price * 0.05}
+            </div>
           </div>
-          <div
-            className={
-              styles['reservation-list-item__container__description__time']
-            }
-          >
-            {' '}
-            {format(start, 'dd MMM')} - {format(end, 'dd MMM')} . {data?.city}
-          </div>
-          <div
-            className={
-              styles['reservation-list-item__container__description__status']
-            }
-          >
-            Completed
-          </div>
-        </div>
-        <div className={styles['reservation-list-item__container__price']}>
-          US${price && price + price * 0.05}
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 };
