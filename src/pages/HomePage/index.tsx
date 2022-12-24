@@ -14,15 +14,36 @@ const HomePage = () => {
       <Navbar />
       <Header />
       <div className={styles['home-page__container']}>
-        <h1 className={styles['home-page__container__title']}>
-          Browse by property type
-        </h1>
-        <PropertyList />
+        <div className={styles['home-page__container__property-list']}>
+          <h1 className={styles['home-page__container__property-list__title']}>
+            Browse by property type
+          </h1>
+          <PropertyList />
+        </div>
         <FeaturedCity />
-        <h1 className={styles['home-page__container__title']}>
-          Home guests love
-        </h1>
-        <FeaturedProperties />
+        <div className={styles['home-page__container__featured-properties']}>
+          <h1
+            className={
+              styles['home-page__container__featured-properties__title']
+            }
+          >
+            Stay at our top unique properties
+          </h1>
+          <span>
+            {`From castles and villas to boats and igloos, we've got it all`}
+          </span>
+          <FeaturedProperties />
+        </div>
+        <div className={styles['home-page__container__featured-properties']}>
+          <h1
+            className={
+              styles['home-page__container__featured-properties__title']
+            }
+          >
+            Home guests love
+          </h1>
+          <FeaturedProperties />
+        </div>
         <MailList />
         <Footer />
       </div>
