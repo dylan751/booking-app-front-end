@@ -16,10 +16,11 @@ interface ReserveProps {
 const Reserve = ({ setIsOpenBookingModal, hotelId }: ReserveProps) => {
   const navigate = useNavigate();
   const [selectedRooms, setSelectedRooms] = useState<number[]>([]);
+  const [numberOfSelect, setNumberOfSelect] = useState<number>(0);
   const { data, error } = useFetch<Room[]>(
     `${process.env.REACT_APP_API_ENDPOINT}/hotels/room/${hotelId}`,
   );
-  const { dates } = useContext(SearchContext);
+  const { dates, options } = useContext(SearchContext);
   const { dispatch: reserveDispatch } = useContext(ReserveContext);
 
   const getDatesInRage = (startDate, endDate) => {
@@ -43,6 +44,14 @@ const Reserve = ({ setIsOpenBookingModal, hotelId }: ReserveProps) => {
     );
 
     return !isFound;
+  };
+
+  const handleCheckbox = (e) => {
+    if (e.target.checked) {
+      setNumberOfSelect(numberOfSelect + 1);
+    } else {
+      setNumberOfSelect(numberOfSelect - 1);
+    }
   };
 
   const handleSelectRoom = (e) => {
@@ -125,7 +134,10 @@ const Reserve = ({ setIsOpenBookingModal, hotelId }: ReserveProps) => {
                     type="checkbox"
                     value={roomNumber._id}
                     onChange={handleSelectRoom}
-                    disabled={!isAvailable(roomNumber)}
+                    disabled={
+                      !isAvailable(roomNumber) || numberOfSelect >= options.room
+                    }
+                    onClick={handleCheckbox}
                   />
                 </div>
               ))}
