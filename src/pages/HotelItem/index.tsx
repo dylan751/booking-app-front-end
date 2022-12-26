@@ -72,6 +72,16 @@ const HotelItem = () => {
     setIsOpenSlider(true);
   };
 
+  const [monthNumber, setMonthNumber] = useState(
+    window.innerWidth > 1024 ? 2 : 1,
+  );
+  useEffect(() => {
+    const handleResize = () => {
+      setMonthNumber(window.innerWidth > 1024 ? 2 : 1);
+    };
+    window.addEventListener('resize', handleResize);
+  }, [window.innerWidth]);
+
   const handleBook = () => {
     if (user) {
       setIsOpenBookingModal(true);
@@ -223,7 +233,7 @@ const HotelItem = () => {
                 moveRangeOnFirstSelection={false}
                 ranges={dates}
                 minDate={new Date()}
-                months={2}
+                months={monthNumber}
                 direction="horizontal"
                 className={
                   styles['hotel__container__wrapper__search__item__date']

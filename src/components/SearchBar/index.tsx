@@ -4,7 +4,7 @@ import {
   faPerson,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SearchContext } from '../../context/SearchContext';
 import { DateRange } from 'react-date-range';
@@ -54,6 +54,16 @@ const SearchBar = ({ component }: SearchBarProps) => {
     });
   };
 
+  const [monthNumber, setMonthNumber] = useState(
+    window.innerWidth > 1024 ? 2 : 1,
+  );
+  useEffect(() => {
+    const handleResize = () => {
+      setMonthNumber(window.innerWidth > 1024 ? 2 : 1);
+    };
+    window.addEventListener('resize', handleResize);
+  }, [window.innerWidth]);
+
   const handleSearch = () => {
     dispatch &&
       dispatch({
@@ -100,7 +110,7 @@ const SearchBar = ({ component }: SearchBarProps) => {
               moveRangeOnFirstSelection={false}
               ranges={dates}
               minDate={new Date()}
-              months={2}
+              months={monthNumber}
               direction="horizontal"
               className={styles['search__item__date']}
             />
