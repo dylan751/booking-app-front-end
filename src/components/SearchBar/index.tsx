@@ -100,6 +100,8 @@ const SearchBar = ({ component }: SearchBarProps) => {
               moveRangeOnFirstSelection={false}
               ranges={dates}
               minDate={new Date()}
+              months={2}
+              direction="horizontal"
               className={styles['search__item__date']}
             />
           )}

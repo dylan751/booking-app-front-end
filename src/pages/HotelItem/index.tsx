@@ -223,6 +223,8 @@ const HotelItem = () => {
                 moveRangeOnFirstSelection={false}
                 ranges={dates}
                 minDate={new Date()}
+                months={2}
+                direction="horizontal"
                 className={
                   styles['hotel__container__wrapper__search__item__date']
                 }

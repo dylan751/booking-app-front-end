@@ -107,6 +107,8 @@ const HotelList = () => {
                   moveRangeOnFirstSelection={false}
                   ranges={dates}
                   minDate={new Date()}
+                  months={2}
+                  direction="horizontal"
                   className={styles['header__container__search__item__date']}
                 />
               )}
