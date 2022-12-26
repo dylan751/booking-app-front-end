@@ -5,6 +5,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext, useEffect, useState } from 'react';
+import SearchInput, { createFilter } from 'react-search-input';
 import { useNavigate } from 'react-router-dom';
 import { SearchContext } from '../../context/SearchContext';
 import { DateRange } from 'react-date-range';
@@ -12,6 +13,8 @@ import 'react-date-range/dist/styles.css'; // main css file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import styles from './SearchBar.module.scss';
 import { format } from 'date-fns';
+import useFetch from '../../hooks/useFetch';
+import { Hotel } from '../../models/Hotel';
 
 export interface DatesInterface {
   startDate: Date;
@@ -25,6 +28,11 @@ export interface SearchBarProps {
 
 const SearchBar = ({ component }: SearchBarProps) => {
   const { dispatch } = useContext(SearchContext);
+
+  const { data } = useFetch<Hotel[]>(
+    `${process.env.REACT_APP_API_ENDPOINT}/hotels`,
+  );
+
   const [destination, setDestination] = useState('');
   const [openDate, setOpenDate] = useState(false);
   const currentDate = new Date();
@@ -72,6 +80,13 @@ const SearchBar = ({ component }: SearchBarProps) => {
       });
     navigate('/hotels', { state: { destination, dates, options } });
   };
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const KEYS_TO_FILTERS = ['city'];
+  const filteredHotel: any = data?.filter(
+    createFilter(searchTerm, KEYS_TO_FILTERS),
+  );
+
   return (
     <>
       <div className={styles['search']}>
@@ -81,12 +96,45 @@ const SearchBar = ({ component }: SearchBarProps) => {
               icon={faBed}
               className={styles['search__item__icon']}
             />
-            <input
+            {/* <input
               type="text"
               placeholder="Where are you going?"
               className={styles['search__item__input']}
               onChange={(e) => setDestination(e.target.value)}
+            /> */}
+            <SearchInput
+              className={styles['search__item__input']}
+              placeholder="Where are you going?"
+              onChange={(e: any) => {
+                setSearchTerm(e);
+              }}
+              value={destination}
             />
+            {searchTerm !== '' && (
+              <div className={styles['search__item__result']}>
+                {filteredHotel.length ? (
+                  filteredHotel.map((hotel: Hotel, index: number) => (
+                    <div
+                      className={styles['search__item__result__item']}
+                      key={index}
+                    >
+                      <img src={hotel.photos[0] || ''} alt="" />
+                      <div
+                        className={styles['search__item__result__item__city']}
+                        onClick={(e: any) => {
+                          setDestination(e.target.innerText);
+                          setSearchTerm('');
+                        }}
+                      >
+                        {hotel.city}
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div>Không có kết quả phù hợp</div>
+                )}
+              </div>
+            )}
           </div>
         )}
         <div className={styles['search__item']}>
