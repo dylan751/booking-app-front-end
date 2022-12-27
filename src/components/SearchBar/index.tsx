@@ -14,7 +14,7 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import styles from './SearchBar.module.scss';
 import { format } from 'date-fns';
 import useFetch from '../../hooks/useFetch';
-import { Hotel } from '../../models/Hotel';
+import { City } from '../../models/City';
 
 export interface DatesInterface {
   startDate: Date;
@@ -29,8 +29,8 @@ export interface SearchBarProps {
 const SearchBar = ({ component }: SearchBarProps) => {
   const { dispatch } = useContext(SearchContext);
 
-  const { data } = useFetch<Hotel[]>(
-    `${process.env.REACT_APP_API_ENDPOINT}/hotels`,
+  const { data: cityData } = useFetch<City[]>(
+    `${process.env.REACT_APP_API_ENDPOINT}/cities`,
   );
 
   const [destination, setDestination] = useState('');
@@ -82,8 +82,8 @@ const SearchBar = ({ component }: SearchBarProps) => {
   };
 
   const [searchTerm, setSearchTerm] = useState('');
-  const KEYS_TO_FILTERS = ['city'];
-  const filteredHotel: any = data?.filter(
+  const KEYS_TO_FILTERS = ['name'];
+  const filteredCity: any = cityData?.filter(
     createFilter(searchTerm, KEYS_TO_FILTERS),
   );
 
@@ -112,13 +112,13 @@ const SearchBar = ({ component }: SearchBarProps) => {
             />
             {searchTerm !== '' && (
               <div className={styles['search__item__result']}>
-                {filteredHotel.length ? (
-                  filteredHotel.map((hotel: Hotel, index: number) => (
+                {filteredCity.length ? (
+                  filteredCity.map((city: City, index: number) => (
                     <div
                       className={styles['search__item__result__item']}
                       key={index}
                     >
-                      <img src={hotel.photos[0] || ''} alt="" />
+                      <img src={city.image || ''} alt="" />
                       <div
                         className={styles['search__item__result__item__city']}
                         onClick={(e: any) => {
@@ -126,7 +126,7 @@ const SearchBar = ({ component }: SearchBarProps) => {
                           setSearchTerm('');
                         }}
                       >
-                        {hotel.city}
+                        {city.name}
                       </div>
                     </div>
                   ))
