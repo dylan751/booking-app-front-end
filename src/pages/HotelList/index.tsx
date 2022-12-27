@@ -6,6 +6,7 @@ import Navbar from '../../components/Navbar';
 import { DateRange } from 'react-date-range';
 import './HotelList.css';
 import styles from './HotelList.module.scss';
+import SearchInput, { createFilter } from 'react-search-input';
 import SearchItem from '../../components/SearchItem';
 import useFetch from '../../hooks/useFetch';
 import { Hotel } from '../../models/Hotel';
@@ -14,6 +15,7 @@ import { CountByCity } from '../../models/CountByCity';
 import SearchItemSkeleton from '../../components/LoadingSkeleton/SearchItemSkeleton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { City } from '../../models/City';
 
 interface OptionsInterface {
   adult: number;
@@ -24,6 +26,10 @@ interface OptionsInterface {
 const HotelList = () => {
   const location = useLocation();
   const { dispatch } = useContext(SearchContext);
+  const { data: cityData } = useFetch<City[]>(
+    `${process.env.REACT_APP_API_ENDPOINT}/cities`,
+  );
+
   const currentDate = new Date();
   const [destination, setDestination] = useState(
     location.state?.destination || '',
@@ -71,6 +77,12 @@ const HotelList = () => {
     reFetch();
   };
 
+  const [searchTerm, setSearchTerm] = useState('');
+  const KEYS_TO_FILTERS = ['name'];
+  const filteredCity: any = cityData?.filter(
+    createFilter(searchTerm, KEYS_TO_FILTERS),
+  );
+
   if (error) {
     return <div>{error.message}</div>;
   }
@@ -87,11 +99,46 @@ const HotelList = () => {
               <label>Destination</label>
               <div className="lsDestination">
                 <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" />
-                <input
+                {/* <input
                   value={destination}
                   type="text"
                   onChange={(e) => setDestination(e.target.value)}
+                /> */}
+                <SearchInput
+                  className={styles['header__container__search__item__input']}
+                  placeholder="Where are you going?"
+                  onChange={(e: any) => {
+                    setSearchTerm(e);
+                  }}
+                  value={destination}
                 />
+                {searchTerm !== '' && (
+                  <div className={styles['header__container__search__item__result']}>
+                    {filteredCity.length ? (
+                      filteredCity.map((city: City, index: number) => (
+                        <div
+                          className={styles['header__container__search__item__result__item']}
+                          key={index}
+                        >
+                          <img src={city.image || ''} alt="" />
+                          <div
+                            className={
+                              styles['header__container__search__item__result__item__city']
+                            }
+                            onClick={(e: any) => {
+                              setDestination(e.target.innerText);
+                              setSearchTerm('');
+                            }}
+                          >
+                            {city.name}
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div>Không có kết quả phù hợp</div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
             <div className="lsItem">
