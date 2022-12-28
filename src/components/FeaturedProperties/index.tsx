@@ -7,10 +7,14 @@ import 'swiper/css';
 import styles from './FeaturedProperties.module.scss';
 import FeaturedPropertiesSkeleton from '../LoadingSkeleton/FeaturedPropertiesSkeleton';
 
-const FeaturedProperties = () => {
+interface FeaturedPropertiesProps {
+  type: string;
+}
+
+const FeaturedProperties = ({ type }: FeaturedPropertiesProps) => {
   const navigate = useNavigate();
   const { data, loading, error } = useFetch<Hotel[]>(
-    `${process.env.REACT_APP_API_ENDPOINT}/hotels?featured=true&limit=4`,
+    `${process.env.REACT_APP_API_ENDPOINT}/hotels?type=${type}&featured=true&limit=4`,
   );
 
   const handleClick = (hotelId: number) => {

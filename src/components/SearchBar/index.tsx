@@ -96,12 +96,6 @@ const SearchBar = ({ component }: SearchBarProps) => {
               icon={faBed}
               className={styles['search__item__icon']}
             />
-            {/* <input
-              type="text"
-              placeholder="Where are you going?"
-              className={styles['search__item__input']}
-              onChange={(e) => setDestination(e.target.value)}
-            /> */}
             <SearchInput
               className={styles['search__item__input']}
               placeholder="Where are you going?"

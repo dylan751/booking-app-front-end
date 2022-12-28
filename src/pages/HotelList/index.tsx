@@ -99,11 +99,6 @@ const HotelList = () => {
               <label>Destination</label>
               <div className="lsDestination">
                 <FontAwesomeIcon icon={faMagnifyingGlass} size="lg" />
-                {/* <input
-                  value={destination}
-                  type="text"
-                  onChange={(e) => setDestination(e.target.value)}
-                /> */}
                 <SearchInput
                   className={styles['header__container__search__item__input']}
                   placeholder="Where are you going?"

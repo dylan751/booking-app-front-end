@@ -32,7 +32,7 @@ const HomePage = () => {
           <span>
             {`From castles and villas to boats and igloos, we've got it all`}
           </span>
-          <FeaturedProperties />
+          <FeaturedProperties type="Apartment" />
         </div>
         <div className={styles['home-page__container__featured-properties']}>
           <h1
@@ -42,7 +42,7 @@ const HomePage = () => {
           >
             Home guests love
           </h1>
-          <FeaturedProperties />
+          <FeaturedProperties type="Hotel" />
         </div>
         <MailList />
         <Footer />
