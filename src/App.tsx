@@ -11,6 +11,7 @@ import Register from './pages/Register';
 import ReservePage from './pages/ReservePage';
 import AllHotelPage from './pages/AllHotelPage';
 import UserReservationsPage from './pages/UserReservationsPage';
+import UserReservationDetails from './pages/UserReservationDetails';
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/reservations" element={<UserReservationsPage />} />
+        <Route path="/reservations/:id" element={<UserReservationDetails />} />
 
         <Route path="/all-hotels" element={<AllHotelPage type={'Hotel'} />} />
         <Route

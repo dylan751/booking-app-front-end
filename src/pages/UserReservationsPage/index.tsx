@@ -9,7 +9,6 @@ import styles from './UserReservationsPage.module.scss';
 
 const UserReservationsPage = () => {
   const { user } = useContext(AuthContext);
-  // TODO: Fetch user's reservation `forms`
   const { data: reservationDatas } = useFetch<Form[]>(
     `${process.env.REACT_APP_API_ENDPOINT}/users/${user._id}/reservation`,
   );

@@ -1,5 +1,7 @@
 import { format } from 'date-fns';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import useFetch from '../../../hooks/useFetch';
 import { Form } from '../../../models/Form';
 import { Hotel } from '../../../models/Hotel';
@@ -12,6 +14,7 @@ interface UserReservationsListItemProps {
 }
 
 const UserReservationsListItem = ({ item }: UserReservationsListItemProps) => {
+  const navigate = useNavigate();
   const { data, loading, error } = useFetch<Hotel>(
     `${process.env.REACT_APP_API_ENDPOINT}/hotels/${item.hotelId}`,
   );
@@ -19,6 +22,10 @@ const UserReservationsListItem = ({ item }: UserReservationsListItemProps) => {
   const end = new Date(item.endDate);
   const numberOfDays = dayDifference(start, end);
   const price = data && numberOfDays * data.cheapestPrice * data.rooms.length;
+
+  const handleNavigate = () => {
+    navigate(`/reservations/${item._id}`);
+  };
 
   if (error) {
     return <div>{error.message}</div>;
@@ -34,7 +41,10 @@ const UserReservationsListItem = ({ item }: UserReservationsListItemProps) => {
           <span>
             {format(start, 'dd MMM')} - {format(end, 'dd MMM')}
           </span>
-          <div className={styles['reservation-list-item__container']}>
+          <div
+            className={styles['reservation-list-item__container']}
+            onClick={handleNavigate}
+          >
             <img src={data?.photos[0]} alt="hotel" />
             <div
               className={
