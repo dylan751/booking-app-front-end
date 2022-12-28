@@ -1,16 +1,42 @@
 import { faCancel } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { format } from 'date-fns';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import useFetch from '../../hooks/useFetch';
+import { Form } from '../../models/Form';
+import { Hotel } from '../../models/Hotel';
+import { dayDifference } from '../../services/utils';
 import styles from './UserReservationDetailsContent.module.scss';
 
-const UserReservationDetailsContent = () => {
+interface UserReservationDetailsContentProps {
+  reservationData: Form;
+}
+
+const UserReservationDetailsContent = ({
+  reservationData,
+}: UserReservationDetailsContentProps) => {
+  const navigate = useNavigate();
+  const { data: hotelData } = useFetch<Hotel>(
+    `${process.env.REACT_APP_API_ENDPOINT}/hotels/${reservationData.hotelId}`,
+  );
+
+  const numberOfDays = dayDifference(
+    new Date(reservationData.startDate),
+    new Date(reservationData.endDate),
+  );
+
+  const handleNavigate = () => {
+    navigate('/reservations');
+  };
+
   return (
     <>
       <h2>Check your details</h2>
       <div className={styles['reservation-content']}>
         <div className={styles['reservation-content__left']}>
           <div className={styles['reservation-content__left__detail']}>
-            <h3>LaHomestay Trúc Bạch</h3>
+            <h3>{hotelData?.name}</h3>
             <div className={styles['reservation-content__left__detail__item']}>
               <span
                 className={
@@ -56,7 +82,7 @@ const UserReservationDetailsContent = () => {
                   styles['reservation-content__left__detail__item__content']
                 }
               >
-                1 night, 1 apartment
+                {numberOfDays} night, 1 apartment
               </span>
             </div>
             <div className={styles['reservation-content__left__detail__item']}>
@@ -88,7 +114,10 @@ const UserReservationDetailsContent = () => {
                   styles['reservation-content__left__detail__item__content']
                 }
               >
-                Tuesday, 6 December 2022 (14:00 - 19:00)
+                {format(
+                  new Date(reservationData.startDate),
+                  'EEEE, dd MMMM yyyy (14:00 - 19:00)',
+                )}
               </span>
             </div>
             <div className={styles['reservation-content__left__detail__item']}>
@@ -104,7 +133,10 @@ const UserReservationDetailsContent = () => {
                   styles['reservation-content__left__detail__item__content']
                 }
               >
-                Wednesday, 7 December 2022 (08:00 - 12:00)
+                {format(
+                  new Date(reservationData.endDate),
+                  'EEEE, dd MMMM yyyy (8:00 - 12:00)',
+                )}
               </span>
             </div>
           </div>
@@ -118,7 +150,7 @@ const UserReservationDetailsContent = () => {
                 }
               >
                 <span>1 apartment</span>
-                <span>US$20</span>
+                <span>US${reservationData.price.toFixed(2)}</span>
               </div>
               <div
                 className={
@@ -127,7 +159,7 @@ const UserReservationDetailsContent = () => {
               >
                 {' '}
                 <span>8% VAT</span>
-                <span>US$2</span>
+                <span>US${(reservationData.price * 0.08).toFixed(2)}</span>
               </div>
             </div>
             <div
@@ -139,7 +171,9 @@ const UserReservationDetailsContent = () => {
                 }
               >
                 <span>Price</span>
-                <span>approx. US$22</span>
+                <span>
+                  approx. US${(reservationData.price * 1.08).toFixed(2)}
+                </span>
               </div>
               <div
                 className={
@@ -155,7 +189,6 @@ const UserReservationDetailsContent = () => {
                 >
                   (for 2 guests)
                 </span>
-                <span>VND 510,000</span>
               </div>
             </div>
             <div
@@ -184,10 +217,10 @@ const UserReservationDetailsContent = () => {
             >
               <h3></h3>
               <p>
-                Currency and exchange rate information You will pay LaHomestay
-                Trúc Bạch in VND according to the exchange rate on the day of
-                payment. The amount displayed in USD is just an estimate based
-                on <strong>today</strong> exchange rate for VND.
+                Currency and exchange rate information You will pay{' '}
+                {hotelData?.name} in VND according to the exchange rate on the
+                day of payment. The amount displayed in USD is just an estimate
+                based on <strong>today</strong> exchange rate for VND.
               </p>
             </div>
             <div
@@ -230,7 +263,10 @@ const UserReservationDetailsContent = () => {
             <FontAwesomeIcon icon={faCancel} />
             <a>Message property</a>
           </div>
-          <div className={styles['reservation-content__right__btn']}>
+          <div
+            className={styles['reservation-content__right__btn']}
+            onClick={handleNavigate}
+          >
             View booking
           </div>
           <span>Tip: You can make changes to this booking at anytime</span>

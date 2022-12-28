@@ -10,19 +10,22 @@ import styles from './UserReservationDetails.module.scss';
 
 const UserReservationDetails = () => {
   const formId = location.pathname.split('/')[2];
-  const { data: reservationData } = useFetch<Form>(
+  const { data: reservationData, loading } = useFetch<Form>(
     `${process.env.REACT_APP_API_ENDPOINT}/forms/${formId}`,
   );
-  console.log(reservationData);
+
+  if (loading) return <h2>Loading please wait</h2>;
 
   return (
     <div className={styles['reservation']}>
       <Navbar />
       <Header type="list" />
-      <div className={styles['reservation__container']}>
-        <UserReservationDetailsConfirm />
-        <UserReservationDetailsContent />
-      </div>
+      {reservationData && (
+        <div className={styles['reservation__container']}>
+          <UserReservationDetailsConfirm reservationData={reservationData} />
+          <UserReservationDetailsContent reservationData={reservationData} />
+        </div>
+      )}
       <Footer />
     </div>
   );
