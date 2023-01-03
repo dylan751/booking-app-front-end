@@ -5,3 +5,12 @@ export const dayDifference = (startDate: Date, endDate: Date) => {
   const diffDays = Math.ceil(timeDiff / MILISECONDS_PER_DAY);
   return diffDays;
 };
+
+export const range = (start, end) => {
+  const length = end - start + 1;
+  /*
+  	Create an array of certain length and set the elements within it from
+    start value to end value.
+  */
+  return Array.from({ length }, (_, idx) => idx + start);
+};

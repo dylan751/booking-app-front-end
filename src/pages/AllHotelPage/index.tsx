@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import AllHotelList from '../../components/AllHotelList';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import HotelFAQ from '../../components/HotelFAQ';
 import Navbar from '../../components/Navbar';
+import Pagination from '../../components/Pagination/Pagination';
 import PropertyList from '../../components/PropertyList';
+import { pageSize } from '../../constants/constants';
 import useFetch from '../../hooks/useFetch';
 import { Hotel } from '../../models/Hotel';
 import styles from './AllHotelPage.module.scss';
@@ -19,6 +21,13 @@ const AllHotelPage = ({ type }: AllHotelPageProps) => {
     `${process.env.REACT_APP_API_ENDPOINT}/hotels?type=${type}&limit=6&offset=0`,
   );
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * pageSize;
+    const lastPageIndex = firstPageIndex + pageSize;
+    return data?.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, data]);
+
   if (error) {
     return <div>{error.message}</div>;
   }
@@ -28,7 +37,18 @@ const AllHotelPage = ({ type }: AllHotelPageProps) => {
       <Navbar />
       <Header />
       <div className={styles['hotel-page__container']}>
-        <AllHotelList hotelList={data} loading={loading} type={type} />
+        <AllHotelList
+          hotelList={currentTableData}
+          loading={loading}
+          type={type}
+        />
+        <Pagination
+          className={styles['pagination-bar']}
+          currentPage={currentPage}
+          totalCount={6}
+          pageSize={pageSize}
+          onPageChange={(page) => setCurrentPage(page)}
+        />
       </div>
       <HotelFAQ type={type} />
       <div className={styles['property-list__container']}>
