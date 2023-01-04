@@ -36,8 +36,8 @@ const UserReservationsPage = () => {
             className={styles['reservation-page__container__empty']}
           >{`You haven't reserve any Hotel`}</div>
         )}
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 };

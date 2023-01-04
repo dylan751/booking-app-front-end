@@ -1,15 +1,27 @@
 .reservation-page {
   h1 {
     padding: 16px 0;
-    margin-bottom: 20px;
+    margin: 0;
+    padding: 0;
     color: rgba(0, 0, 0, 0.8);
+    @media screen and (max-width: 480px) {
+      margin-bottom: 0;
+      font-size: 24px;
+    }
   }
 
   &__container {
-    margin-top: 50px;
-    margin-bottom: 50px;
     max-width: 1140px;
     margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+
+    @media screen and (max-width: 1024px) {
+      padding: 10px;
+      margin-top: 0;
+      gap: 30px;
+    }
 
     &__empty {
       font-size: 24px;
