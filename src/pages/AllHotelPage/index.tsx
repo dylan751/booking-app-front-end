@@ -18,7 +18,7 @@ interface AllHotelPageProps {
 const AllHotelPage = ({ type }: AllHotelPageProps) => {
   // TODO: Add Pagination
   const { data, loading, error } = useFetch<Hotel[]>(
-    `${process.env.REACT_APP_API_ENDPOINT}/hotels?type=${type}&limit=6&offset=0`,
+    `${process.env.REACT_APP_API_ENDPOINT}/hotels?type=${type}`,
   );
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -42,13 +42,15 @@ const AllHotelPage = ({ type }: AllHotelPageProps) => {
           loading={loading}
           type={type}
         />
-        <Pagination
-          className={styles['pagination-bar']}
-          currentPage={currentPage}
-          totalCount={6}
-          pageSize={pageSize}
-          onPageChange={(page) => setCurrentPage(page)}
-        />
+        {data && (
+          <Pagination
+            className={styles['pagination-bar']}
+            currentPage={currentPage}
+            totalCount={data.length}
+            pageSize={pageSize}
+            onPageChange={(page) => setCurrentPage(page)}
+          />
+        )}
       </div>
       <HotelFAQ type={type} />
       <div className={styles['property-list__container']}>
