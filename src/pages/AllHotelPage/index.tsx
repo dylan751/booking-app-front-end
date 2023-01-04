@@ -60,8 +60,8 @@ const AllHotelPage = ({ type }: AllHotelPageProps) => {
           </p>
         </div>
         <PropertyList />
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 };

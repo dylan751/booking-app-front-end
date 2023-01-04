@@ -39,9 +39,9 @@ const UserReservationDetails = () => {
               />
             </>
           )}
+          <Footer />
         </div>
       )}
-      <Footer />
     </div>
   );
 };
