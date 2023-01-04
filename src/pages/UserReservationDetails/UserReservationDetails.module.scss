@@ -1,12 +1,16 @@
 .reservation {
   background-color: #f4f4f4;
   &__container {
-    width: 100%;
     max-width: 1024px;
     margin: 20px auto;
     margin-bottom: 100px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+
+    @media screen and (max-width: 768px) {
+      padding: 0 10px;
+      padding-right: 10px;
+    }
   }
 }

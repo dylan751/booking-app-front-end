@@ -1,6 +1,10 @@
 .reservation-content {
   display: flex;
 
+  @media screen and (max-width: 480px) {
+    flex-direction: column;
+  }
+
   &__left {
     flex: 3;
     background-color: #fff;
@@ -21,11 +25,17 @@
           flex: 1;
           font-weight: 600;
           font-size: 14px;
+          @media screen and (max-width: 480px) {
+            font-size: 12px;
+          }
         }
         &__content {
           flex: 2;
           font-size: 14px;
           color: #262626;
+          @media screen and (max-width: 480px) {
+            font-size: 12px;
+          }
         }
       }
     }

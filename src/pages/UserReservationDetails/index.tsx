@@ -1,4 +1,5 @@
 import React from 'react';
+import Skeleton from 'react-loading-skeleton';
 import Footer from '../../components/Footer';
 import Header from '../../components/Header';
 import Navbar from '../../components/Navbar';
@@ -14,7 +15,7 @@ const UserReservationDetails = () => {
     `${process.env.REACT_APP_API_ENDPOINT}/forms/${formId}`,
   );
 
-  if (loading) return <h2>Loading please wait</h2>;
+  // if (loading) return <h2>Loading please wait</h2>;
 
   return (
     <div className={styles['reservation']}>
@@ -22,8 +23,22 @@ const UserReservationDetails = () => {
       <Header type="list" />
       {reservationData && (
         <div className={styles['reservation__container']}>
-          <UserReservationDetailsConfirm reservationData={reservationData} />
-          <UserReservationDetailsContent reservationData={reservationData} />
+          {loading ? (
+            <>
+              <Skeleton height={160} />
+              <Skeleton height={30} width={200} />
+              <Skeleton height={800} />
+            </>
+          ) : (
+            <>
+              <UserReservationDetailsConfirm
+                reservationData={reservationData}
+              />
+              <UserReservationDetailsContent
+                reservationData={reservationData}
+              />
+            </>
+          )}
         </div>
       )}
       <Footer />
