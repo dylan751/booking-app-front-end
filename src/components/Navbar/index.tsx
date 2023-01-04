@@ -1,4 +1,6 @@
-import React, { useContext } from 'react';
+import { faHouseChimney } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import styles from './Navbar.module.scss';
@@ -24,6 +26,17 @@ const Navbar = ({ type }: NavbarProps) => {
     navigate('/');
   };
 
+  const [width, setWidth] = useState(
+    window.innerWidth > 768 ? 'laptop' : 'mobile',
+  );
+  useEffect(() => {
+    const handleResize = () => {
+      setWidth(window.innerWidth > 768 ? 'laptop' : 'mobile');
+    };
+
+    window.addEventListener('resize', handleResize);
+  }, [window.innerWidth]);
+
   return (
     <div className={styles['navbar']}>
       <div className={styles['navbar__container']}>
@@ -38,7 +51,11 @@ const Navbar = ({ type }: NavbarProps) => {
               className={styles['navbar__container__items__info-btn']}
               onClick={() => navigate('/reservations')}
             >
-              List your reservations
+              {width === 'laptop' ? (
+                'List your reservations'
+              ) : (
+                <FontAwesomeIcon icon={faHouseChimney} />
+              )}
             </button>
             {user.username}
             <button

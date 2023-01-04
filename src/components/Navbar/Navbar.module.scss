@@ -31,6 +31,9 @@
     }
 
     &__items {
+      display: flex;
+      align-items: center;
+
       &__info-btn {
         font-family: inherit;
         font-weight: 500;
