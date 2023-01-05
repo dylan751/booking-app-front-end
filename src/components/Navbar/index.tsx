@@ -42,7 +42,7 @@ const Navbar = ({ type }: NavbarProps) => {
       <div className={styles['navbar__container']}>
         <Link to="/" style={{ color: 'inherit', textDecoration: 'none' }}>
           <span className={styles['navbar__container__logo']}>
-            Zuong Booking
+            Booking
           </span>
         </Link>
         {user ? (

@@ -67,7 +67,7 @@ const Header = ({ type }: HeaderProps) => {
             </h1>
             <p className={styles['header__container__description']}>
               Get rewarded for your travels - unlock instant savings of 10% or
-              more with a free Zuongbooking account
+              more with a free Booking account
             </p>
             {!user && (
               <button
