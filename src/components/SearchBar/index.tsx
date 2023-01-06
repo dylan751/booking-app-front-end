@@ -114,13 +114,30 @@ const SearchBar = ({ component }: SearchBarProps) => {
                     >
                       <img src={city.image || ''} alt="" />
                       <div
-                        className={styles['search__item__result__item__city']}
-                        onClick={(e: any) => {
-                          setDestination(e.target.innerText);
-                          setSearchTerm('');
-                        }}
+                        className={
+                          styles['search__item__result__item__wrapper']
+                        }
                       >
-                        {city.name}
+                        <div
+                          className={
+                            styles['search__item__result__item__wrapper__city']
+                          }
+                          onClick={(e: any) => {
+                            setDestination(e.target.innerText);
+                            setSearchTerm('');
+                          }}
+                        >
+                          {city.name}
+                        </div>
+                        <div
+                          className={
+                            styles[
+                              'search__item__result__item__wrapper__country'
+                            ]
+                          }
+                        >
+                          {city.country}
+                        </div>
                       </div>
                     </div>
                   ))

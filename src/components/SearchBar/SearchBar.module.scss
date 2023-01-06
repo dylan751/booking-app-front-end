@@ -134,11 +134,22 @@
           width: 30px;
           object-fit: contain;
         }
-        &__city {
-          width: 100%;
-          margin-left: 0.5rem;
-          font-weight: 500;
-          color: #262626;
+        &__wrapper {
+          display: flex;
+          flex-direction: column;
+          gap: 3px;
+          &__city {
+            width: 100%;
+            margin-left: 0.5rem;
+            font-weight: 600;
+            color: #262626;
+          }
+          &__country {
+            width: 100%;
+            margin-left: 0.5rem;
+            font-size: 12px;
+            color: #262626;
+          }
         }
 
         &:not(:last-child) {
