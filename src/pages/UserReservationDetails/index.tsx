@@ -15,21 +15,20 @@ const UserReservationDetails = () => {
     `${process.env.REACT_APP_API_ENDPOINT}/forms/${formId}`,
   );
 
-  // if (loading) return <h2>Loading please wait</h2>;
-
   return (
     <div className={styles['reservation']}>
       <Navbar />
       <Header type="list" />
-      {reservationData && (
-        <div className={styles['reservation__container']}>
-          {loading ? (
-            <>
-              <Skeleton height={160} />
-              <Skeleton height={30} width={200} />
-              <Skeleton height={800} />
-            </>
-          ) : (
+      {/* {reservationData && ( */}
+      <div className={styles['reservation__container']}>
+        {loading ? (
+          <>
+            <Skeleton height={160} />
+            <Skeleton height={30} width={200} />
+            <Skeleton height={800} />
+          </>
+        ) : (
+          reservationData && (
             <>
               <UserReservationDetailsConfirm
                 reservationData={reservationData}
@@ -38,10 +37,11 @@ const UserReservationDetails = () => {
                 reservationData={reservationData}
               />
             </>
-          )}
-          <Footer />
-        </div>
-      )}
+          )
+        )}
+        <Footer />
+      </div>
+      {/* )} */}
     </div>
   );
 };
