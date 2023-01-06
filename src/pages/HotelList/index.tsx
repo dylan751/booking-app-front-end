@@ -16,6 +16,7 @@ import SearchItemSkeleton from '../../components/LoadingSkeleton/SearchItemSkele
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { City } from '../../models/City';
+import Skeleton from 'react-loading-skeleton';
 
 interface OptionsInterface {
   adult: number;
@@ -108,17 +109,27 @@ const HotelList = () => {
                   value={destination}
                 />
                 {searchTerm !== '' && (
-                  <div className={styles['header__container__search__item__result']}>
+                  <div
+                    className={
+                      styles['header__container__search__item__result']
+                    }
+                  >
                     {filteredCity.length ? (
                       filteredCity.map((city: City, index: number) => (
                         <div
-                          className={styles['header__container__search__item__result__item']}
+                          className={
+                            styles[
+                              'header__container__search__item__result__item'
+                            ]
+                          }
                           key={index}
                         >
                           <img src={city.image || ''} alt="" />
                           <div
                             className={
-                              styles['header__container__search__item__result__item__city']
+                              styles[
+                                'header__container__search__item__result__item__city'
+                              ]
                             }
                             onClick={(e: any) => {
                               setDestination(e.target.innerText);
@@ -368,15 +379,18 @@ const HotelList = () => {
           <div className="listResult">
             <>
               <h1>
-                {destination || '...'}: {(countData && countData[0]) || '-'}{' '}
-                properties found
-              </h1>
-              {data?.map((item) =>
-                loading ? (
-                  <SearchItemSkeleton key={item._id} />
+                {loading ? (
+                  <Skeleton width={300} />
                 ) : (
-                  <SearchItem item={item} key={item._id} />
-                ),
+                  `${destination || '...'}: ${
+                    (countData && countData[0]) || '...'
+                  } properties found`
+                )}
+              </h1>
+              {loading ? (
+                <SearchItemSkeleton count={6} />
+              ) : (
+                data?.map((item) => <SearchItem item={item} key={item._id} />)
               )}
             </>
           </div>

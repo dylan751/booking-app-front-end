@@ -2,11 +2,19 @@ import React from 'react';
 import Skeleton from 'react-loading-skeleton';
 import styles from './SearchItemSkeleton.module.scss';
 
-const SearchItemSkeleton = () => (
+interface SearchItemSkeletonProps {
+  count: number;
+}
+
+const SearchItemSkeleton = ({ count }: SearchItemSkeletonProps) => (
   <>
-    <div className={styles['search-item-skeleton']}>
-      <Skeleton height={220} />
-    </div>
+    {Array(count)
+      .fill(0)
+      .map((_item, index) => (
+        <div className={styles['search-item-skeleton']} key={index}>
+          <Skeleton height={220} />
+        </div>
+      ))}
   </>
 );
 
