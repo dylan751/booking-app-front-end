@@ -125,7 +125,7 @@ const ReserveSideBar = ({ roomData, hotel }: ReserveSideBarProps) => {
               }
             >
               <span>5 % VAT</span>
-              <span>US${price && price * 0.05}</span>
+              <span>US${price && (price * 0.05).toFixed(2)}</span>
             </div>
           </div>
           <div
