@@ -1,5 +1,6 @@
 import {
   faCalendarDays,
+  faCheck,
   faLocationDot,
   faPerson,
 } from '@fortawesome/free-solid-svg-icons';
@@ -105,6 +106,8 @@ const HotelItem = () => {
     return <div>{error.message}</div>;
   }
 
+  console.log(data);
+
   return (
     <div className={styles['hotel']}>
       <Navbar />
@@ -189,6 +192,282 @@ const HotelItem = () => {
                 >
                   {data?.description}
                 </p>
+                <h3>Most popular facilities</h3>
+                <div
+                  className={
+                    styles['hotel__container__wrapper__detail__text__tags']
+                  }
+                >
+                  {data?.tags.map((tag, index) => (
+                    <div
+                      className={
+                        styles[
+                          'hotel__container__wrapper__detail__text__tags__item'
+                        ]
+                      }
+                      key={index}
+                    >
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        className={
+                          styles[
+                            'hotel__container__wrapper__detail__text__tags__item__icon'
+                          ]
+                        }
+                      />
+                      <span>{tag}</span>
+                    </div>
+                  ))}
+                </div>
+                <h3>Availabilities</h3>
+                <div className={styles['hotel__container__wrapper__search']}>
+                  <div
+                    className={
+                      styles['hotel__container__wrapper__search__item']
+                    }
+                  >
+                    <FontAwesomeIcon
+                      icon={faCalendarDays}
+                      className={
+                        styles['hotel__container__wrapper__search__item__icon']
+                      }
+                    />
+                    <span
+                      className={
+                        styles['hotel__container__wrapper__search__item__text']
+                      }
+                      onClick={() => setOpenDate(!openDate)}
+                    >
+                      {`${format(dates[0].startDate, 'EE d MMM')}  —  ${format(
+                        dates[0].endDate,
+                        'EE d MMM',
+                      )}`}
+                    </span>
+                    {openDate && (
+                      <DateRange
+                        editableDateInputs={true}
+                        onChange={(item) => setDates([item.selection])}
+                        moveRangeOnFirstSelection={false}
+                        ranges={dates}
+                        minDate={new Date()}
+                        months={monthNumber}
+                        direction="horizontal"
+                        className={
+                          styles[
+                            'hotel__container__wrapper__search__item__date'
+                          ]
+                        }
+                      />
+                    )}
+                  </div>
+                  <div
+                    className={
+                      styles['hotel__container__wrapper__search__item']
+                    }
+                  >
+                    <FontAwesomeIcon
+                      icon={faPerson}
+                      className={
+                        styles['hotel__container__wrapper__search__item__icon']
+                      }
+                    />
+                    <span
+                      className={
+                        styles['hotel__container__wrapper__search__item__text']
+                      }
+                      onClick={() => setOpenOptions(!openOptions)}
+                    >
+                      {`${options.adult} adults ・ ${options.children} children ・ ${options.room} room`}
+                    </span>
+                    {openOptions && (
+                      <div
+                        className={
+                          styles[
+                            'hotel__container__wrapper__search__item__options'
+                          ]
+                        }
+                      >
+                        <div
+                          className={
+                            styles[
+                              'hotel__container__wrapper__search__item__options__item'
+                            ]
+                          }
+                        >
+                          <span
+                            className={
+                              styles[
+                                'hotel__container__wrapper__search__item__options__item__text'
+                              ]
+                            }
+                          >
+                            Adult
+                          </span>
+                          <div
+                            className={
+                              styles[
+                                'hotel__container__wrapper__search__item__options__item__counter-container'
+                              ]
+                            }
+                          >
+                            <button
+                              className={
+                                styles[
+                                  'hotel__container__wrapper__search__item__options__item__counter-btn'
+                                ]
+                              }
+                              onClick={() => handleOption('adult', 'd')}
+                              disabled={options.adult <= 1}
+                            >
+                              -
+                            </button>
+                            <span
+                              className={
+                                styles[
+                                  'hotel__container__wrapper__search__item__options__item__counter-number'
+                                ]
+                              }
+                            >
+                              {options.adult}
+                            </span>
+                            <button
+                              className={
+                                styles[
+                                  'hotel__container__wrapper__search__item__options__item__counter-btn'
+                                ]
+                              }
+                              onClick={() => handleOption('adult', 'i')}
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                        <div
+                          className={
+                            styles[
+                              'hotel__container__wrapper__search__item__options__item'
+                            ]
+                          }
+                        >
+                          <span
+                            className={
+                              styles[
+                                'hotel__container__wrapper__search__item__options__item__text'
+                              ]
+                            }
+                          >
+                            Children
+                          </span>
+                          <div
+                            className={
+                              styles[
+                                'hotel__container__wrapper__search__item__options__item__counter-container'
+                              ]
+                            }
+                          >
+                            <button
+                              className={
+                                styles[
+                                  'hotel__container__wrapper__search__item__options__item__counter-btn'
+                                ]
+                              }
+                              onClick={() => handleOption('children', 'd')}
+                              disabled={options.children <= 0}
+                            >
+                              -
+                            </button>
+                            <span
+                              className={
+                                styles[
+                                  'hotel__container__wrapper__search__item__options__item__counter-number'
+                                ]
+                              }
+                            >
+                              {options.children}
+                            </span>
+                            <button
+                              className={
+                                styles[
+                                  'hotel__container__wrapper__search__item__options__item__counter-btn'
+                                ]
+                              }
+                              onClick={() => handleOption('children', 'i')}
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                        <div
+                          className={
+                            styles[
+                              'hotel__container__wrapper__search__item__options__item'
+                            ]
+                          }
+                        >
+                          <span
+                            className={
+                              styles[
+                                'hotel__container__wrapper__search__item__options__item__text'
+                              ]
+                            }
+                          >
+                            Room
+                          </span>
+                          <div
+                            className={
+                              styles[
+                                'hotel__container__wrapper__search__item__options__item__counter-container'
+                              ]
+                            }
+                          >
+                            <button
+                              className={
+                                styles[
+                                  'hotel__container__wrapper__search__item__options__item__counter-btn'
+                                ]
+                              }
+                              onClick={() => handleOption('room', 'd')}
+                              disabled={options.room <= 1}
+                            >
+                              -
+                            </button>
+                            <span
+                              className={
+                                styles[
+                                  'hotel__container__wrapper__search__item__options__item__counter-number'
+                                ]
+                              }
+                            >
+                              {options.room}
+                            </span>
+                            <button
+                              className={
+                                styles[
+                                  'hotel__container__wrapper__search__item__options__item__counter-btn'
+                                ]
+                              }
+                              onClick={() => handleOption('room', 'i')}
+                            >
+                              +
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div
+                    className={
+                      styles['hotel__container__wrapper__search__item']
+                    }
+                  >
+                    <button
+                      className={styles['hotel__container__btn']}
+                      onClick={handleSearch}
+                    >
+                      Apply Changes
+                    </button>
+                  </div>
+                </div>
               </>
             </div>
             <div className={styles['hotel__container__wrapper__detail__price']}>
@@ -205,238 +484,6 @@ const HotelItem = () => {
               </h2>
               <button onClick={handleBook}>Reserve or Book Now!</button>
             </div>
-          </div>
-        </div>
-        <div className={styles['hotel__container__wrapper__search']}>
-          <div className={styles['hotel__container__wrapper__search__item']}>
-            <FontAwesomeIcon
-              icon={faCalendarDays}
-              className={
-                styles['hotel__container__wrapper__search__item__icon']
-              }
-            />
-            <span
-              className={
-                styles['hotel__container__wrapper__search__item__text']
-              }
-              onClick={() => setOpenDate(!openDate)}
-            >
-              {`${format(dates[0].startDate, 'EE d MMM')}  —  ${format(
-                dates[0].endDate,
-                'EE d MMM',
-              )}`}
-            </span>
-            {openDate && (
-              <DateRange
-                editableDateInputs={true}
-                onChange={(item) => setDates([item.selection])}
-                moveRangeOnFirstSelection={false}
-                ranges={dates}
-                minDate={new Date()}
-                months={monthNumber}
-                direction="horizontal"
-                className={
-                  styles['hotel__container__wrapper__search__item__date']
-                }
-              />
-            )}
-          </div>
-          <div className={styles['hotel__container__wrapper__search__item']}>
-            <FontAwesomeIcon
-              icon={faPerson}
-              className={
-                styles['hotel__container__wrapper__search__item__icon']
-              }
-            />
-            <span
-              className={
-                styles['hotel__container__wrapper__search__item__text']
-              }
-              onClick={() => setOpenOptions(!openOptions)}
-            >
-              {`${options.adult} adults ・ ${options.children} children ・ ${options.room} room`}
-            </span>
-            {openOptions && (
-              <div
-                className={
-                  styles['hotel__container__wrapper__search__item__options']
-                }
-              >
-                <div
-                  className={
-                    styles[
-                      'hotel__container__wrapper__search__item__options__item'
-                    ]
-                  }
-                >
-                  <span
-                    className={
-                      styles[
-                        'hotel__container__wrapper__search__item__options__item__text'
-                      ]
-                    }
-                  >
-                    Adult
-                  </span>
-                  <div
-                    className={
-                      styles[
-                        'hotel__container__wrapper__search__item__options__item__counter-container'
-                      ]
-                    }
-                  >
-                    <button
-                      className={
-                        styles[
-                          'hotel__container__wrapper__search__item__options__item__counter-btn'
-                        ]
-                      }
-                      onClick={() => handleOption('adult', 'd')}
-                      disabled={options.adult <= 1}
-                    >
-                      -
-                    </button>
-                    <span
-                      className={
-                        styles[
-                          'hotel__container__wrapper__search__item__options__item__counter-number'
-                        ]
-                      }
-                    >
-                      {options.adult}
-                    </span>
-                    <button
-                      className={
-                        styles[
-                          'hotel__container__wrapper__search__item__options__item__counter-btn'
-                        ]
-                      }
-                      onClick={() => handleOption('adult', 'i')}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-                <div
-                  className={
-                    styles[
-                      'hotel__container__wrapper__search__item__options__item'
-                    ]
-                  }
-                >
-                  <span
-                    className={
-                      styles[
-                        'hotel__container__wrapper__search__item__options__item__text'
-                      ]
-                    }
-                  >
-                    Children
-                  </span>
-                  <div
-                    className={
-                      styles[
-                        'hotel__container__wrapper__search__item__options__item__counter-container'
-                      ]
-                    }
-                  >
-                    <button
-                      className={
-                        styles[
-                          'hotel__container__wrapper__search__item__options__item__counter-btn'
-                        ]
-                      }
-                      onClick={() => handleOption('children', 'd')}
-                      disabled={options.children <= 0}
-                    >
-                      -
-                    </button>
-                    <span
-                      className={
-                        styles[
-                          'hotel__container__wrapper__search__item__options__item__counter-number'
-                        ]
-                      }
-                    >
-                      {options.children}
-                    </span>
-                    <button
-                      className={
-                        styles[
-                          'hotel__container__wrapper__search__item__options__item__counter-btn'
-                        ]
-                      }
-                      onClick={() => handleOption('children', 'i')}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-                <div
-                  className={
-                    styles[
-                      'hotel__container__wrapper__search__item__options__item'
-                    ]
-                  }
-                >
-                  <span
-                    className={
-                      styles[
-                        'hotel__container__wrapper__search__item__options__item__text'
-                      ]
-                    }
-                  >
-                    Room
-                  </span>
-                  <div
-                    className={
-                      styles[
-                        'hotel__container__wrapper__search__item__options__item__counter-container'
-                      ]
-                    }
-                  >
-                    <button
-                      className={
-                        styles[
-                          'hotel__container__wrapper__search__item__options__item__counter-btn'
-                        ]
-                      }
-                      onClick={() => handleOption('room', 'd')}
-                      disabled={options.room <= 1}
-                    >
-                      -
-                    </button>
-                    <span
-                      className={
-                        styles[
-                          'hotel__container__wrapper__search__item__options__item__counter-number'
-                        ]
-                      }
-                    >
-                      {options.room}
-                    </span>
-                    <button
-                      className={
-                        styles[
-                          'hotel__container__wrapper__search__item__options__item__counter-btn'
-                        ]
-                      }
-                      onClick={() => handleOption('room', 'i')}
-                    >
-                      +
-                    </button>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-          <div className={styles['hotel__container__wrapper__search__item']}>
-            <button
-              className={styles['hotel__container__btn']}
-              onClick={handleSearch}
-            >
-              Apply Changes
-            </button>
           </div>
         </div>
         <MailList />

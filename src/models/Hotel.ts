@@ -12,4 +12,5 @@ export interface Hotel {
   rooms: string[];
   cheapestPrice: number;
   featured: boolean;
+  tags: string[];
 }
