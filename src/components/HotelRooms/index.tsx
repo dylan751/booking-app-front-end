@@ -1,5 +1,5 @@
-import { faCheck, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faUser } from '@fortawesome/free-solid-svg-icons';
 import React, { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReserveContext } from '../../context/ReserveContext';
