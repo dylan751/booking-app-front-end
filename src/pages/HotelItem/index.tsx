@@ -445,12 +445,7 @@ const HotelItem = () => {
                 Located in the real heart of Krakow, this property has an
                 excellent location score of 9.8!
               </span>
-              <h2>
-                <b>
-                  ${data && numberOfDays * data.cheapestPrice * options.room}
-                </b>{' '}
-                ({numberOfDays} nights)
-              </h2>
+              <h2>({numberOfDays} nights)</h2>
             </div>
           </div>
           <div className={styles['hotel__container__wrapper__rooms']}>

@@ -67,10 +67,18 @@
     }
 
     &__room-select {
+      margin-bottom: 4px;
       display: flex;
-      gap: 2px;
+      gap: 4px;
       label {
-        min-width: 30px;
+        width: 22px;
+        font-size: 12px;
+        border: none;
+        border-radius: 2px;
+        margin-right: 4px;
+        padding: 2px 4px;
+        background-color: #0071c2;
+        color: #fff;
       }
     }
 
