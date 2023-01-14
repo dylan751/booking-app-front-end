@@ -42,7 +42,7 @@ const ReserveFinalStep = ({
   const { selectedRooms } = useContext(ReserveContext);
   const { user } = useContext(AuthContext);
 
-  const numberOfDays = dayDifference(dates[0].startDate, dates[0].endDate,);
+  const numberOfDays = dayDifference(dates[0].startDate, dates[0].endDate);
   const price = hotel && numberOfDays * hotel.cheapestPrice * options.room;
 
   useEffect(() => {
@@ -109,7 +109,7 @@ const ReserveFinalStep = ({
 
   return (
     <div className={styles['reserve']}>
-      <ReserveSideBar roomData={roomData} hotel={hotel} />
+      <ReserveSideBar roomData={roomData} />
       <div className={styles['reserve__personal']}>
         <div className={styles['reserve__personal__container']}>
           <div className={styles['reserve__personal__container__hotel']}>

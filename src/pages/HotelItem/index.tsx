@@ -83,8 +83,6 @@ const HotelItem = () => {
     return <div>{error.message}</div>;
   }
 
-  console.log(data);
-
   return (
     <div className={styles['hotel']}>
       <Navbar />

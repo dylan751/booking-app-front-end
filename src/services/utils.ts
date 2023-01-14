@@ -1,3 +1,5 @@
+import { Room } from '../models/Room';
+
 const MILISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
 
 export const dayDifference = (startDate: Date, endDate: Date) => {
@@ -13,4 +15,21 @@ export const range = (start, end) => {
     start value to end value.
   */
   return Array.from({ length }, (_, idx) => idx + start);
+};
+
+export const calculatePrice = (
+  rooms: Room[],
+  selectedRoom: number[],
+): number => {
+  let price = 0;
+
+  rooms.map((room) =>
+    room.roomNumbers.map((roomNumber) => {
+      if (selectedRoom.includes(roomNumber._id)) {
+        price += room.price;
+      }
+    }),
+  );
+
+  return price;
 };

@@ -46,7 +46,7 @@ const ReserveDetails = ({
 
   return (
     <div className={styles['reserve']}>
-      <ReserveSideBar roomData={roomData} hotel={hotel} />
+      <ReserveSideBar roomData={roomData} />
       <div className={styles['reserve__personal']}>
         <div className={styles['reserve__personal__container']}>
           <div className={styles['reserve__personal__container__hotel']}>

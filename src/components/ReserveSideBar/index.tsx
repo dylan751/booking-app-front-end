@@ -3,25 +3,24 @@ import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ReserveContext } from '../../context/ReserveContext';
 import { SearchContext } from '../../context/SearchContext';
-import { Hotel } from '../../models/Hotel';
 import { Room } from '../../models/Room';
-import { dayDifference } from '../../services/utils';
+import { calculatePrice, dayDifference } from '../../services/utils';
 import styles from './ReserveSideBar.module.scss';
 
 interface ReserveSideBarProps {
   roomData?: Room[];
-  hotel?: Hotel;
 }
 
-const ReserveSideBar = ({ roomData, hotel }: ReserveSideBarProps) => {
-  const { dates, options } = useContext(SearchContext);
+const ReserveSideBar = ({ roomData }: ReserveSideBarProps) => {
+  const { dates } = useContext(SearchContext);
   const { selectedRooms } = useContext(ReserveContext);
 
   const navigate = useNavigate();
   const hotelId = location.pathname.split('/')[2];
 
   const numberOfDays = dayDifference(dates[0].startDate, dates[0].endDate);
-  const price = hotel && numberOfDays * hotel.cheapestPrice * options.room;
+  const price =
+    roomData && numberOfDays * calculatePrice(roomData, selectedRooms);
 
   const handleChangeSelection = () => {
     navigate(`/hotels/${hotelId}`);
