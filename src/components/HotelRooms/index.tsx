@@ -182,12 +182,6 @@ const HotelRoomList = ({ hotelId }: ReserveProps) => {
           </tr>
         ))}
       </table>
-      {/* <button
-        className={styles['reserve__container__btn']}
-        onClick={handleClickReserve}
-      >
-        Reserve Now!
-      </button> */}
     </div>
   );
 };

@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { format } from 'date-fns';
 import React, { useContext, useEffect, useState } from 'react';
 import { DateRange } from 'react-date-range';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Footer from '../../components/Footer';
 import Header, { DatesInterface } from '../../components/Header';
@@ -18,8 +18,6 @@ import HotelItemSkeletonImage from '../../components/LoadingSkeleton/HotelItemSk
 import HotelItemSkeletonTitle from '../../components/LoadingSkeleton/HotelItemSkeleton/HotelItemSkeletonTitle';
 import MailList from '../../components/MailList';
 import Navbar from '../../components/Navbar';
-import Reserve from '../../components/Reserve';
-import { AuthContext } from '../../context/AuthContext';
 import { SearchContext } from '../../context/SearchContext';
 import useFetch from '../../hooks/useFetch';
 import { Hotel } from '../../models/Hotel';
@@ -36,7 +34,6 @@ const HotelItem = () => {
   const hotelId = location.pathname.split('/')[2];
   const [, setSlideNumber] = useState(0);
   const [isOpenSlider, setIsOpenSlider] = useState(false);
-  const [isOpenBookingModal, setIsOpenBookingModal] = useState(false);
   const [openDate, setOpenDate] = useState(false);
   const [dates, setDates] = useState<DatesInterface[]>(contextDates);
 
@@ -63,8 +60,6 @@ const HotelItem = () => {
   const { data, loading, error } = useFetch<Hotel>(
     `${process.env.REACT_APP_API_ENDPOINT}/hotels/${hotelId}`,
   );
-  const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
 
   // Calculate number of dates function
   const numberOfDays = dayDifference(dates[0].startDate, dates[0].endDate);
@@ -81,25 +76,6 @@ const HotelItem = () => {
     const handleResize = () => {
       setMonthNumber(window.innerWidth > 1024 ? 2 : 1);
     };
-    window.addEventListener('resize', handleResize);
-  }, [window.innerWidth]);
-
-  const handleBook = () => {
-    if (user) {
-      setIsOpenBookingModal(true);
-    } else {
-      navigate('/login');
-    }
-  };
-
-  const [isReserveButton, setIsReserveButton] = useState(
-    window.innerWidth > 768 ? true : false,
-  );
-  useEffect(() => {
-    const handleResize = () => {
-      setIsReserveButton(window.innerWidth > 768 ? true : false);
-    };
-
     window.addEventListener('resize', handleResize);
   }, [window.innerWidth]);
 
@@ -121,14 +97,6 @@ const HotelItem = () => {
           />
         )}
         <div className={styles['hotel__container__wrapper']}>
-          {isReserveButton && (
-            <button
-              className={styles['hotel__container__wrapper__book-btn']}
-              onClick={handleBook}
-            >
-              Reserve or Book Now!
-            </button>
-          )}
           {loading ? (
             <HotelItemSkeletonTitle />
           ) : (
@@ -483,7 +451,6 @@ const HotelItem = () => {
                 </b>{' '}
                 ({numberOfDays} nights)
               </h2>
-              <button onClick={handleBook}>Reserve or Book Now!</button>
             </div>
           </div>
           <div className={styles['hotel__container__wrapper__rooms']}>
@@ -494,12 +461,6 @@ const HotelItem = () => {
         <MailList />
         <Footer />
       </div>
-      {isOpenBookingModal && (
-        <Reserve
-          setIsOpenBookingModal={setIsOpenBookingModal}
-          hotelId={hotelId}
-        />
-      )}
     </div>
   );
 };
