@@ -173,6 +173,15 @@
         color: #262626;
       }
     }
+
+    &__rooms {
+      border-top: 1px solid #e7e7e7;
+      padding: 20px 0;
+      margin-top: 20px;
+      h3 {
+        font-size: 14px;
+      }
+    }
   }
 
   @media screen and (max-width: 1024px) {

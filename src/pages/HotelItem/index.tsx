@@ -13,6 +13,7 @@ import { toast } from 'react-toastify';
 import Footer from '../../components/Footer';
 import Header, { DatesInterface } from '../../components/Header';
 import HotelImageSlider from '../../components/HotelImageSlider';
+import HotelRoomList from '../../components/HotelRooms';
 import HotelItemSkeletonImage from '../../components/LoadingSkeleton/HotelItemSkeleton/HotelItemSkeletonImage';
 import HotelItemSkeletonTitle from '../../components/LoadingSkeleton/HotelItemSkeleton/HotelItemSkeletonTitle';
 import MailList from '../../components/MailList';
@@ -484,6 +485,10 @@ const HotelItem = () => {
               </h2>
               <button onClick={handleBook}>Reserve or Book Now!</button>
             </div>
+          </div>
+          <div className={styles['hotel__container__wrapper__rooms']}>
+            <h3>Book this apartment</h3>
+            <HotelRoomList hotelId={hotelId} />
           </div>
         </div>
         <MailList />

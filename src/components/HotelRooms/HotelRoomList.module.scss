@@ -1,0 +1,131 @@
+.hotel-room {
+  &__table {
+    width: 100%;
+    overflow-x: auto;
+    &__room {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      &__type {
+        text-decoration: underline;
+        color: #0071c2;
+        font-size: 16px;
+        font-weight: bold;
+
+        &:hover {
+          color: #bc5b01;
+          cursor: pointer;
+        }
+      }
+      &__description {
+        font-size: 14px;
+        font-weight: 500;
+      }
+      &__tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        font-size: 12px;
+
+        &__item {
+          display: flex;
+          align-items: center;
+          gap: 2px;
+          &__icon {
+            color: #008009;
+          }
+        }
+      }
+    }
+
+    &__user {
+      display: flex;
+      gap: 2px;
+    }
+
+    &__price {
+      font-size: 16px;
+      div {
+        font-weight: bold;
+      }
+
+      &__tax {
+        color: #6b6b6b;
+        font-size: 12px;
+        display: inline-block;
+        margin-bottom: 4px;
+      }
+      &__credit {
+        display: inline-block;
+        background-color: #00800a;
+        font-size: 12px;
+        color: #fff;
+        padding: 2px 4px;
+        border: 2px;
+      }
+    }
+
+    &__room-select {
+      display: flex;
+      gap: 2px;
+      label {
+        min-width: 30px;
+      }
+    }
+
+    &__reserve {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      color: #262626;
+
+      &__btn {
+        width: 100%;
+        font-weight: 500;
+        font-size: 14px;
+        border: none;
+        padding: 8px 16px;
+        cursor: pointer;
+        background-color: #0071c2;
+        color: #fff;
+
+        @media screen and (max-width: 480px) {
+          font-size: 12px;
+        }
+      }
+      ul {
+        padding: 12px;
+        // list-style-position: inside;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        li {
+          font-size: 14px;
+        }
+      }
+      span {
+        border: 1px solid #008009;
+        color: #008009;
+        padding: 5px;
+        font-size: 12px;
+      }
+    }
+  }
+
+  th {
+    color: #fff;
+    font-size: 14px;
+    background-color: #4c76b2;
+  }
+
+  table,
+  th,
+  td {
+    padding: 6px 8px;
+    text-align: left;
+    vertical-align: top;
+    border: 1px solid #5bbaff;
+    border-collapse: collapse;
+  }
+}
