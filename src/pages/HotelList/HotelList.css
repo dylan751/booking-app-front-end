@@ -14,10 +14,17 @@
 
 .listSearch {
   flex: 2;
-  background-color: #febb02;
   padding: 16px;
   border-radius: 3px;
-  position: sticky;
+  top: 10px;
+  height: max-content;
+}
+
+.listSearchContainer {
+  background-color: #febb02;
+  flex: 2;
+  padding: 16px;
+  border-radius: 3px;
   top: 10px;
   height: max-content;
 }
@@ -34,6 +41,7 @@
   flex-direction: column;
   gap: 5px;
   margin-bottom: 10px;
+  color: #262626;
 }
 
 .lsItem > label {
@@ -86,7 +94,7 @@
   width: 50px;
 }
 
-.listSearch > button {
+.listSearchContainer > button {
   padding: 15px;
   background-color: #0071c2;
   color: white;
