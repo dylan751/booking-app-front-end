@@ -1,4 +1,9 @@
 import React from 'react';
+import {
+  hotelDistanceFromCity,
+  hotelPropertyTypes,
+  hotelTagsArr,
+} from '../../constants/constants';
 import styles from './HotelFilter.module.scss';
 
 interface HotelFilterProps {
@@ -12,8 +17,6 @@ const HotelFilter = ({
   setQueryString,
   city,
 }: HotelFilterProps) => {
-  console.log(queryString);
-
   const handleFilterDistance = (e: any) => {
     e.target.checked
       ? setQueryString((prev) => (prev += `&distance=${e.target.value}`))
@@ -37,92 +40,42 @@ const HotelFilter = ({
       <h2>Filter by:</h2>
       <div className={styles['hotel-filter__distance']}>
         <h3>Distance from centre of {city}</h3>
-        <div className={styles['hotel-filter__distance__item']}>
-          <input
-            type="checkbox"
-            value="10"
-            onClick={(e: any) => handleFilterDistance(e)}
-          />
-          <label> Less than 10km</label>
-        </div>
-        <div className={styles['hotel-filter__distance__item']}>
-          <input
-            type="checkbox"
-            value="30"
-            onClick={(e: any) => handleFilterDistance(e)}
-          />
-          <label> Less than 30km</label>
-        </div>
-        <div className={styles['hotel-filter__distance__item']}>
-          <input
-            type="checkbox"
-            value="50"
-            onClick={(e: any) => handleFilterDistance(e)}
-          />
-          <label> Less than 50km</label>
-        </div>
+        {hotelDistanceFromCity.map((distance, index) => (
+          <div className={styles['hotel-filter__distance__item']} key={index}>
+            <input
+              type="checkbox"
+              value={distance}
+              onClick={(e: any) => handleFilterDistance(e)}
+            />
+            <label> Less than {distance}km</label>
+          </div>
+        ))}
       </div>
       <div className={styles['hotel-filter__type']}>
         <h3>Property type</h3>
-        <div className={styles['hotel-filter__type__item']}>
-          <input
-            type="checkbox"
-            value="Hotel"
-            onClick={(e: any) => handleFilterType(e)}
-          />
-          <label> Hotels</label>
-        </div>
-        <div className={styles['hotel-filter__type__item']}>
-          <input
-            type="checkbox"
-            value="Apartment"
-            onClick={(e: any) => handleFilterType(e)}
-          />
-          <label> Apartments</label>
-        </div>
-        <div className={styles['hotel-filter__type__item']}>
-          <input
-            type="checkbox"
-            value="Villa"
-            onClick={(e: any) => handleFilterType(e)}
-          />
-          <label> Villas</label>
-        </div>
-        <div className={styles['hotel-filter__type__item']}>
-          <input
-            type="checkbox"
-            value="Resort"
-            onClick={(e: any) => handleFilterType(e)}
-          />
-          <label> Resorts</label>
-        </div>
+        {hotelPropertyTypes.map((type, index) => (
+          <div className={styles['hotel-filter__type__item']} key={index}>
+            <input
+              type="checkbox"
+              value={type}
+              onClick={(e: any) => handleFilterType(e)}
+            />
+            <label> {type}s</label>
+          </div>
+        ))}
       </div>
       <div className={styles['hotel-filter__facility']}>
         <h3>Facilities</h3>
-        <div className={styles['hotel-filter__facility__item']}>
-          <input
-            type="checkbox"
-            value="Parking"
-            onClick={(e: any) => handleFilterTag(e)}
-          />
-          <label> Parking</label>
-        </div>
-        <div className={styles['hotel-filter__facility__item']}>
-          <input
-            type="checkbox"
-            value="Restaurant"
-            onClick={(e: any) => handleFilterTag(e)}
-          />
-          <label> Restaurant</label>
-        </div>
-        <div className={styles['hotel-filter__facility__item']}>
-          <input
-            type="checkbox"
-            value="Free WiFi"
-            onClick={(e: any) => handleFilterTag(e)}
-          />
-          <label> Free wifi</label>
-        </div>
+        {hotelTagsArr.map((tag, index) => (
+          <div className={styles['hotel-filter__facility__item']} key={index}>
+            <input
+              type="checkbox"
+              value={tag}
+              onClick={(e: any) => handleFilterTag(e)}
+            />
+            <label> {tag}</label>
+          </div>
+        ))}
       </div>
     </div>
   );
