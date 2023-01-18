@@ -107,7 +107,7 @@ const HotelItem = () => {
                 <span>{data?.address}</span>
               </div>
               <span className={styles['hotel__container__wrapper__distance']}>
-                Excellent location - {data?.distance}m from center
+                Excellent location - {data?.distance}km from center
               </span>
               <span
                 className={styles['hotel__container__wrapper__price-highlight']}
