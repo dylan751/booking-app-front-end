@@ -4,9 +4,14 @@ import styles from './HotelFilter.module.scss';
 interface HotelFilterProps {
   queryString: string;
   setQueryString: any;
+  city: string;
 }
 
-const HotelFilter = ({ queryString, setQueryString }: HotelFilterProps) => {
+const HotelFilter = ({
+  queryString,
+  setQueryString,
+  city,
+}: HotelFilterProps) => {
   console.log(queryString);
 
   const handleFilterDistance = (e: any) => {
@@ -31,7 +36,7 @@ const HotelFilter = ({ queryString, setQueryString }: HotelFilterProps) => {
     <div className={styles['hotel-filter']}>
       <h2>Filter by:</h2>
       <div className={styles['hotel-filter__distance']}>
-        <h3>Distance from centre of Myrtle Beach</h3>
+        <h3>Distance from centre of {city}</h3>
         <div className={styles['hotel-filter__distance__item']}>
           <input
             type="checkbox"

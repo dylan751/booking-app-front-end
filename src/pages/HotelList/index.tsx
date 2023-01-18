@@ -11,7 +11,6 @@ import SearchItem from '../../components/SearchItem';
 import useFetch from '../../hooks/useFetch';
 import { Hotel } from '../../models/Hotel';
 import { SearchContext } from '../../context/SearchContext';
-import { CountByCity } from '../../models/CountByCity';
 import SearchItemSkeleton from '../../components/LoadingSkeleton/SearchItemSkeleton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
@@ -57,10 +56,6 @@ const HotelList = () => {
   );
 
   const { data, loading, error, reFetch } = useFetch<Hotel[]>(queryString);
-
-  const { data: countData } = useFetch<CountByCity[]>(
-    `${process.env.REACT_APP_API_ENDPOINT}/hotels/count/byCity?cities=${destination}`,
-  );
 
   const handleOption = (name: string, operation: 'd' | 'i') => {
     setOptions((prev) => {
@@ -389,6 +384,7 @@ const HotelList = () => {
             <HotelFilter
               queryString={queryString}
               setQueryString={setQueryString}
+              city={destination}
             />
           </div>
           <div className="listResult">
@@ -397,9 +393,7 @@ const HotelList = () => {
                 {loading ? (
                   <Skeleton width={300} />
                 ) : (
-                  `${destination || '...'}: ${
-                    (countData && countData[0]) || '...'
-                  } properties found`
+                  `${destination || '...'}: ${data?.length} properties found`
                 )}
               </h1>
               {loading ? (
