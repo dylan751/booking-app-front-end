@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from '../../components/Header';
 import Navbar from '../../components/Navbar';
@@ -52,10 +52,11 @@ const HotelList = () => {
   const [openOptions, setOpenOptions] = useState(false);
   const [min, setMin] = useState<string>('0');
   const [max, setMax] = useState<string>('999');
-
-  const { data, loading, error, reFetch } = useFetch<Hotel[]>(
+  const [queryString, setQueryString] = useState<string>(
     `${process.env.REACT_APP_API_ENDPOINT}/hotels?city=${destination}&min=${min}&max=${max}`,
   );
+
+  const { data, loading, error, reFetch } = useFetch<Hotel[]>(queryString);
 
   const { data: countData } = useFetch<CountByCity[]>(
     `${process.env.REACT_APP_API_ENDPOINT}/hotels/count/byCity?cities=${destination}`,
@@ -69,6 +70,12 @@ const HotelList = () => {
       };
     });
   };
+
+  useEffect(() => {
+    setQueryString(
+      `${process.env.REACT_APP_API_ENDPOINT}/hotels?city=${destination}&min=${min}&max=${max}`,
+    );
+  }, [min, max]);
 
   const handleSearch = () => {
     dispatch &&
@@ -379,7 +386,10 @@ const HotelList = () => {
               </div>
               <button onClick={handleSearch}>Search</button>
             </div>
-            <HotelFilter />
+            <HotelFilter
+              queryString={queryString}
+              setQueryString={setQueryString}
+            />
           </div>
           <div className="listResult">
             <>
