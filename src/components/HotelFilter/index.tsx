@@ -3,6 +3,7 @@ import {
   hotelDistanceFromCity,
   hotelPropertyTypes,
   hotelTagsArr,
+  roomTagsArr,
 } from '../../constants/constants';
 import styles from './HotelFilter.module.scss';
 
@@ -29,10 +30,16 @@ const HotelFilter = ({
       : setQueryString(queryString.replace(`&type=${e.target.value}`, ''));
   };
 
-  const handleFilterTag = (e: any) => {
+  const handleFilterHotelTag = (e: any) => {
     e.target.checked
-      ? setQueryString((prev) => (prev += `&tag=${e.target.value}`))
-      : setQueryString(queryString.replace(`&tag=${e.target.value}`, ''));
+      ? setQueryString((prev) => (prev += `&hotelTag=${e.target.value}`))
+      : setQueryString(queryString.replace(`&hotelTag=${e.target.value}`, ''));
+  };
+
+  const handleFilterRoomTag = (e: any) => {
+    e.target.checked
+      ? setQueryString((prev) => (prev += `&roomTag=${e.target.value}`))
+      : setQueryString(queryString.replace(`&roomTag=${e.target.value}`, ''));
   };
 
   return (
@@ -71,7 +78,23 @@ const HotelFilter = ({
             <input
               type="checkbox"
               value={tag}
-              onClick={(e: any) => handleFilterTag(e)}
+              onClick={(e: any) => handleFilterHotelTag(e)}
+            />
+            <label> {tag}</label>
+          </div>
+        ))}
+      </div>
+      <div className={styles['hotel-filter__room-facility']}>
+        <h3>Room facilities</h3>
+        {roomTagsArr.map((tag, index) => (
+          <div
+            className={styles['hotel-filter__room-facility__item']}
+            key={index}
+          >
+            <input
+              type="checkbox"
+              value={tag}
+              onClick={(e: any) => handleFilterRoomTag(e)}
             />
             <label> {tag}</label>
           </div>
