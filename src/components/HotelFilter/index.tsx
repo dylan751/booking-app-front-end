@@ -9,16 +9,16 @@ interface HotelFilterProps {
 const HotelFilter = ({ queryString, setQueryString }: HotelFilterProps) => {
   console.log(queryString);
 
+  const handleFilterDistance = (e: any) => {
+    e.target.checked
+      ? setQueryString((prev) => (prev += `&distance=${e.target.value}`))
+      : setQueryString(queryString.replace(`&distance=${e.target.value}`, ''));
+  };
+
   const handleFilterType = (e: any) => {
     e.target.checked
       ? setQueryString((prev) => (prev += `&type=${e.target.value}`))
       : setQueryString(queryString.replace(`&type=${e.target.value}`, ''));
-  };
-
-  const handleFilterRoomType = (e: any) => {
-    e.target.checked
-      ? setQueryString((prev) => (prev += `&roomType=${e.target.value}`))
-      : setQueryString(queryString.replace(`&roomType=${e.target.value}`, ''));
   };
 
   const handleFilterTag = (e: any) => {
@@ -35,32 +35,26 @@ const HotelFilter = ({ queryString, setQueryString }: HotelFilterProps) => {
         <div className={styles['hotel-filter__distance__item']}>
           <input
             type="checkbox"
-            value="1"
-            onClick={(e: any) =>
-              console.log(e.target.checked ? e.target.value : '')
-            }
+            value="10"
+            onClick={(e: any) => handleFilterDistance(e)}
           />
-          <label> Less than 1km</label>
+          <label> Less than 10km</label>
         </div>
         <div className={styles['hotel-filter__distance__item']}>
           <input
             type="checkbox"
-            value="3"
-            onClick={(e: any) =>
-              console.log(e.target.checked ? e.target.value : '')
-            }
+            value="30"
+            onClick={(e: any) => handleFilterDistance(e)}
           />
-          <label> Less than 3km</label>
+          <label> Less than 30km</label>
         </div>
         <div className={styles['hotel-filter__distance__item']}>
           <input
             type="checkbox"
-            value="5"
-            onClick={(e: any) =>
-              console.log(e.target.checked ? e.target.value : '')
-            }
+            value="50"
+            onClick={(e: any) => handleFilterDistance(e)}
           />
-          <label> Less than 5km</label>
+          <label> Less than 50km</label>
         </div>
       </div>
       <div className={styles['hotel-filter__type']}>
@@ -96,25 +90,6 @@ const HotelFilter = ({ queryString, setQueryString }: HotelFilterProps) => {
             onClick={(e: any) => handleFilterType(e)}
           />
           <label> Resorts</label>
-        </div>
-      </div>
-      <div className={styles['hotel-filter__room-type']}>
-        <h3>Room type</h3>
-        <div className={styles['hotel-filter__room-type__item']}>
-          <input
-            type="checkbox"
-            value="Single"
-            onClick={(e: any) => handleFilterRoomType(e)}
-          />
-          <label> Single room</label>
-        </div>
-        <div className={styles['hotel-filter__room-type__item']}>
-          <input
-            type="checkbox"
-            value="Double"
-            onClick={(e: any) => handleFilterRoomType(e)}
-          />
-          <label> Double room</label>
         </div>
       </div>
       <div className={styles['hotel-filter__facility']}>

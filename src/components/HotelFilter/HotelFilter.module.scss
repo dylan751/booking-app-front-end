@@ -25,7 +25,11 @@
     &__item {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 8px;
+      input {
+        width: 20px;
+        height: 20px;
+      }
     }
 
     label {
@@ -47,28 +51,11 @@
     &__item {
       display: flex;
       align-items: center;
-      gap: 5px;
-    }
-    label {
-      font-size: 13px;
-      color: #262626;
-    }
-  }
-
-  &__room-type {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    border-bottom: 1px solid #e7e7e7;
-    h3 {
-      font-size: 14px;
-      color: #262626;
-    }
-    padding: 8px;
-    &__item {
-      display: flex;
-      align-items: center;
-      gap: 5px;
+      gap: 8px;
+      input {
+        width: 20px;
+        height: 20px;
+      }
     }
     label {
       font-size: 13px;
@@ -89,7 +76,11 @@
     &__item {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 8px;
+      input {
+        width: 20px;
+        height: 20px;
+      }
     }
     label {
       font-size: 13px;
