@@ -18,7 +18,7 @@ const SearchItem = ({ item }: SearchItemProps) => {
           {item.name}
         </h1>
         <span className={styles['search-item__description__distance']}>
-          {item.distance}m from center
+          {item.distance}km from center
         </span>
         <span className={styles['search-item__description__taxi-option']}>
           Free airport taxi

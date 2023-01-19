@@ -11,6 +11,7 @@
     padding: 8px;
   }
 
+  &__price,
   &__distance,
   &__type,
   &__facility,
@@ -38,6 +39,18 @@
     label {
       font-size: 13px;
       color: #262626;
+    }
+  }
+
+  &__price {
+    &__slider {
+      width: 90% !important;
+      height: 20px;
+      margin: 0 auto;
+      span {
+        font-size: 12px;
+        font-family: inherit;
+      }
     }
   }
 }

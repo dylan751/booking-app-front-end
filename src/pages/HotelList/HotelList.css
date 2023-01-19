@@ -81,19 +81,6 @@
   padding: 10px;
 }
 
-.lsOptionItem {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 10px;
-  color: #555;
-  font-size: 12px;
-}
-
-.lsOptionInput {
-  border: none;
-  width: 50px;
-}
-
 .listSearchContainer > button {
   padding: 15px;
   background-color: #0071c2;

@@ -49,10 +49,9 @@ const HotelList = () => {
     location.state?.options || { adult: 1, children: 0, room: 1 },
   );
   const [openOptions, setOpenOptions] = useState(false);
-  const [min, setMin] = useState<string>('0');
-  const [max, setMax] = useState<string>('999');
+  const [value, setValue] = useState<number[]>([0, 500]);
   const [queryString, setQueryString] = useState<string>(
-    `${process.env.REACT_APP_API_ENDPOINT}/hotels?city=${destination}&min=${min}&max=${max}`,
+    `${process.env.REACT_APP_API_ENDPOINT}/hotels?city=${destination}&min=${value[0]}&max=${value[1]}`,
   );
 
   const { data, loading, error, reFetch } = useFetch<Hotel[]>(queryString);
@@ -68,9 +67,9 @@ const HotelList = () => {
 
   useEffect(() => {
     setQueryString(
-      `${process.env.REACT_APP_API_ENDPOINT}/hotels?city=${destination}&min=${min}&max=${max}`,
+      `${process.env.REACT_APP_API_ENDPOINT}/hotels?city=${destination}&min=${value[0]}&max=${value[1]}`,
     );
-  }, [min, max]);
+  }, [value]);
 
   const handleSearch = () => {
     dispatch &&
@@ -355,28 +354,6 @@ const HotelList = () => {
                       </div>
                     )}
                   </div>
-                  <div className="lsOptionItem">
-                    <span className="lsOptionText">
-                      Min price <small>per night</small>
-                    </span>
-                    <input
-                      type="number"
-                      onChange={(e) => setMin(e.target.value)}
-                      className="lsOptionInput"
-                      placeholder="1"
-                    />
-                  </div>
-                  <div className="lsOptionItem">
-                    <span className="lsOptionText">
-                      Max price <small>per night</small>
-                    </span>
-                    <input
-                      type="number"
-                      onChange={(e) => setMax(e.target.value)}
-                      className="lsOptionInput"
-                      placeholder="1000"
-                    />
-                  </div>
                 </div>
               </div>
               <button onClick={handleSearch}>Search</button>
@@ -385,6 +362,8 @@ const HotelList = () => {
               queryString={queryString}
               setQueryString={setQueryString}
               city={destination}
+              value={value}
+              setValue={setValue}
             />
           </div>
           <div className="listResult">

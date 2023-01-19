@@ -3,21 +3,32 @@ import {
   hotelDistanceFromCity,
   hotelPropertyTypes,
   hotelTagsArr,
+  hotelPriceRange,
   roomTagsArr,
 } from '../../constants/constants';
+import { Slider } from '@material-ui/core';
 import styles from './HotelFilter.module.scss';
 
 interface HotelFilterProps {
   queryString: string;
   setQueryString: any;
   city: string;
+  value: number[];
+  setValue: any;
 }
 
 const HotelFilter = ({
   queryString,
   setQueryString,
   city,
+  value,
+  setValue,
 }: HotelFilterProps) => {
+  // Changing State when volume increases/decreases
+  const rangeSelector = (event, newValue) => {
+    setValue(newValue);
+  };
+
   const handleFilterDistance = (e: any) => {
     e.target.checked
       ? setQueryString((prev) => (prev += `&distance=${e.target.value}`))
@@ -45,6 +56,19 @@ const HotelFilter = ({
   return (
     <div className={styles['hotel-filter']}>
       <h2>Filter by:</h2>
+      <div className={styles['hotel-filter__price']}>
+        <h3>Select Price Range</h3>
+        <Slider
+          className={styles['hotel-filter__price__slider']}
+          value={value}
+          onChange={rangeSelector}
+          valueLabelDisplay="auto"
+          step={50}
+          marks={hotelPriceRange}
+          min={0}
+          max={500}
+        />
+      </div>
       <div className={styles['hotel-filter__distance']}>
         <h3>Distance from centre of {city}</h3>
         {hotelDistanceFromCity.map((distance, index) => (
