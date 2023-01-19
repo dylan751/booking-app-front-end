@@ -6,8 +6,8 @@ import HotelFAQ from '../../components/HotelFAQ';
 import Navbar from '../../components/Navbar';
 import Pagination from '../../components/Pagination/Pagination';
 import PropertyList from '../../components/PropertyList';
-import { pageSize } from '../../constants/constants';
 import useFetch from '../../hooks/useFetch';
+import { pageSize } from '../../constants/constants';
 import { Hotel } from '../../models/Hotel';
 import styles from './AllHotelPage.module.scss';
 
