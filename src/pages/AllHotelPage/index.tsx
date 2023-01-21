@@ -20,7 +20,6 @@ const AllHotelPage = ({ type }: AllHotelPageProps) => {
   const { data, loading, error } = useFetch<Hotel[]>(
     `${process.env.REACT_APP_API_ENDPOINT}/hotels?type=${type}`,
   );
-
   const [currentPage, setCurrentPage] = useState(1);
   const currentTableData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * pageSize;
