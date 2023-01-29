@@ -35,6 +35,7 @@
         &__img {
           width: 100%;
           object-fit: cover;
+          object-position: bottom;
           cursor: pointer;
 
           @media screen and (max-width: 480px) {
