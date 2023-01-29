@@ -69,7 +69,7 @@ const HotelList = () => {
     setQueryString(
       `${process.env.REACT_APP_API_ENDPOINT}/hotels?city=${destination}&min=${value[0]}&max=${value[1]}`,
     );
-  }, [value]);
+  }, [value, destination]);
 
   const handleSearch = () => {
     dispatch &&

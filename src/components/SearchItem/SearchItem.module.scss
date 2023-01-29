@@ -19,9 +19,15 @@
     gap: 10px;
     flex: 2;
 
+    a {
+      text-decoration: none;
+    }
     &__title {
       font-size: 20px;
       color: #0071c2;
+      &:hover {
+        color: #275191;
+      }
     }
     &__distance {
       font-size: 12px;

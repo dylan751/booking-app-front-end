@@ -14,9 +14,11 @@ const SearchItem = ({ item }: SearchItemProps) => {
     <div className={styles['search-item']}>
       <img src={item.photos[0]} alt="" className={styles['search-item__img']} />
       <div className={styles['search-item__description']}>
-        <h1 className={styles['search-item__description__title']}>
-          {item.name}
-        </h1>
+        <Link to={`/hotels/${item._id}`}>
+          <h1 className={styles['search-item__description__title']}>
+            {item.name}
+          </h1>
+        </Link>
         <span className={styles['search-item__description__distance']}>
           {item.distance}km from center
         </span>
