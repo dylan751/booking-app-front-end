@@ -134,7 +134,7 @@ const HotelRoomList = ({ hotelId }: ReserveProps) => {
                   Includes taxes and charges
                 </span>
                 <span className={styles['hotel-room__table__price__credit']}>
-                  Earn US$2 Credits
+                  Earn US${Math.floor(item.price * 0.05)} Credits (5%)
                 </span>
               </div>
             </td>
