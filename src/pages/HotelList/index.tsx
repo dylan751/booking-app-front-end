@@ -377,8 +377,12 @@ const HotelList = () => {
               </h1>
               {loading ? (
                 <SearchItemSkeleton count={6} />
-              ) : (
+              ) : data && data.length > 0 ? (
                 data?.map((item) => <SearchItem item={item} key={item._id} />)
+              ) : (
+                <div
+                  className={styles['reservation-page__container__empty']}
+                >{`No hotel matches your search`}</div>
               )}
             </>
           </div>

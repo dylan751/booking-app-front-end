@@ -143,3 +143,17 @@
     }
   }
 }
+
+.reservation-page__container__empty {
+  font-size: 24px;
+  font-weight: 600;
+  color: #ff9a00;
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.16);
+  border: 1px solid rgba(211, 211, 211, 0.5);
+  border-radius: 2px;
+  padding: 24px;
+  @media screen and (max-width: 768px) {
+    font-size: 20px;
+    padding: 16px;
+  }
+}
