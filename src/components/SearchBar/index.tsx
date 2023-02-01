@@ -82,7 +82,7 @@ const SearchBar = ({ component }: SearchBarProps) => {
   };
 
   const [searchTerm, setSearchTerm] = useState('');
-  const KEYS_TO_FILTERS = ['name'];
+  const KEYS_TO_FILTERS = ['name', 'country'];
   const filteredCity: any = cityData?.filter(
     createFilter(searchTerm, KEYS_TO_FILTERS),
   );
