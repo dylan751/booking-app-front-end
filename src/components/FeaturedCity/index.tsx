@@ -8,7 +8,7 @@ import styles from './FeaturedCity.module.scss';
 const FeaturedCity = () => {
   const navigate = useNavigate();
   const { data, loading, error } = useFetch<CountByCity[]>(
-    `${process.env.REACT_APP_API_ENDPOINT}/hotels/count/byCity?cities=Krakow,Budapest,Madrid,Ha Noi,Nha Trang`,
+    `${process.env.REACT_APP_API_ENDPOINT}/hotels/count/byCity?cities=Krakow,New York,Madrid,Ha Noi,Nha Trang`,
   );
 
   if (error) {
@@ -23,7 +23,7 @@ const FeaturedCity = () => {
     },
     {
       src: 'https://cf.bstatic.com/xdata/images/city/max600/690334.webp?k=b99df435f06a15a1568ddd5f55d239507c0156985577681ab91274f917af6dbb&o=',
-      city: 'Budapest',
+      city: 'New York',
       propertyCount: data && data[1],
     },
   ];
