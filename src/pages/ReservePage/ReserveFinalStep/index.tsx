@@ -101,7 +101,7 @@ const ReserveFinalStep = ({
       // Redirect to Stripe
       const lineItems: any = [];
       lineItems.push({
-        price: 'price_1M7ThHI7VVxG2TJj0E0dZ5BB',
+        price: 'price_1MZAv2I7VVxG2TJjxzaod1iy',
         quantity: options.room,
       }),
         checkout({
