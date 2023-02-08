@@ -10,7 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import axios from 'axios';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import ReserveSideBar from '../../../components/ReserveSideBar';
 import { AuthContext } from '../../../context/AuthContext';
@@ -42,6 +42,7 @@ const ReserveFinalStep = ({
   const { selectedRooms } = useContext(ReserveContext);
   const { user } = useContext(AuthContext);
 
+  const [isDisabled, setIsDisabled] = useState(true);
   const numberOfDays = dayDifference(dates[0].startDate, dates[0].endDate);
   const price = hotel && numberOfDays * hotel.cheapestPrice * options.room;
 
@@ -50,6 +51,18 @@ const ReserveFinalStep = ({
       return { ...prev, price: price && price * 1.05 };
     });
   }, []);
+
+  useEffect(() => {
+    setIsDisabled(
+      !formData.firstName ||
+        !formData.lastName ||
+        !formData.email ||
+        !formData.country ||
+        !formData.phoneNumber ||
+        !formData.hotelId ||
+        !formData.roomIds,
+    );
+  }, [formData]);
 
   const getDatesInRage = (startDate, endDate) => {
     const date = new Date(startDate.getTime());
@@ -320,6 +333,37 @@ const ReserveFinalStep = ({
             </div>
           </div>
         </div>
+        {!formData.firstName ? (
+          <span className={styles['reserve__warning']}>
+            * Please input your first name
+          </span>
+        ) : !formData.lastName ? (
+          <span className={styles['reserve__warning']}>
+            * Please input your last name
+          </span>
+        ) : !formData.email ? (
+          <span className={styles['reserve__warning']}>
+            * Please input your email
+          </span>
+        ) : !formData.country ? (
+          <span className={styles['reserve__warning']}>
+            * Please input your country
+          </span>
+        ) : !formData.phoneNumber ? (
+          <span className={styles['reserve__warning']}>
+            * Please input your phone number
+          </span>
+        ) : !formData.hotelId ? (
+          <span className={styles['reserve__warning']}>
+            * Please choose a hotel
+          </span>
+        ) : !formData.roomIds ? (
+          <span className={styles['reserve__warning']}>
+            * Please choose hotel rooms
+          </span>
+        ) : (
+          <span></span>
+        )}
         <div className={styles['reserve__btn__group']}>
           <button
             onClick={() => setStep(1)}
@@ -331,15 +375,7 @@ const ReserveFinalStep = ({
           <button
             onClick={handleReserve}
             className={styles['reserve__btn__group__reserve-button']}
-            disabled={
-              !formData.firstName ||
-              !formData.lastName ||
-              !formData.email ||
-              !formData.country ||
-              !formData.phoneNumber ||
-              !formData.hotelId ||
-              !formData.roomIds
-            }
+            disabled={isDisabled}
           >
             <FontAwesomeIcon icon={faLock} size="lg" />
             <span>Complete Booking</span>

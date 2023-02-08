@@ -53,7 +53,7 @@ const Register = () => {
         {step === 1 && (
           <div className={styles['register__container']}>
             <div className={styles['register__container__header']}>
-              Sign in or create an account
+              Create an account
             </div>
             <input
               type="email"

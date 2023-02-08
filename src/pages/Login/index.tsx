@@ -50,9 +50,7 @@ const Login = () => {
       <Navbar type="login" />
       <div className={styles['login']}>
         <div className={styles['login__container']}>
-          <div className={styles['login__container__header']}>
-            Sign in or create an account
-          </div>
+          <div className={styles['login__container__header']}>Sign in</div>
           <input
             type="text"
             placeholder="Email"

@@ -232,6 +232,11 @@
     }
   }
 
+  &__warning {
+    color: red;
+    font-size: 14px;
+  }
+
   &__btn {
     &__group {
       display: flex;
