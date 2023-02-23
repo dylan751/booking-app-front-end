@@ -9,7 +9,6 @@
 <br />
 <div align="center">
   <a href="https://github.com/muoi07052001/booking-app-front-end">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">Booking App Front End</h3>
@@ -57,6 +56,8 @@
 
 ## About The Project
 
+<p>Live domain: <strong>https://booking-app-front-end.vercel.app/</strong></p>
+
 <img src="public/images/project-screenshot.png" />
 
 <p align="right">(<a href="#readme-top">Back to top</a>)</p>
@@ -103,7 +104,7 @@ Things you need to use the software and how to install them.
    ```
 4. Create a `.env.local` file, enter your API in `.env.local`
    ```js
-   REACT_APP_API_ENDPOINT='ENTER YOUR API';
+   REACT_APP_API_ENDPOINT = 'ENTER YOUR API';
    ```
 
 <p align="right">(<a href="#readme-top">Back to top</a>)</p>
